@@ -1,0 +1,8 @@
+env/
+www/video/
+www/images/
+*.htaccess
+*.project
+*.sublime-project
+*.sublime-workspace
+*.htpasswd
