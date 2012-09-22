@@ -5,20 +5,7 @@ if (typeof console == "undefined") {
 }
 
 var GLOBAL = {
-	windowHeight: 0,
-	windowWidth: 0,
-	mode: 'wide',
-	netCom: false,
-	transitionEnd: "transitionend",
-	works: [],
-	selectedWork: null,
-	siteReady: false,
-	webkit: false,
-	userAgent: '',
-	myScroll: null,
-	scrollAmount: 30,
-	os: '',
-	a: '555'
+
 };
 
 var EventDispatcher = (function() {

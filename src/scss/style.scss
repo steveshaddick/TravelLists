@@ -1,0 +1,9 @@
+@import 'compass/css3';
+
+@import "base";
+
+
+body {
+	color: $darkBlue;
+	@include border-radius($borderRadius);
+}

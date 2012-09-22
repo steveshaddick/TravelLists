@@ -1,0 +1,9 @@
+/* line 6, ../../src/scss/style.scss */
+body {
+  color: #151633;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
