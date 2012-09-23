@@ -6,6 +6,7 @@ if (typeof console == "undefined") {
 
 var GLOBAL = {
 
+
 };
 
 var EventDispatcher = (function() {
@@ -59,6 +60,78 @@ var EventDispatcher = (function() {
 	
 }());
 
+var Ajax = (function() {
+
+	var TIMEOUT_SECONDS = 10000;
+
+	var token = 'none';
+
+	var isWaiting = false;
+	var timeoutWait = null;
+
+	var request = null;
+	var callback = null;
+
+	function init(_token) {
+		token = _token;
+	}
+
+	function call(action, data, onSuccess) {
+
+		if (isWaiting) return;
+
+		if (typeof data === "undefined") {
+			data = { token: token };
+		} else {
+			data.token = token;
+		}
+
+		callback = (typeof onSuccess === "undefined") ? null : onSuccess;
+
+		request = $.ajax({
+		  url: "/ajax/" + action,
+		  type: "POST",
+		  data: data,
+		  dataType: "json"
+		});
+
+		request.done(requestDone);
+		request.fail(requestFailed);
+
+		timeoutWait = setTimeout(timeout, TIMEOUT_SECONDS);
+	}
+
+	function requestDone(data) {
+		isWaiting = false;
+		request = null;
+		clearTimeout(timeoutWait);
+
+		if (callback) {
+			callback(data);
+			callback = null;
+		}
+	}
+
+	function requestFailed(jqXHR, textStatus) {
+		isWaiting = false;
+		request = null;
+		callback = null;
+		clearTimeout(timeoutWait);
+	}
+
+	function timeout() {
+		request.done(function(){});
+		request.fail(function(){});
+		requestFailed();
+	}
+
+	return {
+		init: init,
+		call: call
+	}
+
+}());
+
 
 
 var Main = (function() {
@@ -66,6 +139,7 @@ var Main = (function() {
 	
 	function init(obj) {
 		
+		Ajax.init(obj.a);
 	
 	}
 

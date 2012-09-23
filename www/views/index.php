@@ -64,7 +64,6 @@
 					_gaq.push(['_trackEvent',pageLocation, subTopic, details]);
 				}
 				
-				
 				var _gaq = _gaq || [];
 				_gaq.push(['_setAccount', '<?php echo GOOGLE_ANALYTICS_UA; ?>' ]);
 				_gaq.push(['_trackPageview', location.pathname + location.search + location.hash]);
