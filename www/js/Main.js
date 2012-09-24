@@ -89,10 +89,10 @@ var Ajax = (function() {
 		callback = (typeof onSuccess === "undefined") ? null : onSuccess;
 
 		request = $.ajax({
-		  url: "/ajax/" + action,
-		  type: "POST",
-		  data: data,
-		  dataType: "json"
+			url: "/ajax/" + action,
+			type: "POST",
+			data: data,
+			dataType: "json"
 		});
 
 		request.done(requestDone);
@@ -128,7 +128,7 @@ var Ajax = (function() {
 	return {
 		init: init,
 		call: call
-	}
+	};
 
 }());
 
@@ -179,7 +179,7 @@ var Gate = (function() {
 	return {
 		showInfo: showInfo,
 		createTrip: createTrip
-	}
+	};
 
 }());
 
