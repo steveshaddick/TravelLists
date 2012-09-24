@@ -1,18 +1,30 @@
 <?php
 
 @session_start();
-require_once('../env/config.php');
+require_once('../../env/config.php');
 
-require_once BASE_PATH . 'lib/MySQLUtility.php';
 require_once BASE_PATH . 'lib/StringUtils.php';
-// End required files
+require_once BASE_PATH . 'lib/Encryptor.php';
 
-// Project specific includes
 require_once BASE_PATH . 'models/Main.php' ;
 $main = new Main($basePath);
 
 if (!((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['ajaxToken'])))  {
 	exit();
+}
+
+
+function returnJSON($arr) {
+	
+	if (is_array($arr)) {
+		$arr['success'] = true;
+	} else if ($arr === true) {
+		$arr = array('success'=>true);
+	} else {
+		$arr = array('success'=>false);
+	}
+	
+	return json_encode($arr);
 }
 
 
@@ -30,7 +42,20 @@ header('Content-type: application/json');
 // Non-Authenticated pages
 switch ($action) {
 
+	case 'createTrip':
 
+		$arr = $main->createTrip(array(
+			'tripName'=>$_POST['tripName'],
+			'userName'=>$_POST['name'],
+			'email'=>$_POST['email']
+			));
+
+		echo returnJSON($arr);
+		break;
+
+	default:
+		echo returnJSON(false);
+		break;
 }
 
 ?>

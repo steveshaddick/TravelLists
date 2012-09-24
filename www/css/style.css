@@ -1,9 +1,82 @@
 /* line 6, ../../src/scss/style.scss */
 body {
+  border: 0;
+  margin: 0;
+  padding: 0;
   color: #151633;
+}
+
+/* line 14, ../../src/scss/style.scss */
+.clear {
+  clear: both;
+}
+
+/* line 18, ../../src/scss/style.scss */
+a.generalButton {
+  display: inline-block;
+  padding: 10px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
+}
+
+/* line 29, ../../src/scss/style.scss */
+#loadBlocker {
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #eee;
+  z-index: 1000000;
+}
+/* line 39, ../../src/scss/style.scss */
+#loadBlocker .blockerContent {
+  width: 200px;
+  margin: 100px auto 0;
+  height: 100px;
+}
+
+/* line 48, ../../src/scss/style.scss */
+.siteTitle {
+  width: 960px;
+  margin: 0 auto;
+}
+
+/* line 53, ../../src/scss/style.scss */
+.contentWrapper {
+  width: 960px;
+  position: relative;
+  overflow-x: hidden;
+  margin: 0 auto;
+  height: 500px;
+}
+
+/* line 61, ../../src/scss/style.scss */
+.pageContent {
+  width: 960px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transition-property: left;
+  -moz-transition-property: left;
+  -o-transition-property: left;
+  transition-property: left;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+/* line 71, ../../src/scss/style.scss */
+.pageRight {
+  left: 960px;
+}
+
+/* line 74, ../../src/scss/style.scss */
+.pageLeft {
+  left: -960px;
 }

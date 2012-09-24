@@ -1,9 +1,8 @@
 <?php
 
 @session_start();
-require_once('../env/config.php');
+require_once('../../env/config.php');
 
-require_once BASE_PATH . 'lib/MySQLUtility.php';
 require_once BASE_PATH . 'lib/StringUtils.php';
 // End required files
 

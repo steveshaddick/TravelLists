@@ -5,43 +5,70 @@
 <!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
 <head>
 	<meta charset="UTF-8">
-	<?php
-	switch($userAgent) {
-		case 'iPhone':
-			?>
-			
-			<meta name="viewport" content="initial-scale = 0.4, width = device-width" />
-			
-			<?php
-			break;
-			
-		default:
-			?>
-			
-			<meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width" />
-			
-			<?php
-			break;
-	}
-	?>
+	<meta name="viewport" content="width = device-width" />
 	
-	<title></title>
-	<meta name="title" content="" />
+	<title>Trip Notes</title>
+	<meta name="title" content="Trip Notes" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	
-	<link href="css/min.css" rel="stylesheet" type="text/css" />
+	<link href="css/boilerplate_top.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
 	
 	<script src="js/Modernizr.js"></script>
 	
 </head>
 <body>
+
+	<div id="loadBlocker">
+		<div class="blockerContent">
+			Loading...
+		</div>
+	</div>
+
+	<div id="header">
+		<div class="siteTitle">Trip Notes</div>
+	</div>
+
+	<div id="body">
+		<div class="contentWrapper">
+			<div id="landingPage" class="pageContent pageCentre">
+				<div class="overview">
+				</div>
+
+				<div class="tripForm">
+					<label for="txtTripName">Name your trip</label><br />
+					<input id="txtTripName" name="txtTripName" type="text" autofocus="autofocus" maxlength="75" placeholder="ex: Thailand" value="" /><br />
+					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showInfo();">Make Trip Notes</a>
+				</div>
+			</div>
+
+			<div id="infoPage" class="pageContent pageRight">
+				<div class="overview">
+				</div>
+
+				<div class="tripForm">
+					<div class="floatLeft">
+						<label for="txtName">Name</label><br />
+						<input id="txtName" name="txtName" disabled="disabled" type="text" maxlength="75" placeholder="Bob Dobalina" value="" /><br />
+					</div>
+					<div class="floatLeft">
+						<label for="txtEmail">Email</label><br />
+						<input id="txtEmail" name="txtEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
+					</div>
+					<br class="clear" />
+					<a class="generalButton" href="javascript:void(0)" onclick="Gate.createTrip();">Create</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>
 
-	<script src="/js/Main.min.js"></script>
+	<script src="/js/Main.js"></script>
 
 	<script type="text/javascript">
 	

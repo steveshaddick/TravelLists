@@ -133,6 +133,56 @@ var Ajax = (function() {
 }());
 
 
+var Gate = (function() {
+
+	function showInfo() {
+		$("#landingPage").addClass('pageLeft');
+		$("#txtTripName").prop('disabled', true);
+
+
+		$("#infoPage").removeClass('pageRight');
+		$("#txtName").prop('disabled', false).focus();
+		$("#txtEmail").prop('disabled', false);
+	}
+
+	function createTrip() {
+
+		//validate
+
+		var name = $("#txtName").val();
+		var email = $("#txtEmail").val();
+		var tripName = $("#txtTripName").val();
+
+		Main.loadBlock();
+		Ajax.call('createTrip',
+			{
+				name: name,
+				email: email,
+				tripName: tripName
+			},
+			createTripReturn
+		);
+	}
+
+	function createTripReturn(data) {
+
+		//check for success
+		if (data && data.success) {
+			window.location = 'http://s182233257.onlinehome.us/' + data.tripHash;
+		} else {
+			
+		}
+		
+
+	}
+
+	return {
+		showInfo: showInfo,
+		createTrip: createTrip
+	}
+
+}());
+
 
 var Main = (function() {
 	
@@ -143,10 +193,17 @@ var Main = (function() {
 	
 	}
 
-	
+	function loadBlock() {
+		$("#loadBlocker").css('display', 'block');
+	}
+	function loadRelease() {
+		$("#loadBlocker").css('display', 'none');
+	}
 	
 	return {
-		init : init
+		init : init,
+		loadBlock: loadBlock,
+		loadRelease: loadRelease
 	};
 	
 }());

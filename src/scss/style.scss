@@ -4,6 +4,74 @@
 
 
 body {
+	border:0;
+	margin:0;
+	padding:0;
 	color: $darkBlue;
-	@include border-radius($borderRadius);
+//	@include border-radius($borderRadius);
 }
+
+.clear {
+	clear:both;
+}
+
+a.generalButton {
+	display: inline-block;
+	padding: 10px;
+
+	@include border-radius($borderRadius);
+
+	&:hover {
+
+	}
+}
+
+#loadBlocker {
+	display:none;
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	background:#eee;
+	z-index:1000000;
+
+	.blockerContent {
+		width:200px;
+		margin:100px auto 0;
+		height:100px;
+	}
+}
+
+
+
+.siteTitle {
+	width: $contentWidth;
+	margin:0 auto;
+}
+
+.contentWrapper {
+	width: $contentWidth;
+	position: relative;
+	overflow-x: hidden;
+	margin: 0 auto;
+	height:500px;
+}
+
+.pageContent {
+	width: $contentWidth;
+	position:absolute;
+	top:0;
+	left:0;
+
+	@include transition-property(left);
+  	@include transition-duration(0.5s);
+}
+
+.pageRight {
+	left: $contentWidth;
+}
+.pageLeft {
+	left: -$contentWidth;
+}
+
