@@ -29,30 +29,58 @@ class Main {
 	public function createTrip($data) {
 
 		$tripName = $data['tripName'];
-		$name = $data['userName'];
+		$userName = $data['userName'];
 		$email = Encryptor::encrypt($data['email'], SALT);
 
 		//more validation?
 
 		//TODO: change this to something better, obvs
-		$stmt = $this->db->prepare("SELECT hash FROM Lists WHERE hash=? LIMIT 1");
+		$stmt = $this->db->prepare("SELECT _id FROM Lists WHERE adminHash=? OR publicHash=? LIMIT 1");
 		do {
-			$tripHash = randomString(16);
-			$stmt->execute(array($tripHash));
+			$adminHash = randomString(20);
+			$publicHash = randomString(20);
+			$stmt->execute(array($adminHash, $publicHash));
 			$duplicate = $stmt->fetchAll();
 		} while (count($duplicate) !== 0);
 
 		$now = date( 'Y-m-d H:i:s');
-		//TODO: duplicate email?
 
-		$stmt = $this->db->prepare("INSERT INTO Users SET name=?, email=?, dateEntered='$now'");
-		$stmt->execute(array($name, $email));
-		$insertId = $this->db->lastInsertId();
+		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, userName=?, email=?, dateCreated='$now'");
+		$stmt->execute(array($adminHash, $publicHash, $userName, $email));
 
-		$stmt = $this->db->prepare("INSERT INTO Lists SET hash=?, name=?, userId=$insertId, dateCreated='$now'");
-		$stmt->execute(array($tripHash, $tripName));
+		/*$subject = 'A new subject';
 
-		return array('tripHash'=>$tripHash);
+		$html = '<!doctype html><head></head><body>';
+		$html .= '<div style="background:#FAFAFA; padding:10px;">';
+		$html .= '<div style="max-width:600px">';
+		$html .= 'Here is your link: ';
+		$html .= '<img style="padding-top:25px;" src="" width="175" height="29" alt="Steve Shaddick" />';
+		$html .= '</div>';
+		$html .= '</div>';
+		$html .= '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#7d7d7d; margin-top:10px;">To unsubscribe from this newsletter, go here: <a href="http://www.steveshaddick.com/unsubscribe/%unsub_num%">http://www.steveshaddick.com/unsubscribe/%unsub_num%</a></p>';
+		$html .= '</body></html>';
+
+		$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
+		$html = str_replace("<p>", '<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#7d7d7d; margin-top:10px;">', $html);
+
+		$subs = array();
+		foreach ($emails as $email) {
+			$mail->addTo($email['email']);
+
+			$subs []= $email['rando'] . "_" .  $email['_id'];
+		}
+
+		$mail->setFrom("steve@steveshaddick.com");
+
+		$mail->setSubject($subject);
+
+		$mail->setHtml($html);
+		$mail->setText(html2text($html));
+		$mail->addSubstitution("%unsub_num%", $subs);
+		
+		$response = $sendgrid->web->send($mail);*/
+
+		return array('tripHash'=>$adminHash);
 
 	}
 
