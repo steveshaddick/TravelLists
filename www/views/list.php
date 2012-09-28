@@ -28,38 +28,55 @@
 	</div>
 
 	<div id="header">
-		<div class="siteTitle">Trip Notes</div>
+		<div class="tripTitle"><?php echo $this->trip['tripName']; ?></div>
+		<div class="tripOwner">by <?php echo $this->trip['userName']; ?></div>
 	</div>
 
 	<div id="body">
 		<div class="contentWrapper">
-			<div id="landingPage" class="pageContent pageCentre">
-				<div class="overview">
-				</div>
+			<div id="locations">
+				<?php
+				foreach ($this->locations as $location) {
+					?>
+					<span class="locationName"><?php echo $location['name']; ?></span>
+					<div class="locationNotes">
+						<?php
+						foreach ($this->categories[$location['_id']] as $category) {
+							?>
+							<div class="category">
+								<?php
+								//Category titles
+								switch ($category['category_id']) {
+									default:
+										break;
+								}
+								?>
+								<div class="notesList">
+									<?php
+									foreach ($this->notes[$location['_id']][$category['category_id']] as $note) {
+										?>
+										<div class="note">
+											<span class="text"><?php echo $note['note']; ?></span>
+											<span class="from"><?php echo $note['from']; ?></span>
+										</div>
 
-				<div class="tripForm">
-					<label for="txtTripName">Name your trip</label><br />
-					<input id="txtTripName" name="txtTripName" type="text" autofocus="autofocus" maxlength="75" placeholder="ex: Thailand" value="" /><br />
-					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showInfo();">Make Trip Notes</a>
-				</div>
-			</div>
-
-			<div id="infoPage" class="pageContent pageRight">
-				<div class="overview">
-				</div>
-
-				<div class="tripForm">
-					<div class="floatLeft">
-						<label for="txtName">Name</label><br />
-						<input id="txtName" name="txtName" disabled="disabled" type="text" maxlength="75" placeholder="Bob Dobalina" value="" /><br />
+										<?php
+									}
+									?>
+								</div>
+							</div>
+							<?php
+						}
+						?>
 					</div>
-					<div class="floatLeft">
-						<label for="txtEmail">Email</label><br />
-						<input id="txtEmail" name="txtEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
+					
+					<div class="addNote">
+						<span>Add note to <?php echo $location['name']; ?></span>
 					</div>
-					<br class="clear" />
-					<a class="generalButton" href="javascript:void(0)" onclick="Gate.createTrip();">Create</a>
-				</div>
+
+					<?php
+				}
+				?>
 			</div>
 		</div>
 	</div>

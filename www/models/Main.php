@@ -4,7 +4,13 @@
  */
 class Main {
 
-	
+	public $tripId;
+	public $trip;
+	public $locations;
+	public $categories;
+	public $notes;
+	public $isAdmin = false;
+
 	private $db;
 	private $basePath;
 	
@@ -89,22 +95,38 @@ class Main {
 		$list = $_GET['id'];
 
 
-		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE hash=? LIMIT 1");
-		$stmt->execute(array($list));
-		$trip = $stmt->fetch();
+		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE adminHash=? OR publicHash=? LIMIT 1");
+		$stmt->execute(array($list, $list));
+		$this->trip = $stmt->fetch();
 
-		$stmt = $this->db->prepare("SELECT * FROM Locations WHERE hash=? ORDER BY listOrder");
-		$stmt->execute(array($list));
-		$locations = $stmt->fetchAll();
+		$this->admin = ($this->trip['adminHash'] == $list);
+		$this->tripId = intval($this->trip['_id']);
 
-		$stmt = $this->db->prepare("SELECT * FROM Notes WHERE hash=? ORDER BY listOrder");
-		$stmt->execute(array($list));
-		$notes = array();
+		$stmt = $this->db->prepare("SELECT * FROM Locations WHERE trip_id=? ORDER BY listOrder");
+		$stmt->execute(array($this->tripId));
+		$this->locations = $stmt->fetchAll();
+
+		$stmt = $this->db->prepare("SELECT * FROM Categories WHERE trip_id=? ORDER BY listOrder");
+		$stmt->execute(array($this->tripId));
+		$this->categories = array();
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			if (!isset($notes[$row['location_id']])) {
-				$notes[$row['location_id']] = array();
+			if (!isset($this->categories[$row['location_id']])) {
+				$this->categories[$row['location_id']] = array();
 			}
-			$notes[$row['location_id']] []= $row;
+			$this->categories[$row['location_id']] []= $row;
+		}
+
+		$stmt = $this->db->prepare("SELECT * FROM Notes WHERE trip_id=? ORDER BY listOrder");
+		$stmt->execute(array($this->tripId));
+		$this->notes = array();
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			if (!isset($this->notes[$row['location_id']])) {
+				$this->notes[$row['location_id']] = array();
+			}
+			if (!isset($this->notes[$row['location_id']][$row['category_id']])) {
+				$this->notes[$row['location_id']][$row['category_id']] = array();
+			}
+			$this->notes[$row['location_id']][$row['category_id']] []= $row;
 		}
 
 	}

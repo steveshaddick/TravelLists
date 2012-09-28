@@ -9,6 +9,10 @@ require_once BASE_PATH . 'lib/Encryptor.php';
 require_once BASE_PATH . 'models/Main.php' ;
 $main = new Main($basePath);
 
+if ($main->init() !== true) {
+	exit();
+}
+
 if (!((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['ajaxToken'])))  {
 	exit();
 }

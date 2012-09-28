@@ -65,6 +65,8 @@ switch ($view) {
 	case 'list':
 
 		$main->getTripList();
+		include('../views/list.php');
+		exit();
 
 		break;
 		
