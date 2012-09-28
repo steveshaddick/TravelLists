@@ -10,6 +10,12 @@ require_once BASE_PATH . 'lib/StringUtils.php';
 require_once BASE_PATH . 'models/Main.php' ;
 $main = new Main($basePath);
 
+if ($main->init() !== true) {
+	//TODO include error screen?
+	include('../views/404.php');
+	exit();
+}
+
 if (isset($_SESSION['ajaxToken'])) {
 	$ajaxToken = $_SESSION['ajaxToken'];
 } else {
@@ -54,6 +60,12 @@ switch ($view) {
 		
 		include('../views/index.php');
 		exit();
+		break;
+
+	case 'list':
+
+		$main->getTripList();
+
 		break;
 		
 	default:
