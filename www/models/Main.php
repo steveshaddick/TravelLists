@@ -92,6 +92,10 @@ class Main {
 
 	public function getTripList() {
 
+		if (!isset($_GET['id']) || ($_GET['id'] == '')) {
+			return false;
+		}
+
 		$list = $_GET['id'];
 
 
@@ -99,7 +103,11 @@ class Main {
 		$stmt->execute(array($list, $list));
 		$this->trip = $stmt->fetch();
 
-		$this->admin = ($this->trip['adminHash'] == $list);
+		if ($stmt->rowCount() == 0) {
+			return false;
+		}
+
+		$this->isAdmin = ($this->trip['adminHash'] == $list);
 		$this->tripId = intval($this->trip['_id']);
 
 		$stmt = $this->db->prepare("SELECT * FROM Locations WHERE trip_id=? ORDER BY listOrder");
@@ -128,6 +136,8 @@ class Main {
 			}
 			$this->notes[$row['location_id']][$row['category_id']] []= $row;
 		}
+
+		return true;
 
 	}
 

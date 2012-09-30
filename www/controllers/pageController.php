@@ -1,5 +1,6 @@
 <?php
 
+
 @session_start();
 require_once('../../env/config.php');
 
@@ -8,11 +9,12 @@ require_once BASE_PATH . 'lib/StringUtils.php';
 
 // Project specific includes
 require_once BASE_PATH . 'models/Main.php' ;
-$main = new Main($basePath);
+$main = new Main(BASE_PATH);
+
 
 if ($main->init() !== true) {
 	//TODO include error screen?
-	include('../views/404.php');
+	include(BASE_PATH . 'views/404.php');
 	exit();
 }
 
@@ -45,33 +47,34 @@ if (strpos($os, 'windows')) {
 	$os = '';
 }
 
-
-
 if (isset($_GET['action'])) {
 	$view = $_GET['action'];
 } else {
 	$view = '';
 }
 
+
 // Non-Authenticated pages
 switch ($view) {
 	case 'index':
 		
 		
-		include('../views/index.php');
+		include(BASE_PATH . 'views/index.php');
 		exit();
 		break;
 
 	case 'list':
 
-		$main->getTripList();
-		include('../views/list.php');
+		if ($main->getTripList() !== true) {
+			header('Location: http://' . SITE_URL);
+		}
+		include(BASE_PATH . 'views/list.php');
 		exit();
 
 		break;
 		
 	default:
-		include('../views/404.php');
+		include(BASE_PATH . 'views/404.php');
 		exit();
 		break;
 	

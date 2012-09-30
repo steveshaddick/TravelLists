@@ -12,11 +12,11 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	
-	<link href="css/boilerplate_top.css" rel="stylesheet" type="text/css" />
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<link href="css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
+	<link href="/css/boilerplate_top.css" rel="stylesheet" type="text/css" />
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
 	
-	<script src="js/Modernizr.js"></script>
+	<script src="/js/Modernizr.js"></script>
 	
 </head>
 <body>

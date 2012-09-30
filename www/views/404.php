@@ -33,6 +33,7 @@
 </head>
 <body>
 	
+	Custom 404
 	
 	
 	<script type="text/javascript">

@@ -12,11 +12,11 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	
-	<link href="css/boilerplate_top.css" rel="stylesheet" type="text/css" />
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<link href="css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
+	<link href="/css/boilerplate_top.css" rel="stylesheet" type="text/css" />
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
 	
-	<script src="js/Modernizr.js"></script>
+	<script src="/js/Modernizr.js"></script>
 	
 </head>
 <body>
@@ -28,20 +28,20 @@
 	</div>
 
 	<div id="header">
-		<div class="tripTitle"><?php echo $this->trip['tripName']; ?></div>
-		<div class="tripOwner">by <?php echo $this->trip['userName']; ?></div>
+		<div class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
+		<div class="tripOwner">by <?php echo $main->trip['userName']; ?></div>
 	</div>
 
 	<div id="body">
 		<div class="contentWrapper">
 			<div id="locations">
 				<?php
-				foreach ($this->locations as $location) {
+				foreach ($main->locations as $location) {
 					?>
 					<span class="locationName"><?php echo $location['name']; ?></span>
 					<div class="locationNotes">
 						<?php
-						foreach ($this->categories[$location['_id']] as $category) {
+						foreach ($main->categories[$location['_id']] as $category) {
 							?>
 							<div class="category">
 								<?php
@@ -53,7 +53,7 @@
 								?>
 								<div class="notesList">
 									<?php
-									foreach ($this->notes[$location['_id']][$category['category_id']] as $note) {
+									foreach ($main->notes[$location['_id']][$category['category_id']] as $note) {
 										?>
 										<div class="note">
 											<span class="text"><?php echo $note['note']; ?></span>
@@ -78,6 +78,15 @@
 				}
 				?>
 			</div>
+			<?php
+			if ($main->isAdmin) {
+				?>
+				<div class="addLocation">
+					<span>Add location to trip</span>
+				</div>
+				<?php
+			}
+			?>
 		</div>
 	</div>
 	
