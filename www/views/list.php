@@ -27,6 +27,12 @@
 		</div>
 	</div>
 
+	<div id="modal">
+		<div id="modalContent">
+			Loading...
+		</div>
+	</div>
+
 	<div id="header">
 		<div class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
 		<div class="tripOwner">by <?php echo $main->trip['userName']; ?></div>
@@ -35,64 +41,71 @@
 	<div id="body">
 		<div class="contentWrapper">
 			<div id="locations">
-				<?php
-				foreach ($main->locations as $location) {
-					?>
-					<span class="locationName"><?php echo $location['name']; ?></span>
-					<div class="locationNotes">
-						<?php
-						foreach ($main->categories[$location['_id']] as $category) {
-							?>
-							<div class="category">
-								<?php
-								//Category titles
-								switch ($category['category_id']) {
-									default:
-										break;
-								}
-								?>
-								<div class="notesList">
-									<?php
-									foreach ($main->notes[$location['_id']][$category['category_id']] as $note) {
-										?>
-										<div class="note">
-											<span class="text"><?php echo $note['note']; ?></span>
-											<span class="from"><?php echo $note['from']; ?></span>
-										</div>
-
-										<?php
-									}
-									?>
-								</div>
-							</div>
-							<?php
-						}
-						?>
-					</div>
-					
-					<div class="addNote">
-						<span>Add note to <?php echo $location['name']; ?></span>
-					</div>
-
-					<?php
-				}
-				?>
+				
 			</div>
 			<?php
 			if ($main->isAdmin) {
 				?>
 				<div class="addLocation">
-					<span>Add location to trip</span>
+					<a class="addLocationLink" href="javascript:void(0)">Add location to trip</a>
 				</div>
 				<?php
 			}
 			?>
 		</div>
 	</div>
+
+	<div id="cls">
+
+		<div id="clsLocation">
+			<span class="locationName">$LOCATION$</span>
+			<div class="locationNotes"></div>
+			<div class="addNote">
+				<a class="addNoteLink" href="javascript:void(0)">Add note to $LOCATION$</a>
+			</div>
+		</div>
+
+		<div id="clsCategory" class="category">
+			<span>$CATEGORY_NAME$</span>
+			<div class="notesWrapper"></div>
+		</div>
+
+		<div id="clsNote" class="note">
+			<span>$NOTE$</span>
+		</div>
+
+		<div id="addNoteInput" class="addNoteInput">
+			<input type="text" id="txtNoteText" />
+			<select id="selCategory">
+				<option value="0">Category</option>
+				<option value="1">Food</option>
+				<option value="2">Something Else</option>
+			</select>
+			<a class="submitNoteLink" href="javascript:void(0)">Add</a>
+		</div>
+
+	<?php
+	if ($main->isAdmin) {
+		?>
+
+		<?php
+	}
+	?>
+	</div>
 	
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>
+
+    <?php
+    if ($main->isAdmin) {
+    	?>
+
+    	<script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    	<script src="/js/ListAdmin.js"></script>
+    	<?php
+    }
+    ?>
 
 	<script src="/js/Main.js"></script>
 
@@ -105,6 +118,15 @@
 				os: '<?php echo $os; ?>',
 				a: '<?php echo $ajaxToken; ?>'
 			});
+			Trip.loadTrip();
+
+			<?php
+			if ($main->isAdmin) {
+				?>
+				ListAdmin.init();
+				<?php
+			}
+			?>
 		}
 	)
 	

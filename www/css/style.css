@@ -40,13 +40,36 @@ a.generalButton {
   height: 100px;
 }
 
-/* line 48, ../../src/scss/style.scss */
+/* line 46, ../../src/scss/style.scss */
+#modal {
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #eee;
+  z-index: 100;
+}
+/* line 56, ../../src/scss/style.scss */
+#modal .modalContent {
+  width: 200px;
+  margin: 100px auto 0;
+  height: 100px;
+}
+
+/* line 64, ../../src/scss/style.scss */
+#cls {
+  display: none;
+}
+
+/* line 69, ../../src/scss/style.scss */
 .siteTitle {
   width: 960px;
   margin: 0 auto;
 }
 
-/* line 53, ../../src/scss/style.scss */
+/* line 74, ../../src/scss/style.scss */
 .contentWrapper {
   width: 960px;
   position: relative;
@@ -55,7 +78,7 @@ a.generalButton {
   height: 500px;
 }
 
-/* line 61, ../../src/scss/style.scss */
+/* line 82, ../../src/scss/style.scss */
 .pageContent {
   width: 960px;
   position: absolute;
@@ -71,12 +94,12 @@ a.generalButton {
   transition-duration: 0.5s;
 }
 
-/* line 71, ../../src/scss/style.scss */
+/* line 92, ../../src/scss/style.scss */
 .pageRight {
   left: 960px;
 }
 
-/* line 74, ../../src/scss/style.scss */
+/* line 95, ../../src/scss/style.scss */
 .pageLeft {
   left: -960px;
 }

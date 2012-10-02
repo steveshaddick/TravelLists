@@ -71,12 +71,13 @@ var Ajax = (function() {
 
 	var request = null;
 	var callback = null;
+	var errorCallback = null;
 
 	function init(_token) {
 		token = _token;
 	}
 
-	function call(action, data, onSuccess) {
+	function call(action, data, onSuccess, onError) {
 
 		if (isWaiting) return;
 
@@ -87,6 +88,7 @@ var Ajax = (function() {
 		}
 
 		callback = (typeof onSuccess === "undefined") ? null : onSuccess;
+		errorCallback = (typeof onError === "undefined") ? null : onError;
 
 		request = $.ajax({
 			url: "/ajax/" + action,
@@ -106,10 +108,16 @@ var Ajax = (function() {
 		request = null;
 		clearTimeout(timeoutWait);
 
-		if (callback) {
-			callback(data);
-			callback = null;
+		if (data && data.success) {
+			if (callback) {
+				callback(data);
+				callback = null;
+				errorCallback = null;
+			}
+		} else {
+			requestFailed();	
 		}
+		
 	}
 
 	function requestFailed(jqXHR, textStatus) {
@@ -117,6 +125,10 @@ var Ajax = (function() {
 		request = null;
 		callback = null;
 		clearTimeout(timeoutWait);
+		if (errorCallback) {
+			errorCallback();
+			errorCallback = null;
+		}
 	}
 
 	function timeout() {
@@ -129,6 +141,25 @@ var Ajax = (function() {
 		init: init,
 		call: call
 	};
+
+}());
+
+var Modal = (function() {
+
+	function load(file, callback) {
+		$("#modal").css('display', 'block');
+		$("#modalContent").load(file, {}, callback);
+	}
+
+	function close() {
+		$("#modalContent").html('');
+		$("#modal").css('display', 'none');
+	}
+
+	return {
+		load: load,
+		close : close
+	}
 
 }());
 
@@ -168,7 +199,7 @@ var Gate = (function() {
 
 		//check for success
 		if (data && data.success) {
-			window.location = 'http://s182233257.onlinehome.us/' + data.tripHash;
+			window.location = 'http://dev.maketripnotes.com/list/' + data.tripHash;
 		} else {
 			
 		}
@@ -181,6 +212,135 @@ var Gate = (function() {
 		createTrip: createTrip
 	};
 
+}());
+
+function Location(data) {
+	this.name = data.name;
+	this.id = data.id;
+	this.listOrder = data.listOrder;
+
+	this.$element = null;
+
+	this.categories = [];
+
+	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
+	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name));
+	$("#locations").append(this.$element);
+
+
+	var notes;
+	for (var i=0, len=data.categories.length; i<len; i++) {
+		this.addCategory(data.categories[i].id);
+		notes = data.categories[i].notes;
+		for (var ii=0, llen=notes.length; ii<llen; ii++) {
+			this.addNote(notes[ii]);
+		}
+	}
+
+}
+Location.prototype.addCategory = function(categoryId) {
+	
+	var $category = $("#clsCategory").clone().attr('id', 'category_' + this.id + '_' + categoryId);
+	$category.html($category.html().replace(/\$CATEGORY_NAME\$/g, 'Category ' + categoryId));
+
+	$('.locationNotes', this.$element).append($category);
+
+	this.categories[categoryId] = $category;
+
+	return $category;
+}
+Location.prototype.addNote = function(note) {
+	
+	var $category = (typeof this.categories[note.categoryId] == "undefined") ? this.addCategory(note.categoryId) : this.categories[note.categoryId];
+
+	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
+	$note.html($note.html().replace(/\$NOTE\$/g, note.note));
+
+	$category.append($note);
+
+}
+
+function Category() {
+
+}
+
+var Trip = (function() {
+
+	var locations = [];
+
+
+	var $addNoteInput = null;
+	var $hiddenNoteLink = null;
+
+	function loadTrip() {
+		Ajax.call('loadTrip', {}, 
+			function(data) {
+
+				for (var i=0,len=data.locations.length; i<len; i++) {
+					addLocation(data.locations[i]);
+				}
+			},
+			function() {
+				//error
+			});
+
+		$addNoteInput = $("#addNoteInput");
+
+	}
+
+	function addLocation(locationData) {
+
+		var location = new Location(locationData);
+		locations.push(location);
+		$('.addNoteLink', location.$element).click({location: location}, addNoteClickHandler);
+	}
+
+	function addNoteClickHandler(event) {
+
+		var location = event.data.location;
+
+		if ($hiddenNoteLink) {
+			$hiddenNoteLink.css('display', 'inline');
+			$('.submitNoteLink', $addNoteInput).unbind('click');
+		}
+		$hiddenNoteLink = $('.addNoteLink', location.$element).css('display', 'none');
+
+		$('.addNote', location.$element).append($("#addNoteInput"));
+		$('.submitNoteLink', $addNoteInput).click({location:location}, submitNoteClickHandler);
+	}
+
+	function submitNoteClickHandler(event) {
+		
+		var noteText = $('#txtNoteText').val();
+		var categoryId = $('#selCategory').val();
+
+		var location = event.data.location;
+
+		Ajax.call('addNote', 
+			{
+				noteText: noteText,
+				categoryId: categoryId,
+				locationId: location.id
+			},
+			function(data) {
+				
+				$hiddenNoteLink.css('display', 'inline');
+				$('.submitNoteLink', $addNoteInput).unbind('click');
+				$("#cls").append($addNoteInput);
+
+				data.note = noteText;
+				data.categoryId = categoryId;
+				location.addNote(data);
+			},
+			function() {
+				//error
+			});
+	}
+
+	return {
+		loadTrip: loadTrip,
+		addLocation: addLocation
+	}
 }());
 
 

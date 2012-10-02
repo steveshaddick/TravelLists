@@ -7,7 +7,7 @@ require_once BASE_PATH . 'lib/StringUtils.php';
 require_once BASE_PATH . 'lib/Encryptor.php';
 
 require_once BASE_PATH . 'models/Main.php' ;
-$main = new Main($basePath);
+$main = new Main(BASE_PATH);
 
 if ($main->init() !== true) {
 	exit();
@@ -52,6 +52,27 @@ switch ($action) {
 			'tripName'=>$_POST['tripName'],
 			'userName'=>$_POST['name'],
 			'email'=>$_POST['email']
+			));
+
+		echo returnJSON($arr);
+		break;
+
+	case 'loadTrip':
+		$arr = $main->loadTrip();
+		echo returnJSON($arr);
+		break;
+
+	case 'addLocation':
+		$arr = $main->addLocation($_POST['location']);
+
+		echo returnJSON($arr);
+		break;
+
+	case 'addNote':
+		$arr = $main->addNote(array(
+			'note'=>$_POST['noteText'],
+			'categoryId'=>$_POST['categoryId'],
+			'locationId'=>$_POST['locationId']
 			));
 
 		echo returnJSON($arr);

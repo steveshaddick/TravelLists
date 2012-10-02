@@ -52,7 +52,7 @@ class Main {
 		$now = date( 'Y-m-d H:i:s');
 
 		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, userName=?, email=?, dateCreated='$now'");
-		$stmt->execute(array($adminHash, $publicHash, $userName, $email));
+		$stmt->execute(array($adminHash, $publicHash, $tripName, $userName, $email));
 
 		/*$subject = 'A new subject';
 
@@ -108,39 +108,140 @@ class Main {
 		}
 
 		$this->isAdmin = ($this->trip['adminHash'] == $list);
-		$this->tripId = intval($this->trip['_id']);
-
-		$stmt = $this->db->prepare("SELECT * FROM Locations WHERE trip_id=? ORDER BY listOrder");
-		$stmt->execute(array($this->tripId));
-		$this->locations = $stmt->fetchAll();
-
-		$stmt = $this->db->prepare("SELECT * FROM Categories WHERE trip_id=? ORDER BY listOrder");
-		$stmt->execute(array($this->tripId));
-		$this->categories = array();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			if (!isset($this->categories[$row['location_id']])) {
-				$this->categories[$row['location_id']] = array();
-			}
-			$this->categories[$row['location_id']] []= $row;
-		}
-
-		$stmt = $this->db->prepare("SELECT * FROM Notes WHERE trip_id=? ORDER BY listOrder");
-		$stmt->execute(array($this->tripId));
-		$this->notes = array();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			if (!isset($this->notes[$row['location_id']])) {
-				$this->notes[$row['location_id']] = array();
-			}
-			if (!isset($this->notes[$row['location_id']][$row['category_id']])) {
-				$this->notes[$row['location_id']][$row['category_id']] = array();
-			}
-			$this->notes[$row['location_id']][$row['category_id']] []= $row;
-		}
-
+		$_SESSION['trip_id'] = intval($this->trip['_id']);
+		
 		return true;
 
 	}
 
+	public function loadTrip() {
+		if (!isset($_SESSION['trip_id'])) {
+			return false;
+		}
+
+		$tripId = $_SESSION['trip_id'];
+
+		$stmt = $this->db->prepare("SELECT * FROM Locations WHERE trip_id=? ORDER BY listOrder");
+		$stmt->execute(array($tripId));
+		
+		$locations = array();
+		$locationsById = array();
+		$categoriesById = array();
+		$_SESSION['categories'] = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			
+			$location = array(
+				'id'=>$row['_id'],
+				'name'=>stripslashes($row['name']),
+				'listOrder'=>$row['listOrder'],
+				'categories'=>array()
+				);
+
+			$_SESSION['categories'][$row['_id']] = array();
+			$categoriesById[$row['_id']] = array();
+
+			$locations []= $location;
+			$locationsById[$row['_id']] = &$locations[count($locations) - 1];
+		}
+
+		$stmt = $this->db->prepare("SELECT * FROM Categories WHERE trip_id=? ORDER BY listOrder");
+		$stmt->execute(array($tripId));
+
+		
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$category = array(
+				'id'=>$row['category_id'],
+				'listOrder'=>$row['listOrder'],
+				'notes'=>array()
+				);
+
+			$_SESSION['categories'][$row['location_id']][$row['category_id']] = $row['listOrder'];
+
+			$locationsById[$row['location_id']]['categories'] []= $category;
+			$categoriesById[$row['location_id']][$row['category_id']] = &$locationsById[$row['location_id']]['categories'][count($locationsById[$row['location_id']]['categories']) - 1];
+
+		}
+
+		$stmt = $this->db->prepare("SELECT * FROM Notes WHERE trip_id=? ORDER BY listOrder");
+		$stmt->execute(array($tripId));
+
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$note = array(
+				'categoryId'=>$row['category_id'],
+				'from'=>stripslashes($row['from']),
+				'note'=>stripslashes($row['note']),
+				'link'=>$row['link'],
+				'listOrder'=>$row['listOrder']
+				);
+
+			$categoriesById[$row['location_id']][$row['category_id']]['notes'] []= $note;
+		}
+
+		return array('locations'=>$locations);
+
+	}
+
+
+	public function addLocation($location) {
+		
+		if (!isset($_SESSION['trip_id'])) {
+			return false;
+		}
+		$tripId = $_SESSION['trip_id'];
+
+		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Locations WHERE trip_id=?");
+		$stmt->execute(array($tripId));
+		$row = $stmt->fetch();
+		
+		$listOrder = $row['total'] + 1;
+
+		$stmt = $this->db->prepare("INSERT INTO Locations SET trip_id=?, name=?, listOrder=?");
+		$stmt->execute(array($tripId, $location, $listOrder));
+
+		$id = $this->db->lastInsertId();
+
+		$_SESSION['categories'][$id] = array();
+		return array('id'=>$this->db->lastInsertId(), 'name'=>$location, 'categories'=>array(), 'listOrder'=>$listOrder);
+	}
+
+	public function addNote($note) {
+		if (!isset($_SESSION['trip_id'])) {
+			return false;
+		}
+		$tripId = $_SESSION['trip_id'];
+
+		$needCategory = true;
+		$categoryOrder = 0;
+		foreach ($_SESSION['categories'][$note['locationId']] as $key=>$value) {
+			if ($key === intval($note['categoryId'])) {
+				$needCategory = false;
+				break;
+			}
+			if ($value > $categoryOrder) {
+				$categoryOrder = $value;
+			}
+		}
+
+		if ($needCategory) {
+			$categoryOrder ++;
+			$stmt = $this->db->prepare("INSERT INTO Categories SET trip_id=?, location_id=?, category_id=?, listOrder=?");
+			$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $categoryOrder));
+			$_SESSION['categories'][$note['locationId']][$note['categoryId']] = $categoryOrder;
+		}
+
+		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Notes WHERE trip_id=? AND location_id=? AND category_id=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId']));
+		$row = $stmt->fetch();
+
+		$listOrder = $row['total'] + 1;
+
+
+		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, note=?, listOrder=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['note'], $listOrder));
+
+		return array('id'=>$this->db->lastInsertId(), 'listOrder'=>$listOrder);
+
+	}
 	
 
 }

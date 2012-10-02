@@ -43,6 +43,27 @@ a.generalButton {
 	}
 }
 
+#modal {
+	display:none;
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	background:#eee;
+	z-index:100;
+
+	.modalContent {
+		width:200px;
+		margin:100px auto 0;
+		height:100px;
+	}
+
+}
+
+#cls {
+	display:none;
+}
 
 
 .siteTitle {
