@@ -4,6 +4,7 @@ var ListAdmin = (function() {
 
 	function init() {
 		$('.addLocationLink').click(addLocation);
+		$(document).on('click', '.deleteLocationLink', deleteLocation);
 	}
 
 	function addLocation() {
@@ -32,6 +33,18 @@ var ListAdmin = (function() {
 			function() {
 				$('#txtLocation').val('');
 				$('#txtLocation').prop('disabled', false);
+			});
+	}
+
+	function deleteLocation(event) {
+		var locationId = $(this).attr('data-id');
+
+		Ajax.call('deleteLocation', {locationId: locationId}, 
+			function(data) {
+				Trip.deleteLocation(locationId);
+			},
+			function() {
+				//error
 			});
 	}
 

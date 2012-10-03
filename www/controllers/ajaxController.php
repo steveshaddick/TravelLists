@@ -78,6 +78,19 @@ switch ($action) {
 		echo returnJSON($arr);
 		break;
 
+
+	case 'deleteNote':
+		$arr = $main->deleteNote($_POST['noteId']);
+
+		echo returnJSON($arr);
+		break;
+
+	case 'deleteLocation':
+		$arr = $main->deleteLocation($_POST['locationId']);
+
+		echo returnJSON($arr);
+		break;
+
 	default:
 		echo returnJSON(false);
 		break;

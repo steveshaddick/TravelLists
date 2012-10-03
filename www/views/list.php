@@ -59,6 +59,13 @@
 
 		<div id="clsLocation">
 			<span class="locationName">$LOCATION$</span>
+			<?php
+			if ($main->isAdmin) {
+				?>
+				<a class="deleteLocationLink" data-id="$LOCATION_ID$" href="javascript:void(0);">delete</a>
+				<?php
+			}
+			?>
 			<div class="locationNotes"></div>
 			<div class="addNote">
 				<a class="addNoteLink" href="javascript:void(0)">Add note to $LOCATION$</a>
@@ -71,7 +78,7 @@
 		</div>
 
 		<div id="clsNote" class="note">
-			<span>$NOTE$</span>
+			<span>$NOTE$</span><a class="deleteNoteLink" href="javascript:void(0)">delete</a>
 		</div>
 
 		<div id="addNoteInput" class="addNoteInput">

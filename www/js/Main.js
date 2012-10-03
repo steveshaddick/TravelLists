@@ -221,52 +221,96 @@ function Location(data) {
 
 	this.$element = null;
 
-	this.categories = [];
+	this.categories = [
+		{ title: '', $element:false, total:0},
+		{ title: 'Places to eat', $element:false, total:0 },
+		{ title: 'Places to whatever', $element:false, total:0 },
+		{ title: 'Whatevers to whatever', $element:false, total:0 }
+		];
+
+	this.notes = [];
 
 	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
-	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name));
+	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
 	$("#locations").append(this.$element);
 
 
 	var notes;
-	for (var i=0, len=data.categories.length; i<len; i++) {
-		this.addCategory(data.categories[i].id);
-		notes = data.categories[i].notes;
-		for (var ii=0, llen=notes.length; ii<llen; ii++) {
-			this.addNote(notes[ii]);
-		}
+	for (var i=0, len=data.notes.length; i<len; i++) {
+		this.addNote(data.notes[i]);
 	}
 
 }
 Location.prototype.addCategory = function(categoryId) {
 	
 	var $category = $("#clsCategory").clone().attr('id', 'category_' + this.id + '_' + categoryId);
-	$category.html($category.html().replace(/\$CATEGORY_NAME\$/g, 'Category ' + categoryId));
+	$category.html($category.html().replace(/\$CATEGORY_NAME\$/g, this.categories[categoryId].title));
 
-	$('.locationNotes', this.$element).append($category);
+	var $before = false;
+	var beforeId = 0;
+	var $check;
+	while (beforeId < categoryId) {
+		$check = $('#category_' + this.id + '_' + beforeId, this.$element);
+		if ($check.length > 0) {
+			$before = $check;
+		}
+		beforeId ++;
+	}
 
-	this.categories[categoryId] = $category;
+	if ($before) {
+		$before.after($category);
+	} else {
+		$('.locationNotes', this.$element).prepend($category);
+	}
+
+	this.categories[categoryId].$element = $category;
 
 	return $category;
 }
 Location.prototype.addNote = function(note) {
 	
-	var $category = (typeof this.categories[note.categoryId] == "undefined") ? this.addCategory(note.categoryId) : this.categories[note.categoryId];
+	var $category = (this.categories[note.categoryId].$element === false) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].$element;
 
 	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
 	$note.html($note.html().replace(/\$NOTE\$/g, note.note));
 
+	if (note.canDelete) {
+		$('.deleteNoteLink', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+	} else {
+		$('.deleteNoteLink', $note).remove();
+	}
+	this.categories[note.categoryId].total ++;
+
+	this.notes[note.id] = note;
+
 	$category.append($note);
 
 }
+Location.prototype.deleteNoteClickHandler = function(event) {
+	
+	var location = event.data.location;
+	var note = location.notes[event.data.noteId];
+	var category = location.categories[note.categoryId];
+	if (!note.canDelete) return;
 
-function Category() {
-
+	Ajax.call('deleteNote', { noteId: note.id },
+		function() {
+			$("#note_" + note.id ).remove();
+			category.total --;
+			if (category.total < 1) {
+				category.$element.remove();
+				category.$element = false;
+				category.total = 0;
+			}
+		},
+		function() {
+			//error
+		});
 }
 
 var Trip = (function() {
 
-	var locations = [];
+	//var locations = [];
 
 
 	var $addNoteInput = null;
@@ -291,7 +335,8 @@ var Trip = (function() {
 	function addLocation(locationData) {
 
 		var location = new Location(locationData);
-		locations.push(location);
+		//locations.push(location);
+
 		$('.addNoteLink', location.$element).click({location: location}, addNoteClickHandler);
 	}
 
@@ -337,9 +382,15 @@ var Trip = (function() {
 			});
 	}
 
+	function deleteLocation(locationId) {
+		//TODO delete listeners?
+		$("#location_" + locationId).remove();
+	}
+
 	return {
 		loadTrip: loadTrip,
-		addLocation: addLocation
+		addLocation: addLocation,
+		deleteLocation: deleteLocation
 	}
 }());
 
