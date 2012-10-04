@@ -34,8 +34,9 @@
 	</div>
 
 	<div id="header">
-		<div class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
-		<div class="tripOwner">by <?php echo $main->trip['userName']; ?></div>
+		<div id="tripTitle" class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
+		<div id="tripSubtitle" class="tripSubtitle"><?php echo $main->trip['subtitle']; ?></div>
+		<div id="map"></div>
 	</div>
 
 	<div id="body">
@@ -101,14 +102,15 @@
 	</div>
 	
 	
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>
+
 
     <?php
     if ($main->isAdmin) {
     	?>
-
-    	<script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    	
     	<script src="/js/ListAdmin.js"></script>
     	<?php
     }
@@ -123,7 +125,9 @@
 			Main.init({
 				userAgent: '<?php echo $userAgent; ?>',
 				os: '<?php echo $os; ?>',
-				a: '<?php echo $ajaxToken; ?>'
+				a: '<?php echo $ajaxToken; ?>',
+				lat: <?php echo $main->trip['lat']; ?>,
+				lng: <?php echo $main->trip['lng']; ?>
 			});
 			Trip.loadTrip();
 

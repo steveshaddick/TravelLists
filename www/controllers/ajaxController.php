@@ -91,6 +91,12 @@ switch ($action) {
 		echo returnJSON($arr);
 		break;
 
+	case 'saveTrip':
+
+		$arr = $main->saveTrip($_POST);
+		echo returnJSON($arr);
+		break;
+
 	default:
 		echo returnJSON(false);
 		break;

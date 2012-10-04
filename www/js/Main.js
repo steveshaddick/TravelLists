@@ -396,11 +396,21 @@ var Trip = (function() {
 
 
 var Main = (function() {
+
+	var map;
 	
 	
 	function init(obj) {
 		
 		Ajax.init(obj.a);
+
+		var mapOptions = {
+          center: new google.maps.LatLng(obj.lat, obj.lng),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
 	
 	}
 

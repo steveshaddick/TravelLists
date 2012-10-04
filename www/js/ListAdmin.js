@@ -1,3 +1,70 @@
+var EditText = function($element, saveCallback) {
+
+	this.$element = $element;
+	this.saveCallback = saveCallback;
+
+	this.$divWrapper = $('<div><input type="text" disabled="disabled" class="editTextInput" /></div>');
+	this.$divWrapper.attr('class', this.$element.attr('class'));
+
+	this.$input = $('.editTextInput', this.$divWrapper).css('display', 'none');
+
+	this.$element.after(this.$divWrapper);
+	this.$divWrapper.append(this.$element);
+	this.$input.val(this.$element.html());
+
+	this.$divWrapper.click({editText: this}, this.onClickHandler);
+}
+
+EditText.prototype.onClickHandler = function(event) {
+
+	var editText = event.data.editText;
+
+	editText.$input.css('display', '').prop('disabled', false);
+	editText.$element.css('display', 'none');
+
+	editText.$divWrapper.unbind('click');
+
+	editText.$input.select().blur({editText: editText}, editText.finishText).keypress({editText: editText}, editText.onKeypress);
+
+}
+
+EditText.prototype.onKeypress = function(event) {
+	var code = (event.keyCode ? event.keyCode : event.which);
+	var editText = event.data.editText;
+
+	switch (code) {
+		//enter
+		case 13:
+			editText.finishText(event);
+			break;
+
+		//escape
+		case 27:
+			editText.$input.val(editText.$element.html());
+			event.data.noSave = true;
+			editText.finishText(event);
+			break;
+
+	}
+}
+
+EditText.prototype.finishText = function(event) {
+
+	var editText = event.data.editText;
+	editText.$input.prop('disabled', true).unbind('blur').unbind('keypress').css('display', 'none');
+
+	editText.$element.css('display', '').html(editText.$input.val());
+
+	editText.$divWrapper.click({editText: editText}, editText.onClickHandler);
+
+	if (typeof event.data.noSave == "undefined") {
+		editText.saveCallback();
+	}
+}
+
+
+
+
 var ListAdmin = (function() {
 
 	var autocomplete = null;
@@ -5,6 +72,9 @@ var ListAdmin = (function() {
 	function init() {
 		$('.addLocationLink').click(addLocation);
 		$(document).on('click', '.deleteLocationLink', deleteLocation);
+
+		var text = new EditText($("#tripTitle"), save);
+		text = new EditText($("#tripSubtitle"), save);
 	}
 
 	function addLocation() {
@@ -48,8 +118,19 @@ var ListAdmin = (function() {
 			});
 	}
 
+	function save() {
+
+		Ajax.call('saveTrip',
+		{
+			tripTitle: $("#tripTitle").html(),
+			tripSubtitle: $("#tripSubtitle").html()
+		});
+
+	}
+
 	return {
-		init: init
+		init: init,
+		save: save
 	}
 
 }());

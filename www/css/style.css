@@ -70,6 +70,12 @@ a.generalButton {
 }
 
 /* line 74, ../../src/scss/style.scss */
+#map {
+  width: 800px;
+  height: 200px;
+}
+
+/* line 79, ../../src/scss/style.scss */
 .contentWrapper {
   width: 960px;
   position: relative;
@@ -78,7 +84,7 @@ a.generalButton {
   height: 500px;
 }
 
-/* line 82, ../../src/scss/style.scss */
+/* line 87, ../../src/scss/style.scss */
 .pageContent {
   width: 960px;
   position: absolute;
@@ -94,12 +100,12 @@ a.generalButton {
   transition-duration: 0.5s;
 }
 
-/* line 92, ../../src/scss/style.scss */
+/* line 97, ../../src/scss/style.scss */
 .pageRight {
   left: 960px;
 }
 
-/* line 95, ../../src/scss/style.scss */
+/* line 100, ../../src/scss/style.scss */
 .pageLeft {
   left: -960px;
 }

@@ -37,6 +37,8 @@ class Main {
 
 	public function createTrip($data) {
 
+		require $this->basePath . 'lib/Geocoder.php';
+
 		$tripName = $data['tripName'];
 		$userName = $data['userName'];
 		$email = Encryptor::encrypt($data['email'], SALT);
@@ -54,8 +56,13 @@ class Main {
 
 		$now = date( 'Y-m-d H:i:s');
 
-		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, userName=?, email=?, dateCreated='$now'");
-		$stmt->execute(array($adminHash, $publicHash, $tripName, $userName, $email));
+		$location = Geocoder::getLocation($tripName);
+		if ($location === false) {
+			$location = array('lat'=>0, 'lng'=> 0);
+		}
+
+		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
+		$stmt->execute(array($adminHash, $publicHash, $tripName, $userName, $email, $location['lat'], $location['lng']));
 
 		if (!isset($_SESSION['addedNotes'])) {
 			$_SESSION['addedNotes'] = array();
@@ -260,6 +267,22 @@ class Main {
 		$stmt->execute(array($tripId, $locationId));
 
 		return true;
+	}
+
+	public function saveTrip($arr) {
+		if (!isset($_SESSION['trip_id'])) {
+			return false;
+		}
+		$tripId = $_SESSION['trip_id'];
+
+		$tripTitle = $arr['tripTitle'];
+		$tripSubtitle = $arr['tripSubtitle'];
+
+		$stmt = $this->db->prepare("UPDATE Lists SET tripName=?, subtitle=? WHERE _id=?");
+		$stmt->execute(array($tripTitle, $tripSubtitle, $tripId));
+
+		return true;
+
 	}
 }
 
