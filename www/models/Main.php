@@ -12,12 +12,16 @@ class Main {
 
 	private $db;
 	private $basePath;
+	private $errorLogger;
 	
 	public function __construct($basePath = '') {
 		
 		$this->basePath = $basePath;
 
 		require $this->basePath . 'lib/Geocoder.php';
+		require $this->basePath . 'lib/ErrorLogger.php';
+
+		$this->errorLogger = new ErrorLogger(ERROR_LOG_PATH);
 
 		if (isset($_SESSION['isAdmin'])) {
 			$this->isAdmin = $_SESSION['isAdmin'];
@@ -38,6 +42,9 @@ class Main {
 	}
 
 	public function createTrip($data) {
+
+		require_once $this->basePath . 'lib/html2text.php';
+		require_once $this->basePath . 'lib/sendgrid-php/SendGrid_loader.php';
 
 
 		$tripName = $data['tripName'];
@@ -69,37 +76,35 @@ class Main {
 			$_SESSION['addedNotes'] = array();
 		}
 
-		/*$subject = 'A new subject';
+		$sendgrid = new SendGrid(SENDGRID_USER, SENDGRID_PASS);
+		$mail = new SendGrid\Mail();
+
+		$subject = 'Email Subject';
 
 		$html = '<!doctype html><head></head><body>';
-		$html .= '<div style="background:#FAFAFA; padding:10px;">';
-		$html .= '<div style="max-width:600px">';
-		$html .= 'Here is your link: ';
-		$html .= '<img style="padding-top:25px;" src="" width="175" height="29" alt="Steve Shaddick" />';
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#7d7d7d; margin-top:10px;">To unsubscribe from this newsletter, go here: <a href="http://www.steveshaddick.com/unsubscribe/%unsub_num%">http://www.steveshaddick.com/unsubscribe/%unsub_num%</a></p>';
+		$html .= 'Admin Link: <a href="http://' . SITE_URL . '/list/' . $adminHash . '">http://' . SITE_URL . '/list/' . $adminHash . '</a><br />';
+		$html .= 'Public Link: <a href="http://' . SITE_URL . '/list/' . $publicHash . '">http://' . SITE_URL . '/list/' . $publicHash . '</a><br />';
 		$html .= '</body></html>';
 
-		$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
-		$html = str_replace("<p>", '<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#7d7d7d; margin-top:10px;">', $html);
+		//$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
+		//$html = str_replace("<p>", '<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#7d7d7d; margin-top:10px;">', $html);
 
-		$subs = array();
-		foreach ($emails as $email) {
-			$mail->addTo($email['email']);
-
-			$subs []= $email['rando'] . "_" .  $email['_id'];
-		}
-
-		$mail->setFrom("steve@steveshaddick.com");
-
+		$mail->addTo($data['email']);
+		$mail->setFrom("welcome@maketripnotes.com");
 		$mail->setSubject($subject);
-
 		$mail->setHtml($html);
 		$mail->setText(html2text($html));
-		$mail->addSubstitution("%unsub_num%", $subs);
 		
-		$response = $sendgrid->web->send($mail);*/
+		$responseRaw = $sendgrid->web->send($mail);
+		$response = json_decode($responseRaw);
+
+		if ($response->message != 'success') {
+			$this->errorLogger->log(array(
+				'error'=>'Email Failed',
+				'message'=> $responseRaw,
+				'publichash'=>$publicHash)
+			);
+		}
 
 		return array('tripHash'=>$adminHash);
 

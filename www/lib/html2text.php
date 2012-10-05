@@ -390,11 +390,11 @@ function html2text( $sourceStr, $isXML = false, $isfile = false ) {
 	//wordrapping is quite brutal and will also affect indents and preformatting, but as this is intended for email use, I don't care
 	if( $DOM->documentElement ) {
 		$sourceStr = html2text_render($DOM->documentElement,1);
-		if( !$html2text_elements['the document'][1] ) {
+		//if( !$html2text_elements['the document'][1] ) {
 			$DOM->h2t_blockstart = true;
 			//get any remaining linebreaks
 			$sourceStr .= html2text_formattext($DOM,'');
-		}
+		//}
 		//wordwrap is not multibyte-safe ... can't help that, and it works in most cases
 		return wordwrap($sourceStr,75,"\r\n");
 	} else {

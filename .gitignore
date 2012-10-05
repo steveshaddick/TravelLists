@@ -1,4 +1,5 @@
 env/
+tripnotes_error_log/
 .sass-cache/
 *.htaccess
 *.project

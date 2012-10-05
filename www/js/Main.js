@@ -315,7 +315,7 @@ var Trip = (function() {
 	var map;
 	var locations = [];
 	var locationCount = 0;
-	var bounds = new google.maps.LatLngBounds();
+	var bounds;
 
 	var $addNoteInput = null;
 	var $hiddenNoteLink = null;
@@ -337,6 +337,7 @@ var Trip = (function() {
 			});
 
 		$addNoteInput = $("#addNoteInput");
+		bounds = new google.maps.LatLngBounds();
 
 		var mapOptions = {
           center: new google.maps.LatLng(obj.lat, obj.lng),
@@ -450,8 +451,6 @@ var Main = (function() {
 		
 		Ajax.init(obj.a);
 
-		
-	
 	}
 
 	function loadBlock() {
