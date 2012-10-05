@@ -218,6 +218,8 @@ function Location(data) {
 	this.name = data.name;
 	this.id = data.id;
 	this.listOrder = data.listOrder;
+	this.lat = data.lat;
+	this.lng = data.lng;
 
 	this.$element = null;
 
@@ -310,18 +312,24 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 
 var Trip = (function() {
 
-	//var locations = [];
-
+	var map;
+	var locations = [];
+	var locationCount = 0;
+	var bounds = new google.maps.LatLngBounds();
 
 	var $addNoteInput = null;
 	var $hiddenNoteLink = null;
 
-	function loadTrip() {
+	function loadTrip(obj) {
 		Ajax.call('loadTrip', {}, 
 			function(data) {
 
 				for (var i=0,len=data.locations.length; i<len; i++) {
-					addLocation(data.locations[i]);
+					if (i < len-1) {
+						addLocation(data.locations[i], true);
+					} else {
+						addLocation(data.locations[i]);
+					}
 				}
 			},
 			function() {
@@ -330,12 +338,45 @@ var Trip = (function() {
 
 		$addNoteInput = $("#addNoteInput");
 
+		var mapOptions = {
+          center: new google.maps.LatLng(obj.lat, obj.lng),
+          zoom: 4,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
 	}
 
-	function addLocation(locationData) {
+	function addLocation(locationData, loopOverride) {
 
 		var location = new Location(locationData);
-		//locations.push(location);
+		var marker = null;
+		if ((location.lat != 0) && (location.lng != 0)) {
+			var markerOptions = {
+				animation: google.maps.Animation.DROP,
+				position: new google.maps.LatLng(location.lat, location.lng),
+				title: location.name
+			}
+			marker = new google.maps.Marker(markerOptions);
+			marker.setMap(map);
+
+			bounds.extend(markerOptions.position);
+		}
+
+		locations[location.id] = {
+			location: location,
+			marker: marker
+		};
+		locationCount ++;
+
+		if (typeof loopOverride == "undefined") {
+			if (locationCount > 1) {
+				map.fitBounds(bounds);
+			} else {
+				map.setCenter(markerOptions.position);
+			}
+		}
 
 		$('.addNoteLink', location.$element).click({location: location}, addNoteClickHandler);
 	}
@@ -385,6 +426,11 @@ var Trip = (function() {
 	function deleteLocation(locationId) {
 		//TODO delete listeners?
 		$("#location_" + locationId).remove();
+		if (locations[locationId].marker) {
+			locations[locationId].marker.setMap(null);
+		}
+		locations.splice(locationId, 1);
+		locationCount --;
 	}
 
 	return {
@@ -397,20 +443,14 @@ var Trip = (function() {
 
 var Main = (function() {
 
-	var map;
+	
 	
 	
 	function init(obj) {
 		
 		Ajax.init(obj.a);
 
-		var mapOptions = {
-          center: new google.maps.LatLng(obj.lat, obj.lng),
-          zoom: 8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		
 	
 	}
 

@@ -17,6 +17,8 @@ class Main {
 		
 		$this->basePath = $basePath;
 
+		require $this->basePath . 'lib/Geocoder.php';
+
 		if (isset($_SESSION['isAdmin'])) {
 			$this->isAdmin = $_SESSION['isAdmin'];
 		}
@@ -37,7 +39,6 @@ class Main {
 
 	public function createTrip($data) {
 
-		require $this->basePath . 'lib/Geocoder.php';
 
 		$tripName = $data['tripName'];
 		$userName = $data['userName'];
@@ -145,6 +146,8 @@ class Main {
 			$location = array(
 				'id'=>$row['_id'],
 				'name'=>stripslashes($row['name']),
+				'lat'=>$row['lat'],
+				'lng'=>$row['lng'],
 				'listOrder'=>$row['listOrder'],
 				'notes'=>array()
 				);
@@ -180,7 +183,7 @@ class Main {
 	}
 
 
-	public function addLocation($location) {
+	public function addLocation($name) {
 		
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
@@ -193,12 +196,17 @@ class Main {
 		
 		$listOrder = $row['total'] + 1;
 
-		$stmt = $this->db->prepare("INSERT INTO Locations SET trip_id=?, name=?, listOrder=?");
-		$stmt->execute(array($tripId, $location, $listOrder));
+		$location = Geocoder::getLocation($name);
+		if ($location === false) {
+			$location = array('lat'=>0, 'lng'=> 0);
+		}
+
+		$stmt = $this->db->prepare("INSERT INTO Locations SET trip_id=?, name=?, lat=?, lng=?, listOrder=?");
+		$stmt->execute(array($tripId, $name, $location['lat'], $location['lng'], $listOrder));
 
 		$id = $this->db->lastInsertId();
 
-		return array('id'=>$this->db->lastInsertId(), 'name'=>$location, 'notes'=>array(), 'listOrder'=>$listOrder);
+		return array('id'=>$this->db->lastInsertId(), 'name'=>$name, 'lat'=>$location['lat'], 'lng'=>$location['lng'], 'notes'=>array(), 'listOrder'=>$listOrder);
 	}
 
 	public function addNote($note) {
