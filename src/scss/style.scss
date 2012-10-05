@@ -8,6 +8,8 @@ body {
 	margin:0;
 	padding:0;
 	color: $darkBlue;
+	background: $lightGrey;
+	font-family:Arial, Helvetica, sans-serif;
 //	@include border-radius($borderRadius);
 }
 
@@ -67,7 +69,7 @@ a.generalButton {
 
 
 .siteTitle {
-	width: $contentWidth;
+	max-width: $maxContentWidth;
 	margin:0 auto;
 }
 
@@ -77,15 +79,14 @@ a.generalButton {
 }
 
 .contentWrapper {
-	width: $contentWidth;
+	max-width: $maxContentWidth;
 	position: relative;
 	overflow-x: hidden;
 	margin: 0 auto;
-	height:500px;
 }
 
 .pageContent {
-	width: $contentWidth;
+	max-width: $maxContentWidth;
 	position:absolute;
 	top:0;
 	left:0;
@@ -100,4 +101,97 @@ a.generalButton {
 .pageLeft {
 	left: -$contentWidth;
 }
+
+.editTextInput {
+	border:none;
+
+}
+
+#header {
+
+	color: $lightGrey;
+	background: $darkBlue;
+	width:100%;
+	max-width: $maxWidth;
+	margin:0 auto;
+
+	.content {
+		max-width: $maxContentWidth;
+		margin:0 auto;
+	}
+
+	.tripTitle {
+		font-size:90px;
+	}
+	.tripSubtitle {
+		font-size:18px;
+	}
+}
+
+#map {
+	width:100%;
+	height:395px;
+	max-width: $maxWidth;
+	margin:0 auto;
+}
+
+
+#locations {
+
+	.location {
+		padding-bottom:33px;
+		border-bottom: 1px solid $darkGrey;
+	}
+
+	.locationName {
+		font-size:36px;
+		font-weight:bold;
+	}
+
+	.locationNotes {
+		margin:0 16px;
+	}
+
+
+	.notesWrapper {
+		margin: 0 40px;
+	}
+
+	.note {
+		font-size:30px;
+		margin: 22px 0;
+	}
+
+	a.addNoteLink {
+		display:block;
+		padding:16px 10px;
+		color: $darkBlue;
+		border: 1px solid $green;
+		text-decoration:none;
+
+		@include border-radius($borderRadius);
+	}
+	a.addNoteLink:hover {
+		background-color:#fff;
+	}
+}
+
+.category {
+	
+	.categoryHeader {
+		position:relative;
+	}
+
+	.showHide {
+		position:absolute;
+		right:0;
+	}
+
+	.categoryName {
+		font-size:18px;
+	}
+
+}
+
+	
 

@@ -224,10 +224,10 @@ function Location(data) {
 	this.$element = null;
 
 	this.categories = [
-		{ title: '', $element:false, total:0},
-		{ title: 'Places to eat', $element:false, total:0 },
-		{ title: 'Places to whatever', $element:false, total:0 },
-		{ title: 'Whatevers to whatever', $element:false, total:0 }
+		{ title: '', obj:null},
+		{ title: 'Places to eat', obj:null },
+		{ title: 'Places to whatever', obj:null },
+		{ title: 'Whatevers to whatever', obj:null }
 		];
 
 	this.notes = [];
@@ -265,13 +265,13 @@ Location.prototype.addCategory = function(categoryId) {
 		$('.locationNotes', this.$element).prepend($category);
 	}
 
-	this.categories[categoryId].$element = $category;
+	this.categories[categoryId].obj = new Category($category);
 
 	return $category;
 }
 Location.prototype.addNote = function(note) {
 	
-	var $category = (this.categories[note.categoryId].$element === false) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].$element;
+	var $category = (this.categories[note.categoryId].obj === null) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].obj.$element;
 
 	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
 	$note.html($note.html().replace(/\$NOTE\$/g, note.note));
@@ -281,18 +281,18 @@ Location.prototype.addNote = function(note) {
 	} else {
 		$('.deleteNoteLink', $note).remove();
 	}
-	this.categories[note.categoryId].total ++;
 
 	this.notes[note.id] = note;
 
-	$category.append($note);
+	$('.notesWrapper', $category).append($note);
+	this.categories[note.categoryId].obj.noteAdded();
 
 }
 Location.prototype.deleteNoteClickHandler = function(event) {
 	
 	var location = event.data.location;
 	var note = location.notes[event.data.noteId];
-	var category = location.categories[note.categoryId];
+	var category = location.categories[note.categoryId].obj;
 	if (!note.canDelete) return;
 
 	Ajax.call('deleteNote', { noteId: note.id },
@@ -300,14 +300,46 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 			$("#note_" + note.id ).remove();
 			category.total --;
 			if (category.total < 1) {
-				category.$element.remove();
-				category.$element = false;
-				category.total = 0;
+				category.destroy();
+				location.categories[note.categoryId].obj = null;
 			}
 		},
 		function() {
 			//error
 		});
+}
+
+var Category = function($element) {
+	this.$element = $element;
+	this.total = 0;
+
+	this.isOpen = true;
+
+	$('.showHide', this.$element).click({ category: this }, this.showHide);
+}
+Category.prototype.showHide = function (event) {
+	var category = event.data.category;
+
+	if (category.isOpen) {
+		$('.notesWrapper', category.$element).slideUp();
+		category.isOpen = false;
+	} else {
+		$('.notesWrapper', category.$element).slideDown();
+		category.isOpen = true;
+	}
+}
+Category.prototype.noteAdded = function () {
+	this.total ++;
+	if (!this.isOpen) {
+		$('.notesWrapper', this.$element).slideDown();
+		this.isOpen = true;
+	}
+}
+Category.prototype.destroy = function () {
+	this.$element.remove();
+	this.$element = false;
+	this.total = 0;
+	$('.showHide', this.$element).unbind('click');
 }
 
 var Trip = (function() {
@@ -342,7 +374,11 @@ var Trip = (function() {
 		var mapOptions = {
           center: new google.maps.LatLng(obj.lat, obj.lng),
           zoom: 4,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          disableDefaultUI : true,
+          disableDoubleClickZoom: true,
+          scrollwheel: false
+
         };
 
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -387,7 +423,7 @@ var Trip = (function() {
 		var location = event.data.location;
 
 		if ($hiddenNoteLink) {
-			$hiddenNoteLink.css('display', 'inline');
+			$hiddenNoteLink.css('display', '');
 			$('.submitNoteLink', $addNoteInput).unbind('click');
 		}
 		$hiddenNoteLink = $('.addNoteLink', location.$element).css('display', 'none');
@@ -411,7 +447,7 @@ var Trip = (function() {
 			},
 			function(data) {
 				
-				$hiddenNoteLink.css('display', 'inline');
+				$hiddenNoteLink.css('display', '');
 				$('.submitNoteLink', $addNoteInput).unbind('click');
 				$("#cls").append($addNoteInput);
 
@@ -432,6 +468,16 @@ var Trip = (function() {
 		}
 		locations.splice(locationId, 1);
 		locationCount --;
+
+		if (locationCount > 1) {
+			bounds = new google.maps.LatLngBounds();
+			for (var id in locations) {
+				if (locations[id].marker) {
+					bounds.extend(locations[id].marker.getPosition());
+					map.fitBounds(bounds);
+				}
+			}
+		}
 	}
 
 	return {

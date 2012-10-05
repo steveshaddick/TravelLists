@@ -4,14 +4,16 @@ body {
   margin: 0;
   padding: 0;
   color: #151633;
+  background: #e8eced;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* line 14, ../../src/scss/style.scss */
+/* line 16, ../../src/scss/style.scss */
 .clear {
   clear: both;
 }
 
-/* line 18, ../../src/scss/style.scss */
+/* line 20, ../../src/scss/style.scss */
 a.generalButton {
   display: inline-block;
   padding: 10px;
@@ -22,7 +24,7 @@ a.generalButton {
   border-radius: 2px;
 }
 
-/* line 29, ../../src/scss/style.scss */
+/* line 31, ../../src/scss/style.scss */
 #loadBlocker {
   display: none;
   height: 100%;
@@ -33,14 +35,14 @@ a.generalButton {
   background: #eee;
   z-index: 1000000;
 }
-/* line 39, ../../src/scss/style.scss */
+/* line 41, ../../src/scss/style.scss */
 #loadBlocker .blockerContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 46, ../../src/scss/style.scss */
+/* line 48, ../../src/scss/style.scss */
 #modal {
   display: none;
   height: 100%;
@@ -51,42 +53,41 @@ a.generalButton {
   background: #eee;
   z-index: 100;
 }
-/* line 56, ../../src/scss/style.scss */
+/* line 58, ../../src/scss/style.scss */
 #modal .modalContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 64, ../../src/scss/style.scss */
+/* line 66, ../../src/scss/style.scss */
 #cls {
   display: none;
 }
 
-/* line 69, ../../src/scss/style.scss */
+/* line 71, ../../src/scss/style.scss */
 .siteTitle {
-  width: 960px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
-/* line 74, ../../src/scss/style.scss */
+/* line 76, ../../src/scss/style.scss */
 #map {
   width: 800px;
   height: 200px;
 }
 
-/* line 79, ../../src/scss/style.scss */
+/* line 81, ../../src/scss/style.scss */
 .contentWrapper {
-  width: 960px;
+  max-width: 960px;
   position: relative;
   overflow-x: hidden;
   margin: 0 auto;
-  height: 500px;
 }
 
-/* line 87, ../../src/scss/style.scss */
+/* line 88, ../../src/scss/style.scss */
 .pageContent {
-  width: 960px;
+  max-width: 960px;
   position: absolute;
   top: 0;
   left: 0;
@@ -100,12 +101,102 @@ a.generalButton {
   transition-duration: 0.5s;
 }
 
-/* line 97, ../../src/scss/style.scss */
+/* line 98, ../../src/scss/style.scss */
 .pageRight {
   left: 960px;
 }
 
-/* line 100, ../../src/scss/style.scss */
+/* line 101, ../../src/scss/style.scss */
 .pageLeft {
   left: -960px;
+}
+
+/* line 105, ../../src/scss/style.scss */
+.editTextInput {
+  border: none;
+}
+
+/* line 110, ../../src/scss/style.scss */
+#header {
+  color: #e8eced;
+  background: #151633;
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+/* line 118, ../../src/scss/style.scss */
+#header .content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+/* line 123, ../../src/scss/style.scss */
+#header .tripTitle {
+  font-size: 90px;
+}
+/* line 126, ../../src/scss/style.scss */
+#header .tripSubtitle {
+  font-size: 18px;
+}
+
+/* line 131, ../../src/scss/style.scss */
+#map {
+  width: 100%;
+  height: 395px;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+/* line 141, ../../src/scss/style.scss */
+#locations .location {
+  padding-bottom: 33px;
+  border-bottom: 1px solid #858390;
+}
+/* line 146, ../../src/scss/style.scss */
+#locations .locationName {
+  font-size: 36px;
+  font-weight: bold;
+}
+/* line 151, ../../src/scss/style.scss */
+#locations .locationNotes {
+  margin: 0 16px;
+}
+/* line 156, ../../src/scss/style.scss */
+#locations .notesWrapper {
+  margin: 0 40px;
+}
+/* line 160, ../../src/scss/style.scss */
+#locations .note {
+  font-size: 30px;
+  margin: 22px 0;
+}
+/* line 165, ../../src/scss/style.scss */
+#locations a.addNoteLink {
+  display: block;
+  padding: 16px 10px;
+  color: #151633;
+  border: 1px solid #799b28;
+  text-decoration: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+/* line 174, ../../src/scss/style.scss */
+#locations a.addNoteLink:hover {
+  background-color: #fff;
+}
+
+/* line 181, ../../src/scss/style.scss */
+.category .categoryHeader {
+  position: relative;
+}
+/* line 185, ../../src/scss/style.scss */
+.category .showHide {
+  position: absolute;
+  right: 0;
+}
+/* line 190, ../../src/scss/style.scss */
+.category .categoryName {
+  font-size: 18px;
 }

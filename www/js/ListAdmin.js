@@ -19,7 +19,7 @@ EditText.prototype.onClickHandler = function(event) {
 
 	var editText = event.data.editText;
 
-	editText.$input.css('display', '').prop('disabled', false);
+	editText.$input.css('display', '').prop('disabled', false).attr('class', 'editTextInput ' + editText.$element.attr('class'));
 	editText.$element.css('display', 'none');
 
 	editText.$divWrapper.unbind('click');

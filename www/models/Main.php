@@ -69,8 +69,10 @@ class Main {
 			$location = array('lat'=>0, 'lng'=> 0);
 		}
 
-		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
-		$stmt->execute(array($adminHash, $publicHash, $tripName, $userName, $email, $location['lat'], $location['lng']));
+		$subtitle = 'by '.$userName;
+		
+		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, subtitle=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
+		$stmt->execute(array($adminHash, $publicHash, $tripName, $subtitle, $userName, $email, $location['lat'], $location['lng']));
 
 		if (!isset($_SESSION['addedNotes'])) {
 			$_SESSION['addedNotes'] = array();

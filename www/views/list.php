@@ -34,10 +34,13 @@
 	</div>
 
 	<div id="header">
-		<div id="tripTitle" class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
-		<div id="tripSubtitle" class="tripSubtitle"><?php echo $main->trip['subtitle']; ?></div>
-		<div id="map"></div>
+		<div class="content">
+			<div id="tripTitle" class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
+			<div id="tripSubtitle" class="tripSubtitle"><?php echo $main->trip['subtitle']; ?></div>
+		</div>
 	</div>
+
+	<div id="map"></div>
 
 	<div id="body">
 		<div class="contentWrapper">
@@ -58,7 +61,7 @@
 
 	<div id="cls">
 
-		<div id="clsLocation">
+		<div id="clsLocation" class="location">
 			<span class="locationName">$LOCATION$</span>
 			<?php
 			if ($main->isAdmin) {
@@ -74,7 +77,9 @@
 		</div>
 
 		<div id="clsCategory" class="category">
-			<span>$CATEGORY_NAME$</span>
+			<div class="categoryHeader">
+				<span class="categoryName">$CATEGORY_NAME$</span><a class="showHide" href="javascript:void(0)">+</a>
+			</div>
 			<div class="notesWrapper"></div>
 		</div>
 
