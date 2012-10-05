@@ -88,13 +88,26 @@
 		</div>
 
 		<div id="addNoteInput" class="addNoteInput">
-			<input type="text" id="txtNoteText" />
-			<select id="selCategory">
-				<option value="0">Category</option>
-				<option value="1">Food</option>
-				<option value="2">Something Else</option>
-			</select>
-			<a class="submitNoteLink" href="javascript:void(0)">Add</a>
+			<input type="text" id="txtNoteText" class="txtNoteText" />
+			<div>
+				<div class="noteLink">
+					<table>
+						<tr>
+							<td><img class="link-image" src="/images/blank.gif" alt="" /></td>
+							<td><a class="link-title"></a></td>
+						<tr>
+					</table>
+				</div>
+				<div>
+					<label for="selCategory">It's a</label>
+					<select id="selCategory">
+						<option value="0">Category</option>
+						<option value="1">Food</option>
+						<option value="2">Something Else</option>
+					</select>
+					<a class="submitNoteLink" href="javascript:void(0)">&nbsp;</a>
+				</div>
+			</div>
 		</div>
 
 	<?php

@@ -17,6 +17,10 @@ body {
 	clear:both;
 }
 
+.hidden {
+	display: none;
+}
+
 a.generalButton {
 	display: inline-block;
 	padding: 10px;
@@ -87,9 +91,7 @@ a.generalButton {
 
 .pageContent {
 	max-width: $maxContentWidth;
-	position:absolute;
-	top:0;
-	left:0;
+
 
 	@include transition-property(left);
   	@include transition-duration(0.5s);
@@ -162,18 +164,7 @@ a.generalButton {
 		margin: 22px 0;
 	}
 
-	a.addNoteLink {
-		display:block;
-		padding:16px 10px;
-		color: $darkBlue;
-		border: 1px solid $green;
-		text-decoration:none;
-
-		@include border-radius($borderRadius);
-	}
-	a.addNoteLink:hover {
-		background-color:#fff;
-	}
+	
 }
 
 .category {
@@ -191,6 +182,40 @@ a.generalButton {
 		font-size:18px;
 	}
 
+}
+
+.addNote {
+
+
+	.txtNoteText {
+		width:100%;
+		background:#fff;
+		padding:16px 10px;
+		border: 1px solid $lightGrey;
+
+		@include border-radius($borderRadius);
+
+	}
+
+	a.addNoteLink {
+		display:block;
+		padding:16px 10px;
+		color: $darkBlue;
+		border: 1px solid $green;
+		text-decoration:none;
+
+		@include border-radius($borderRadius);
+	}
+	a.addNoteLink:hover {
+		background-color:#fff;
+	}
+
+	a.submitNoteLink {
+		display:inline-block;
+		background:$green;
+		height:55px;
+		width:55px;
+	}
 }
 
 	

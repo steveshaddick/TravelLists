@@ -14,6 +14,11 @@ body {
 }
 
 /* line 20, ../../src/scss/style.scss */
+.hidden {
+  display: none;
+}
+
+/* line 24, ../../src/scss/style.scss */
 a.generalButton {
   display: inline-block;
   padding: 10px;
@@ -24,7 +29,7 @@ a.generalButton {
   border-radius: 2px;
 }
 
-/* line 31, ../../src/scss/style.scss */
+/* line 35, ../../src/scss/style.scss */
 #loadBlocker {
   display: none;
   height: 100%;
@@ -35,14 +40,14 @@ a.generalButton {
   background: #eee;
   z-index: 1000000;
 }
-/* line 41, ../../src/scss/style.scss */
+/* line 45, ../../src/scss/style.scss */
 #loadBlocker .blockerContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 48, ../../src/scss/style.scss */
+/* line 52, ../../src/scss/style.scss */
 #modal {
   display: none;
   height: 100%;
@@ -53,31 +58,31 @@ a.generalButton {
   background: #eee;
   z-index: 100;
 }
-/* line 58, ../../src/scss/style.scss */
+/* line 62, ../../src/scss/style.scss */
 #modal .modalContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 66, ../../src/scss/style.scss */
+/* line 70, ../../src/scss/style.scss */
 #cls {
   display: none;
 }
 
-/* line 71, ../../src/scss/style.scss */
+/* line 75, ../../src/scss/style.scss */
 .siteTitle {
   max-width: 960px;
   margin: 0 auto;
 }
 
-/* line 76, ../../src/scss/style.scss */
+/* line 80, ../../src/scss/style.scss */
 #map {
   width: 800px;
   height: 200px;
 }
 
-/* line 81, ../../src/scss/style.scss */
+/* line 85, ../../src/scss/style.scss */
 .contentWrapper {
   max-width: 960px;
   position: relative;
@@ -85,12 +90,9 @@ a.generalButton {
   margin: 0 auto;
 }
 
-/* line 88, ../../src/scss/style.scss */
+/* line 92, ../../src/scss/style.scss */
 .pageContent {
   max-width: 960px;
-  position: absolute;
-  top: 0;
-  left: 0;
   -webkit-transition-property: left;
   -moz-transition-property: left;
   -o-transition-property: left;
@@ -101,22 +103,22 @@ a.generalButton {
   transition-duration: 0.5s;
 }
 
-/* line 98, ../../src/scss/style.scss */
+/* line 100, ../../src/scss/style.scss */
 .pageRight {
   left: 960px;
 }
 
-/* line 101, ../../src/scss/style.scss */
+/* line 103, ../../src/scss/style.scss */
 .pageLeft {
   left: -960px;
 }
 
-/* line 105, ../../src/scss/style.scss */
+/* line 107, ../../src/scss/style.scss */
 .editTextInput {
   border: none;
 }
 
-/* line 110, ../../src/scss/style.scss */
+/* line 112, ../../src/scss/style.scss */
 #header {
   color: #e8eced;
   background: #151633;
@@ -124,21 +126,21 @@ a.generalButton {
   max-width: 1250px;
   margin: 0 auto;
 }
-/* line 118, ../../src/scss/style.scss */
+/* line 120, ../../src/scss/style.scss */
 #header .content {
   max-width: 960px;
   margin: 0 auto;
 }
-/* line 123, ../../src/scss/style.scss */
+/* line 125, ../../src/scss/style.scss */
 #header .tripTitle {
   font-size: 90px;
 }
-/* line 126, ../../src/scss/style.scss */
+/* line 128, ../../src/scss/style.scss */
 #header .tripSubtitle {
   font-size: 18px;
 }
 
-/* line 131, ../../src/scss/style.scss */
+/* line 133, ../../src/scss/style.scss */
 #map {
   width: 100%;
   height: 395px;
@@ -146,31 +148,58 @@ a.generalButton {
   margin: 0 auto;
 }
 
-/* line 141, ../../src/scss/style.scss */
+/* line 143, ../../src/scss/style.scss */
 #locations .location {
   padding-bottom: 33px;
   border-bottom: 1px solid #858390;
 }
-/* line 146, ../../src/scss/style.scss */
+/* line 148, ../../src/scss/style.scss */
 #locations .locationName {
   font-size: 36px;
   font-weight: bold;
 }
-/* line 151, ../../src/scss/style.scss */
+/* line 153, ../../src/scss/style.scss */
 #locations .locationNotes {
   margin: 0 16px;
 }
-/* line 156, ../../src/scss/style.scss */
+/* line 158, ../../src/scss/style.scss */
 #locations .notesWrapper {
   margin: 0 40px;
 }
-/* line 160, ../../src/scss/style.scss */
+/* line 162, ../../src/scss/style.scss */
 #locations .note {
   font-size: 30px;
   margin: 22px 0;
 }
-/* line 165, ../../src/scss/style.scss */
-#locations a.addNoteLink {
+
+/* line 172, ../../src/scss/style.scss */
+.category .categoryHeader {
+  position: relative;
+}
+/* line 176, ../../src/scss/style.scss */
+.category .showHide {
+  position: absolute;
+  right: 0;
+}
+/* line 181, ../../src/scss/style.scss */
+.category .categoryName {
+  font-size: 18px;
+}
+
+/* line 190, ../../src/scss/style.scss */
+.addNote .txtNoteText {
+  width: 100%;
+  background: #fff;
+  padding: 16px 10px;
+  border: 1px solid #e8eced;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+/* line 200, ../../src/scss/style.scss */
+.addNote a.addNoteLink {
   display: block;
   padding: 16px 10px;
   color: #151633;
@@ -182,21 +211,14 @@ a.generalButton {
   -o-border-radius: 2px;
   border-radius: 2px;
 }
-/* line 174, ../../src/scss/style.scss */
-#locations a.addNoteLink:hover {
+/* line 209, ../../src/scss/style.scss */
+.addNote a.addNoteLink:hover {
   background-color: #fff;
 }
-
-/* line 181, ../../src/scss/style.scss */
-.category .categoryHeader {
-  position: relative;
-}
-/* line 185, ../../src/scss/style.scss */
-.category .showHide {
-  position: absolute;
-  right: 0;
-}
-/* line 190, ../../src/scss/style.scss */
-.category .categoryName {
-  font-size: 18px;
+/* line 213, ../../src/scss/style.scss */
+.addNote a.submitNoteLink {
+  display: inline-block;
+  background: #799b28;
+  height: 55px;
+  width: 55px;
 }

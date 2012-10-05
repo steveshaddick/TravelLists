@@ -33,7 +33,7 @@
 
 	<div id="body">
 		<div class="contentWrapper">
-			<div id="landingPage" class="pageContent pageCentre">
+			<div id="landingPage" class="pageContent">
 				<div class="overview">
 				</div>
 
@@ -44,7 +44,7 @@
 				</div>
 			</div>
 
-			<div id="infoPage" class="pageContent pageRight">
+			<div id="infoPage" class="pageContent hidden">
 				<div class="overview">
 				</div>
 

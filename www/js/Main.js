@@ -166,12 +166,14 @@ var Modal = (function() {
 
 var Gate = (function() {
 
+
+
 	function showInfo() {
-		$("#landingPage").addClass('pageLeft');
+		$("#landingPage").addClass('hidden');
 		$("#txtTripName").prop('disabled', true);
 
 
-		$("#infoPage").removeClass('pageRight');
+		$("#infoPage").removeClass('hidden');
 		$("#txtName").prop('disabled', false).focus();
 		$("#txtEmail").prop('disabled', false);
 	}
@@ -285,6 +287,7 @@ Location.prototype.addNote = function(note) {
 	this.notes[note.id] = note;
 
 	$('.notesWrapper', $category).append($note);
+
 	this.categories[note.categoryId].obj.noteAdded();
 
 }
@@ -425,6 +428,7 @@ var Trip = (function() {
 		if ($hiddenNoteLink) {
 			$hiddenNoteLink.css('display', '');
 			$('.submitNoteLink', $addNoteInput).unbind('click');
+			
 		}
 		$hiddenNoteLink = $('.addNoteLink', location.$element).css('display', 'none');
 
