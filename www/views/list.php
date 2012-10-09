@@ -84,31 +84,39 @@
 		</div>
 
 		<div id="clsNote" class="note">
-			<span>$NOTE$</span><a class="deleteNoteLink" href="javascript:void(0)">delete</a>
+			<div class="note-text-wrapper">
+				<span class="note-text"></span>
+			</div>
+			<div class="noteLink">
+				<table>
+					<tr>
+						<td><a target="_blank"><img class="link-image" src="/images/blank.gif" alt="" /></a></td>
+						<td><a target="_blank" class="link-title"></a></td>
+					</tr>
+				</table>
+			</div>
+			<a class="deleteNoteLink" href="javascript:void(0)">delete</a>
 		</div>
 
-		<div id="addNoteInput" class="addNoteInput">
-			<input type="text" id="txtNoteText" class="txtNoteText" />
+		<div id="clsNoteEditor" class="note-editor">
+			<div class="note-text-wrapper">
+				<input type="text" id="txtNoteText" class="txtNoteText" />
+			</div>
 			<div>
-				<div class="noteLink">
-					<table>
-						<tr>
-							<td><img class="link-image" src="/images/blank.gif" alt="" /></td>
-							<td><a class="link-title"></a></td>
-						<tr>
-					</table>
-				</div>
-				<div>
-					<label for="selCategory">It's a</label>
-					<select id="selCategory">
-						<option value="0">Category</option>
-						<option value="1">Food</option>
-						<option value="2">Something Else</option>
-					</select>
-					<a class="submitNoteLink" href="javascript:void(0)">&nbsp;</a>
-				</div>
+				<label for"txtFromName">from</label>
+				<input type="text" id="txtFromName" class="txtFromName" />
+
+				<label for="selCategory">It's a</label>
+				<select id="selCategory">
+					<option value="0">Category</option>
+					<option value="1">Food</option>
+					<option value="2">Something Else</option>
+				</select>
+				<a class="submitNoteLink" href="javascript:void(0)">Add</a>
+				<a class="cancelNoteLink" href="javascript:void(0)">Cancel</a>
 			</div>
 		</div>
+
 
 	<?php
 	if ($main->isAdmin) {

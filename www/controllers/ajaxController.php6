@@ -28,6 +28,10 @@ function returnJSON($arr) {
 		$arr = array('success'=>false);
 	}
 	
+	if (isset($_POST['bgid'])) {
+		$arr['bgid'] = $_POST['bgid'];
+	}
+
 	return json_encode($arr);
 }
 
@@ -94,6 +98,11 @@ switch ($action) {
 	case 'saveTrip':
 
 		$arr = $main->saveTrip($_POST);
+		echo returnJSON($arr);
+		break;
+
+	case 'checkLink':
+		$arr = $main->checkLink($_POST['noteId'], $_POST['url']);
 		echo returnJSON($arr);
 		break;
 

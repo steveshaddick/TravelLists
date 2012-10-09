@@ -172,7 +172,10 @@ class Main {
 				'categoryId'=>$row['category_id'],
 				'from'=>stripslashes($row['from']),
 				'note'=>stripslashes($row['note']),
-				'link'=>$row['link'],
+				'linkUrl'=>$row['linkUrl'],
+				'linkImage'=>$row['linkImage'],
+				'linkTitle'=>$row['linkTitle'],
+				'linkCheck'=>$row['linkCheck'],
 				'listOrder'=>$row['listOrder']
 				);
 
@@ -232,14 +235,41 @@ class Main {
 
 		$listOrder = $row['total'] + 1;
 
+		$linkUrl = '';
+		$linkTitle ='';
+		$linkImage = '';
+		$nextCheck = 0;
 
-		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, note=?, listOrder=?");
-		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['note'], $listOrder));
+		$note['note'] = preg_replace('/[^http:\/\/]\bwww\./i', ' http://www.', $note['note']);
+		if (substr($note['note'],0, 4) == 'www.') {
+			$note['note'] = 'http://' . $note['note'];
+		}
+		preg_match("/(\(?\bhttps?:\/\/[-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#\/%=~_()|])/", $note['note'], $match);
+		if (count($match) > 0) {
+			$linkUrl = $match[0];
+		}
+
+		if ($linkUrl != '') {
+
+			$stmt = $this->db->prepare("SELECT linkTitle, linkImage, nextCheck FROM LinkMetaData WHERE url=?");
+			$stmt->execute(array($linkUrl));
+			
+			if ($stmt->rowCount() > 0) {
+				$row = $stmt->fetch();
+				$linkTitle = $row['linkTitle'];
+				$linkImage = $row['linkImage'];
+				$nextCheck = $row['nextCheck'];
+			}
+		}
+
+
+		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkCheck=?, listOrder=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['note'], $linkUrl, $linkTitle, $linkImage, $nextCheck, $listOrder));
 
 		$noteId = $this->db->lastInsertId();
 
 		$_SESSION['addedNotes'][$noteId] = true;
-		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'canDelete'=>true);
+		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
 
 	}
 
@@ -297,6 +327,46 @@ class Main {
 		$stmt->execute(array($tripTitle, $tripSubtitle, $tripId));
 
 		return true;
+
+	}
+
+	public function checkLink($noteId, $url) {
+
+		require $this->basePath . 'lib/URLMetaData.php';
+		
+		$metaData = false;
+		$nextCheck = time() + (60 * 60 * 24 * 365);
+		$updateLink = false;
+		
+		$stmt = $this->db->prepare("SELECT linkTitle, linkImage, nextCheck FROM LinkMetaData WHERE url=?");
+		$stmt->execute(array($url));
+		
+		if ($stmt->rowCount() == 0) {
+			$metaData = URLMetaData::getMetaData($url);
+			$updateLink = true;
+		
+		} else {
+			$row = $stmt->fetch();
+
+			$metaData['title'] = $row['linkTitle'];
+			$metaData['image'] = $row['linkImage'];
+		}
+
+		if ($metaData !== false) {
+
+			//$stmt = $this->db->prepare("UPDATE Notes SET linkTitle=?, linkImage=?, linkCheck=$nextCheck WHERE _id=?");
+			//$stmt->execute(array($metaData['title'], $metaData['image'], $noteId));
+
+			if ($updateLink) {
+				$stmt = $this->db->prepare("INSERT INTO LinkMetaData (url, linkTitle, linkImage, nextCheck) VALUES (?, ?, ?, $nextCheck) ON DUPLICATE KEY UPDATE linkTitle=?, linkImage=?, nextCheck=$nextCheck");
+				$stmt->execute(array($url, $metaData['title'], $metaData['image'], $metaData['title'], $metaData['image']));
+			}
+
+		} else {
+			return false;
+		}
+
+		return array('linkTitle'=>$metaData['title'], 'linkImage'=>$metaData['image'], 'linkCheck'=>$nextCheck);
 
 	}
 }

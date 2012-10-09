@@ -73,22 +73,39 @@ var Ajax = (function() {
 	var callback = null;
 	var errorCallback = null;
 
+	var background = [];
+	var bgid = 1; //incrementor, this will break beyond max int size
+
 	function init(_token) {
 		token = _token;
 	}
 
-	function call(action, data, onSuccess, onError) {
+	function call(action, data, onSuccess, onError, isBackground) {
 
-		if (isWaiting) return;
+		isBackground = (typeof isBackground == "undefined") ? false : isBackground;
 
 		if (typeof data === "undefined") {
 			data = { token: token };
 		} else {
 			data.token = token;
 		}
+		
+		if (isBackground) {
+			data.bgid = bgid++;
+			background.push( {
+				bgid : data.bgid,
+				callback : (typeof onSuccess === "undefined") ? null : onSuccess,
+				errorCallback : (typeof onError === "undefined") ? null : onError
+			});
 
-		callback = (typeof onSuccess === "undefined") ? null : onSuccess;
-		errorCallback = (typeof onError === "undefined") ? null : onError;
+		} else {
+			
+			if (isWaiting) return;
+
+			callback = (typeof onSuccess === "undefined") ? null : onSuccess;
+			errorCallback = (typeof onError === "undefined") ? null : onError;
+			timeoutWait = setTimeout(timeout, TIMEOUT_SECONDS);
+		}
 
 		request = $.ajax({
 			url: "/ajax/" + action,
@@ -100,27 +117,48 @@ var Ajax = (function() {
 		request.done(requestDone);
 		request.fail(requestFailed);
 
-		timeoutWait = setTimeout(timeout, TIMEOUT_SECONDS);
 	}
 
 	function requestDone(data) {
-		isWaiting = false;
-		request = null;
-		clearTimeout(timeoutWait);
-
 		if (data && data.success) {
-			if (callback) {
-				callback(data);
-				callback = null;
-				errorCallback = null;
+			if (data.bgid) {
+				for (var i=background.length - 1; i>=0; i--) {
+					if (background[i].bgid == data.bgid) {
+						if (background[i].callback) {
+							background[i].callback(data);
+						}
+						background.splice(i, 1);
+					}
+				}
+			} else {
+				isWaiting = false;
+				request = null;
+				clearTimeout(timeoutWait);
+				if (callback) {
+					callback(data);
+					callback = null;
+					errorCallback = null;
+				}
 			}
 		} else {
-			requestFailed();	
+			if (data && data.bgid) {
+				for (var i=background.length - 1; i>=0; i--) {
+					if (background[i].bgid == data.bgid) {
+						if (background[i].errorCallback) {
+							background[i].errorCallback(data);
+						}
+						background.splice(i, 1);
+					}
+				}
+			} else {
+				requestFailed();	
+			}
 		}
 		
 	}
 
 	function requestFailed(jqXHR, textStatus) {
+		//TODO bug here - if a background call errors it'll disrupt the main queue
 		isWaiting = false;
 		request = null;
 		callback = null;
@@ -276,7 +314,7 @@ Location.prototype.addNote = function(note) {
 	var $category = (this.categories[note.categoryId].obj === null) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].obj.$element;
 
 	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
-	$note.html($note.html().replace(/\$NOTE\$/g, note.note));
+	
 
 	if (note.canDelete) {
 		$('.deleteNoteLink', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
@@ -284,11 +322,53 @@ Location.prototype.addNote = function(note) {
 		$('.deleteNoteLink', $note).remove();
 	}
 
+	note.$element = $note;
 	this.notes[note.id] = note;
 
-	$('.notesWrapper', $category).append($note);
+	if (note.linkCheck <= (new Date().valueOf() / 1000)) {
+		Main.queueLinkCheck(this, note.id, note.linkUrl);
+	} 
+	this.parseNote(note.id);
 
+	$('.notesWrapper', $category).append($note);
 	this.categories[note.categoryId].obj.noteAdded();
+}
+Location.prototype.parseNote = function(noteId, linkData) {
+
+	var note = this.notes[noteId];
+
+	if (typeof linkData != "undefined") {
+		note.linkTitle = linkData.linkTitle;
+		note.linkImage = linkData.linkImage;
+	}
+
+	var regex;
+	var htmlString = note.note;
+
+	if (note.linkUrl != '') {
+
+		if (note.linkImage != '') {
+			$('.link-image', note.$element).attr('src', note.linkImage).parent().attr('href', note.linkUrl);
+		}
+
+		if (note.linkTitle != '') {
+			$('.link-title', note.$element).attr('href', note.linkUrl).html(note.linkTitle);
+			if (htmlString == note.linkUrl) {
+				$('.note-text-wrapper', note.$element).css('display', 'none');
+			} else {
+				$('.note-text-wrapper', note.$element).css('display', '');
+			}
+			$('.noteLink', note.$element).css('display', '');
+		} else {
+			$('.noteLink', note.$element).css('display', 'none');
+		}
+
+	} 
+
+	regex = /(\(?\bhttps?:\/\/[-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#\/%=~_()|])/g;
+	htmlString = htmlString.replace(regex,"<a target=\"_blank\" href=\"$1\">$1</a>").replace(/href="\(/g, 'href="').replace(/\)">/g, '">');
+
+	$('.note-text', note.$element).html(htmlString);
 
 }
 Location.prototype.deleteNoteClickHandler = function(event) {
@@ -345,6 +425,109 @@ Category.prototype.destroy = function () {
 	$('.showHide', this.$element).unbind('click');
 }
 
+
+var NoteEditor = (function() {
+
+	var $noteEditor;
+	var linkTimeout;
+	var isInit = false;
+	var isEditing = false;
+
+	var $hiddenElement = false;
+	
+	var currentLocation = false;
+	var currentLink = '';
+
+
+	function init($element) {
+
+		$noteEditor = $("#clsNoteEditor");
+		isInit = true;
+	}
+
+	function setHandlers() {
+		
+		$("#txtNoteText").focus();
+
+		$('.submitNoteLink', $noteEditor).click({location: currentLocation}, submitNoteClickHandler);
+		$('.cancelNoteLink', $noteEditor).click(cancelNoteClickHandler);
+	}
+
+	function clearHandlers() {
+		$('.submitNoteLink', $noteEditor).unbind('click');
+		$('.cancelNoteLink', $noteEditor).unbind('click');
+	}
+
+	function submitNoteClickHandler(event) {
+		var noteText = $("#txtNoteText").val();
+		var categoryId = $('#selCategory').val();
+		var from = $('#txtFromName').val();
+
+		var location = event.data.currentLocation;
+
+		//TODO form error checking, loading
+
+		Ajax.call('addNote', 
+			{
+				noteText: noteText,
+				from: from,
+				categoryId: categoryId,
+				locationId: currentLocation.id
+			},
+			function(data) {
+				
+				resetEditor();
+
+				data.note = noteText;
+				data.categoryId = categoryId;
+
+				currentLocation.addNote(data);
+			},
+			function() {
+				//error
+			});
+	}
+
+	function cancelNoteClickHandler(event) {
+		resetEditor();
+	}
+
+	function resetEditor() {
+		if (!isEditing) return;
+
+		$hiddenElement.css('display', '');
+		$hiddenElement = false;
+
+		$("#txtNoteText").val('');
+		$('#selCategory').val('0');
+
+		clearHandlers();
+		$("#cls").append($noteEditor);
+	}
+
+	function newNote($element, location) {
+		if (!isInit) init();
+
+		if ($hiddenElement !== false) {
+			$hiddenElement.css('display', '');
+			clearHandlers();
+		}
+		$hiddenElement = $(':first-child', $element).css('display', 'none');
+
+		currentLocation = location;
+
+		$element.append($noteEditor);
+		setHandlers(currentLocation);
+
+		isEditing = true;
+	}
+
+	return {
+		newNote: newNote
+	}
+
+}());
+
 var Trip = (function() {
 
 	var map;
@@ -352,7 +535,6 @@ var Trip = (function() {
 	var locationCount = 0;
 	var bounds;
 
-	var $addNoteInput = null;
 	var $hiddenNoteLink = null;
 
 	function loadTrip(obj) {
@@ -371,7 +553,6 @@ var Trip = (function() {
 				//error
 			});
 
-		$addNoteInput = $("#addNoteInput");
 		bounds = new google.maps.LatLngBounds();
 
 		var mapOptions = {
@@ -425,43 +606,13 @@ var Trip = (function() {
 
 		var location = event.data.location;
 
-		if ($hiddenNoteLink) {
-			$hiddenNoteLink.css('display', '');
-			$('.submitNoteLink', $addNoteInput).unbind('click');
-			
-		}
-		$hiddenNoteLink = $('.addNoteLink', location.$element).css('display', 'none');
+		NoteEditor.newNote($(this).parent(), location);
 
-		$('.addNote', location.$element).append($("#addNoteInput"));
-		$('.submitNoteLink', $addNoteInput).click({location:location}, submitNoteClickHandler);
 	}
 
 	function submitNoteClickHandler(event) {
 		
-		var noteText = $('#txtNoteText').val();
-		var categoryId = $('#selCategory').val();
-
-		var location = event.data.location;
-
-		Ajax.call('addNote', 
-			{
-				noteText: noteText,
-				categoryId: categoryId,
-				locationId: location.id
-			},
-			function(data) {
-				
-				$hiddenNoteLink.css('display', '');
-				$('.submitNoteLink', $addNoteInput).unbind('click');
-				$("#cls").append($addNoteInput);
-
-				data.note = noteText;
-				data.categoryId = categoryId;
-				location.addNote(data);
-			},
-			function() {
-				//error
-			});
+		
 	}
 
 	function deleteLocation(locationId) {
@@ -495,7 +646,7 @@ var Trip = (function() {
 var Main = (function() {
 
 	
-	
+	var linkQueue = [];
 	
 	function init(obj) {
 		
@@ -509,11 +660,43 @@ var Main = (function() {
 	function loadRelease() {
 		$("#loadBlocker").css('display', 'none');
 	}
+
+	function queueLinkCheck(location, noteId, url) {
+
+		if (url =='') return;
+
+		linkQueue.push({location: location, noteId:noteId, url: url});
+
+		processLinkQueue();
+	}
+
+	function processLinkQueue() {
+		if (linkQueue.length == 0) return;
+
+		var linkCheck = linkQueue[0];
+
+		Ajax.call('checkLink', 
+			{
+				noteId: linkCheck.noteId,
+				url: linkCheck.url
+			},
+			function(linkData) {
+				linkCheck.location.parseNote(linkCheck.noteId, linkData);
+				processLinkQueue();
+			},
+			function() {
+				processLinkQueue();
+			},
+			true);
+
+		linkQueue.shift();
+	}
 	
 	return {
 		init : init,
 		loadBlock: loadBlock,
-		loadRelease: loadRelease
+		loadRelease: loadRelease,
+		queueLinkCheck: queueLinkCheck
 	};
 	
 }());
