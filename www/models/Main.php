@@ -269,7 +269,7 @@ class Main {
 		$noteId = $this->db->lastInsertId();
 
 		$_SESSION['addedNotes'][$noteId] = true;
-		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
+		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
 
 	}
 

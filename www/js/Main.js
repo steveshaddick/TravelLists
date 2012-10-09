@@ -478,7 +478,6 @@ var NoteEditor = (function() {
 				
 				resetEditor();
 
-				data.note = noteText;
 				data.categoryId = categoryId;
 
 				currentLocation.addNote(data);
