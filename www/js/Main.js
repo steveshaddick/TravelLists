@@ -264,10 +264,10 @@ function Location(data) {
 	this.$element = null;
 
 	this.categories = [
-		{ title: '', obj:null},
-		{ title: 'Places to eat', obj:null },
-		{ title: 'Places to whatever', obj:null },
-		{ title: 'Whatevers to whatever', obj:null }
+		{ title: 'General', obj:null},
+		{ title: 'Places to Stay', obj:null },
+		{ title: 'Places to Eat', obj:null },
+		{ title: 'Things to Do', obj:null }
 		];
 
 	this.notes = [];
@@ -302,7 +302,7 @@ Location.prototype.addCategory = function(categoryId) {
 	if ($before) {
 		$before.after($category);
 	} else {
-		$('.locationNotes', this.$element).prepend($category);
+		$('.location-notes', this.$element).prepend($category);
 	}
 
 	this.categories[categoryId].obj = new Category($category);
@@ -317,9 +317,9 @@ Location.prototype.addNote = function(note) {
 	
 
 	if (note.canDelete) {
-		$('.deleteNoteLink', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+		$('.note-delete-link', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	} else {
-		$('.deleteNoteLink', $note).remove();
+		$('.note-delete-link', $note).remove();
 	}
 
 	note.$element = $note;
@@ -340,6 +340,7 @@ Location.prototype.parseNote = function(noteId, linkData) {
 	if (typeof linkData != "undefined") {
 		note.linkTitle = linkData.linkTitle;
 		note.linkImage = linkData.linkImage;
+		note.linkDescription = linkData.linkDescription;
 	}
 
 	var regex;
@@ -347,28 +348,37 @@ Location.prototype.parseNote = function(noteId, linkData) {
 
 	if (note.linkUrl != '') {
 
-		if (note.linkImage != '') {
-			$('.link-image', note.$element).attr('src', note.linkImage).parent().attr('href', note.linkUrl);
-		}
-
 		if (note.linkTitle != '') {
+			
 			$('.link-title', note.$element).attr('href', note.linkUrl).html(note.linkTitle);
 			if (htmlString == note.linkUrl) {
 				$('.note-text-wrapper', note.$element).css('display', 'none');
 			} else {
 				$('.note-text-wrapper', note.$element).css('display', '');
 			}
-			$('.noteLink', note.$element).css('display', '');
+			$('.note-link', note.$element).css('display', '');
+			
+			if (note.linkImage != '') {
+				$('.link-image', note.$element).attr('src', note.linkImage).parent().attr('href', note.linkUrl);
+			}
+
+			if (note.linkDescription != '') {
+				$('.link-description', note.$element).html(note.linkDescription);
+			}
+
 		} else {
-			$('.noteLink', note.$element).css('display', 'none');
+			$('.note-link', note.$element).css('display', 'none');
 		}
 
-	} 
+	} else {
+		$('.note-link', note.$element).css('display', 'none');
+	}
 
 	regex = /(\(?\bhttps?:\/\/[-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#\/%=~_()|])/g;
 	htmlString = htmlString.replace(regex,"<a target=\"_blank\" href=\"$1\">$1</a>").replace(/href="\(/g, 'href="').replace(/\)">/g, '">');
 
 	$('.note-text', note.$element).html(htmlString);
+	$('.note-from', note.$element).html('-' + note.from);
 
 }
 Location.prototype.deleteNoteClickHandler = function(event) {
@@ -398,23 +408,31 @@ var Category = function($element) {
 
 	this.isOpen = true;
 
-	$('.showHide', this.$element).click({ category: this }, this.showHide);
+	$('.show-hide', this.$element).click({ category: this }, this.showHide);
 }
 Category.prototype.showHide = function (event) {
 	var category = event.data.category;
 
 	if (category.isOpen) {
 		$('.notesWrapper', category.$element).slideUp();
+		$('.notes-hidden', category.$element).show();
 		category.isOpen = false;
 	} else {
 		$('.notesWrapper', category.$element).slideDown();
+		$('.notes-hidden', category.$element).hide();
 		category.isOpen = true;
 	}
 }
 Category.prototype.noteAdded = function () {
 	this.total ++;
+	if (this.total > 1) {
+		$('.notes-hidden', this.$element).html(this.total + ' notes hidden');
+	} else {
+		$('.notes-hidden', this.$element).html(this.total + ' note hidden');
+	}
 	if (!this.isOpen) {
 		$('.notesWrapper', this.$element).slideDown();
+		$('.notes-hidden', this.$element).hide();
 		this.isOpen = true;
 	}
 }
@@ -422,7 +440,7 @@ Category.prototype.destroy = function () {
 	this.$element.remove();
 	this.$element = false;
 	this.total = 0;
-	$('.showHide', this.$element).unbind('click');
+	$('.show-hide', this.$element).unbind('click');
 }
 
 
@@ -449,19 +467,23 @@ var NoteEditor = (function() {
 		
 		$("#txtNoteText").focus();
 
-		$('.submitNoteLink', $noteEditor).click({location: currentLocation}, submitNoteClickHandler);
-		$('.cancelNoteLink', $noteEditor).click(cancelNoteClickHandler);
+		$('.submit-note-link', $noteEditor).click({location: currentLocation}, submitNoteClickHandler);
+		$('.cancel-note-link', $noteEditor).click(cancelNoteClickHandler);
 	}
 
 	function clearHandlers() {
-		$('.submitNoteLink', $noteEditor).unbind('click');
-		$('.cancelNoteLink', $noteEditor).unbind('click');
+		$('.submit-note-link', $noteEditor).unbind('click');
+		$('.cancel-note-link', $noteEditor).unbind('click');
 	}
 
 	function submitNoteClickHandler(event) {
 		var noteText = $("#txtNoteText").val();
 		var categoryId = $('#selCategory').val();
 		var from = $('#txtFromName').val();
+
+		if (from == '') {
+			from = 'Anonymous';
+		}
 
 		var location = event.data.currentLocation;
 
@@ -598,7 +620,7 @@ var Trip = (function() {
 			}
 		}
 
-		$('.addNoteLink', location.$element).click({location: location}, addNoteClickHandler);
+		$('.add-note-link', location.$element).click({location: location}, addNoteClickHandler);
 	}
 
 	function addNoteClickHandler(event) {
@@ -650,6 +672,8 @@ var Main = (function() {
 	function init(obj) {
 		
 		Ajax.init(obj.a);
+		$("body select").msDropDown();
+
 
 	}
 

@@ -175,6 +175,7 @@ class Main {
 				'linkUrl'=>$row['linkUrl'],
 				'linkImage'=>$row['linkImage'],
 				'linkTitle'=>$row['linkTitle'],
+				'linkDescription'=>$row['linkDescription'],
 				'linkCheck'=>$row['linkCheck'],
 				'listOrder'=>$row['listOrder']
 				);
@@ -237,6 +238,7 @@ class Main {
 
 		$linkUrl = '';
 		$linkTitle ='';
+		$linkDescription = '';
 		$linkImage = '';
 		$nextCheck = 0;
 
@@ -251,25 +253,26 @@ class Main {
 
 		if ($linkUrl != '') {
 
-			$stmt = $this->db->prepare("SELECT linkTitle, linkImage, nextCheck FROM LinkMetaData WHERE url=?");
+			$stmt = $this->db->prepare("SELECT linkTitle, linkImage, linkDescription, nextCheck FROM LinkMetaData WHERE url=?");
 			$stmt->execute(array($linkUrl));
 			
 			if ($stmt->rowCount() > 0) {
 				$row = $stmt->fetch();
 				$linkTitle = $row['linkTitle'];
 				$linkImage = $row['linkImage'];
+				$linkDescription = $row['linkDescription'];
 				$nextCheck = $row['nextCheck'];
 			}
 		}
 
 
-		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkCheck=?, listOrder=?");
-		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['note'], $linkUrl, $linkTitle, $linkImage, $nextCheck, $listOrder));
+		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder));
 
 		$noteId = $this->db->lastInsertId();
 
 		$_SESSION['addedNotes'][$noteId] = true;
-		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
+		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
 
 	}
 
@@ -338,7 +341,7 @@ class Main {
 		$nextCheck = time() + (60 * 60 * 24 * 365);
 		$updateLink = false;
 		
-		$stmt = $this->db->prepare("SELECT linkTitle, linkImage, nextCheck FROM LinkMetaData WHERE url=?");
+		$stmt = $this->db->prepare("SELECT linkTitle, linkImage, linkDescription, nextCheck FROM LinkMetaData WHERE url=?");
 		$stmt->execute(array($url));
 		
 		if ($stmt->rowCount() == 0) {
@@ -350,23 +353,24 @@ class Main {
 
 			$metaData['title'] = $row['linkTitle'];
 			$metaData['image'] = $row['linkImage'];
+			$metaData['description'] = $row['linkDescription'];
 		}
 
 		if ($metaData !== false) {
 
-			//$stmt = $this->db->prepare("UPDATE Notes SET linkTitle=?, linkImage=?, linkCheck=$nextCheck WHERE _id=?");
-			//$stmt->execute(array($metaData['title'], $metaData['image'], $noteId));
+			$stmt = $this->db->prepare("UPDATE Notes SET linkTitle=?, linkImage=?, linkDescription=?, linkCheck=$nextCheck WHERE _id=?");
+			$stmt->execute(array($metaData['title'], $metaData['image'], $metaData['description'], $noteId));
 
 			if ($updateLink) {
-				$stmt = $this->db->prepare("INSERT INTO LinkMetaData (url, linkTitle, linkImage, nextCheck) VALUES (?, ?, ?, $nextCheck) ON DUPLICATE KEY UPDATE linkTitle=?, linkImage=?, nextCheck=$nextCheck");
-				$stmt->execute(array($url, $metaData['title'], $metaData['image'], $metaData['title'], $metaData['image']));
+				$stmt = $this->db->prepare("INSERT INTO LinkMetaData (url, linkTitle, linkImage, linkDescription, nextCheck) VALUES (?, ?, ?, ?, $nextCheck) ON DUPLICATE KEY UPDATE linkTitle=?, linkImage=?, linkDescription=?, nextCheck=$nextCheck");
+				$stmt->execute(array($url, $metaData['title'], $metaData['image'], $metaData['description'], $metaData['title'], $metaData['image'], $metaData['description']));
 			}
 
 		} else {
 			return false;
 		}
 
-		return array('linkTitle'=>$metaData['title'], 'linkImage'=>$metaData['image'], 'linkCheck'=>$nextCheck);
+		return array('linkTitle'=>$metaData['title'], 'linkImage'=>$metaData['image'], 'linkDescription'=>$metaData['description'], 'linkCheck'=>$nextCheck);
 
 	}
 }

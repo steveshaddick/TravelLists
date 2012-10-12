@@ -1,10 +1,17 @@
 $darkBlue : #151633;
 $lightGrey : #e8eced;
+$mediumGrey: #c0c2c8;
 $darkGrey: #858390;
 $green: #799b28;
 
-$borderRadius : 2px;
+$borderRadius : 4px;
 
 $contentWidth: 960px;
 $maxContentWidth: 960px;
 $maxWidth: 1250px;
+
+@mixin border($color) {
+	border:1px solid $color;
+
+	@include border-radius($borderRadius);
+}

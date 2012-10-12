@@ -19,17 +19,40 @@ body {
 }
 
 /* line 24, ../../src/scss/style.scss */
+a {
+  text-decoration: none;
+  color: #799b28;
+}
+/* line 28, ../../src/scss/style.scss */
+a:hover {
+  text-decoration: underline;
+}
+
+/* line 33, ../../src/scss/style.scss */
 a.generalButton {
   display: inline-block;
   padding: 10px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
 }
 
-/* line 35, ../../src/scss/style.scss */
+/* line 44, ../../src/scss/style.scss */
+input {
+  border: 1px solid #858390;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #fff;
+  background-image: url("/images/input-bg.gif");
+  background-repeat: repeat-x;
+}
+
+/* line 51, ../../src/scss/style.scss */
 #loadBlocker {
   display: none;
   height: 100%;
@@ -40,14 +63,14 @@ a.generalButton {
   background: #eee;
   z-index: 1000000;
 }
-/* line 45, ../../src/scss/style.scss */
+/* line 61, ../../src/scss/style.scss */
 #loadBlocker .blockerContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 52, ../../src/scss/style.scss */
+/* line 68, ../../src/scss/style.scss */
 #modal {
   display: none;
   height: 100%;
@@ -58,31 +81,31 @@ a.generalButton {
   background: #eee;
   z-index: 100;
 }
-/* line 62, ../../src/scss/style.scss */
+/* line 78, ../../src/scss/style.scss */
 #modal .modalContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 70, ../../src/scss/style.scss */
+/* line 86, ../../src/scss/style.scss */
 #cls {
   display: none;
 }
 
-/* line 75, ../../src/scss/style.scss */
+/* line 91, ../../src/scss/style.scss */
 .siteTitle {
   max-width: 960px;
   margin: 0 auto;
 }
 
-/* line 80, ../../src/scss/style.scss */
+/* line 96, ../../src/scss/style.scss */
 #map {
   width: 800px;
   height: 200px;
 }
 
-/* line 85, ../../src/scss/style.scss */
+/* line 101, ../../src/scss/style.scss */
 .contentWrapper {
   max-width: 960px;
   position: relative;
@@ -90,7 +113,7 @@ a.generalButton {
   margin: 0 auto;
 }
 
-/* line 92, ../../src/scss/style.scss */
+/* line 108, ../../src/scss/style.scss */
 .pageContent {
   max-width: 960px;
   -webkit-transition-property: left;
@@ -103,22 +126,22 @@ a.generalButton {
   transition-duration: 0.5s;
 }
 
-/* line 100, ../../src/scss/style.scss */
+/* line 116, ../../src/scss/style.scss */
 .pageRight {
   left: 960px;
 }
 
-/* line 103, ../../src/scss/style.scss */
+/* line 119, ../../src/scss/style.scss */
 .pageLeft {
   left: -960px;
 }
 
-/* line 107, ../../src/scss/style.scss */
+/* line 123, ../../src/scss/style.scss */
 .editTextInput {
   border: none;
 }
 
-/* line 112, ../../src/scss/style.scss */
+/* line 128, ../../src/scss/style.scss */
 #header {
   color: #e8eced;
   background: #151633;
@@ -126,21 +149,21 @@ a.generalButton {
   max-width: 1250px;
   margin: 0 auto;
 }
-/* line 120, ../../src/scss/style.scss */
+/* line 136, ../../src/scss/style.scss */
 #header .content {
   max-width: 960px;
   margin: 0 auto;
 }
-/* line 125, ../../src/scss/style.scss */
+/* line 141, ../../src/scss/style.scss */
 #header .tripTitle {
   font-size: 90px;
 }
-/* line 128, ../../src/scss/style.scss */
+/* line 144, ../../src/scss/style.scss */
 #header .tripSubtitle {
   font-size: 18px;
 }
 
-/* line 133, ../../src/scss/style.scss */
+/* line 149, ../../src/scss/style.scss */
 #map {
   width: 100%;
   height: 395px;
@@ -148,77 +171,393 @@ a.generalButton {
   margin: 0 auto;
 }
 
-/* line 143, ../../src/scss/style.scss */
+/* line 159, ../../src/scss/style.scss */
 #locations .location {
   padding-bottom: 33px;
+  margin-top: 25px;
   border-bottom: 1px solid #858390;
+  position: relative;
 }
-/* line 148, ../../src/scss/style.scss */
-#locations .locationName {
+/* line 165, ../../src/scss/style.scss */
+#locations .location .location-name {
   font-size: 36px;
   font-weight: bold;
+  background: url("/images/location-icon.png") no-repeat 0 7px;
+  padding-left: 24px;
 }
-/* line 153, ../../src/scss/style.scss */
-#locations .locationNotes {
-  margin: 0 16px;
+/* line 172, ../../src/scss/style.scss */
+#locations .location .location-notes {
+  min-height: 20px;
 }
-/* line 158, ../../src/scss/style.scss */
+/* line 176, ../../src/scss/style.scss */
+#locations .location .delete-location-link {
+  color: #ff0000;
+  position: absolute;
+  top: 15px;
+  right: 0;
+}
+/* line 187, ../../src/scss/style.scss */
 #locations .notesWrapper {
   margin: 0 40px;
+  /*min-height:44px;*/
 }
-/* line 162, ../../src/scss/style.scss */
+/* line 192, ../../src/scss/style.scss */
+#locations .notes-hidden {
+  text-align: center;
+  color: #858390;
+  font-weight: bold;
+  font-size: 18px;
+  display: none;
+  padding-bottom: 15px;
+}
+/* line 201, ../../src/scss/style.scss */
 #locations .note {
   font-size: 30px;
   margin: 22px 0;
-}
-
-/* line 172, ../../src/scss/style.scss */
-.category .categoryHeader {
   position: relative;
 }
-/* line 176, ../../src/scss/style.scss */
-.category .showHide {
-  position: absolute;
-  right: 0;
+/* line 207, ../../src/scss/style.scss */
+#locations .note .note-text {
+  font-style: italic;
 }
-/* line 181, ../../src/scss/style.scss */
-.category .categoryName {
+/* line 211, ../../src/scss/style.scss */
+#locations .note .note-from {
+  font-size: 14px;
+  color: #151633;
+}
+/* line 218, ../../src/scss/style.scss */
+#locations .note .note-link td {
+  vertical-align: middle;
+}
+/* line 222, ../../src/scss/style.scss */
+#locations .note .note-link .link-info {
+  padding-left: 16px;
+}
+/* line 226, ../../src/scss/style.scss */
+#locations .note .note-link .link-image {
+  border: 1px solid #151633;
+  max-width: 170px;
+}
+/* line 231, ../../src/scss/style.scss */
+#locations .note .note-link .link-title {
   font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+}
+/* line 236, ../../src/scss/style.scss */
+#locations .note .note-link .link-description {
+  font-size: 18px;
+  font-weight: normal;
+  display: inline-block;
+  font-style: italic;
+}
+/* line 245, ../../src/scss/style.scss */
+#locations .note .note-delete {
+  position: absolute;
+  top: 0;
+  right: -10px;
+}
+/* line 250, ../../src/scss/style.scss */
+#locations .note .note-delete a {
+  color: #ff0000;
 }
 
-/* line 190, ../../src/scss/style.scss */
-.addNote .txtNoteText {
-  width: 100%;
-  background: #fff;
-  padding: 16px 10px;
-  border: 1px solid #e8eced;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
+/* line 259, ../../src/scss/style.scss */
+a.add-location-link {
+  display: block;
+  padding: 20px 0;
+  font-size: 14;
+  text-transform: uppercase;
+  font-weight: bold;
+  width: 300px;
+  margin: 20px auto;
+  text-align: center;
+  color: #858390;
+  border: 1px solid #799b28;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
 }
-/* line 200, ../../src/scss/style.scss */
-.addNote a.addNoteLink {
+/* line 272, ../../src/scss/style.scss */
+a.add-location-link:hover {
+  background: #fff;
+  text-decoration: none;
+}
+
+/* line 280, ../../src/scss/style.scss */
+.category table {
+  width: 100%;
+}
+/* line 284, ../../src/scss/style.scss */
+.category .category-header {
+  margin: 0 10px 0 20px;
+}
+/* line 287, ../../src/scss/style.scss */
+.category .category-header .category-name {
+  font-size: 18px;
+  color: #858390;
+  width: 120px;
+  background: url("/images/category-icon.png") no-repeat;
+  padding-left: 30px;
+}
+/* line 294, ../../src/scss/style.scss */
+.category .category-header .middle-grey-line {
+  border-top: 1px solid #c0c2c8;
+  display: block;
+  height: 0px;
+}
+/* line 300, ../../src/scss/style.scss */
+.category .category-header .show-hide {
+  width: 37px;
+  text-align: right;
+}
+
+/* line 310, ../../src/scss/style.scss */
+.add-note {
+  padding: 0 10px;
+}
+/* line 315, ../../src/scss/style.scss */
+.add-note .txtNoteText {
+  width: 100%;
+  font-size: 18px;
+  padding: 16px 10px;
+}
+/* line 322, ../../src/scss/style.scss */
+.add-note a.add-note-link {
   display: block;
   padding: 16px 10px;
   color: #151633;
-  border: 1px solid #799b28;
   text-decoration: none;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+  background-image: url("/images/white-top.gif");
+  background-repeat: repeat-x;
+  border: 1px solid #799b28;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
 }
-/* line 209, ../../src/scss/style.scss */
-.addNote a.addNoteLink:hover {
+/* line 335, ../../src/scss/style.scss */
+.add-note a.add-note-link:hover {
   background-color: #fff;
 }
-/* line 213, ../../src/scss/style.scss */
-.addNote a.submitNoteLink {
+/* line 339, ../../src/scss/style.scss */
+.add-note a.submit-note-link {
   display: inline-block;
   background: #799b28;
-  height: 55px;
-  width: 55px;
+  border: 1px solid #799b28;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  width: 53px;
+  line-height: 53px;
+  position: relative;
+  top: -23px;
+  text-align: center;
+  text-decoration: none;
+  color: #e8eced;
+  font-weight: bold;
 }
+/* line 353, ../../src/scss/style.scss */
+.add-note .note-editor-bottom {
+  position: relative;
+  margin-top: 18px;
+}
+/* line 358, ../../src/scss/style.scss */
+.add-note .bottom-right-chunk {
+  float: right;
+}
+/* line 362, ../../src/scss/style.scss */
+.add-note .category-label {
+  font-size: 18px;
+  font-weight: bold;
+  padding-right: 6px;
+  position: relative;
+  top: -22px;
+}
+
+/************** Skin 1 *********************/
+/* line 372, ../../src/scss/style.scss */
+.dd {
+  /*display:inline-block !important;*/
+  text-align: left;
+  font-size: 21px;
+  position: relative;
+  display: inline-block;
+}
+/* line 379, ../../src/scss/style.scss */
+.dd .ddTitle {
+  padding: 14px 10px;
+  text-indent: 0;
+  cursor: pointer;
+  overflow: hidden;
+  font-style: italic;
+  border: 1px solid #858390;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 388, ../../src/scss/style.scss */
+.dd .ddTitle:hover {
+  border-color: #000;
+}
+/* line 392, ../../src/scss/style.scss */
+.dd .ddTitle span.arrow {
+  background: url(dd_arrow.gif) no-repeat 0 0;
+  float: right;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+/* line 401, ../../src/scss/style.scss */
+.dd .ddTitle span.ddTitleText {
+  text-indent: 1px;
+  overflow: hidden;
+}
+/* line 405, ../../src/scss/style.scss */
+.dd .ddTitle span.ddTitleText img {
+  text-align: left;
+  padding: 0 2px 0 0;
+}
+/* line 409, ../../src/scss/style.scss */
+.dd .ddTitle img.selected {
+  padding: 0 3px 0 0;
+  vertical-align: top;
+}
+/* line 415, ../../src/scss/style.scss */
+.dd .ddChild {
+  position: absolute;
+  border-top: none;
+  display: none;
+  margin: 0;
+  width: auto;
+  overflow: auto;
+  overflow-x: hidden !important;
+  background-color: #ffffff;
+  border: 1px solid #858390;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 427, ../../src/scss/style.scss */
+.dd .ddChild .opta a {
+  padding-left: 10px;
+}
+/* line 431, ../../src/scss/style.scss */
+.dd .ddChild a {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #000;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+/* line 441, ../../src/scss/style.scss */
+.dd .ddChild a:hover {
+  background-color: #799b28;
+}
+/* line 445, ../../src/scss/style.scss */
+.dd .ddChild a img {
+  border: 0;
+  padding: 0 2px 0 0;
+  vertical-align: middle;
+}
+/* line 450, ../../src/scss/style.scss */
+.dd .ddChild a.selected {
+  background-color: #799b28;
+  color: #e8eced;
+}
+
+/* line 459, ../../src/scss/style.scss */
+.hidden {
+  display: none;
+}
+
+/* line 461, ../../src/scss/style.scss */
+.dd .borderTop {
+  border-top: 1px solid #c3c3c3 !important;
+}
+
+/* line 462, ../../src/scss/style.scss */
+.dd .noBorderTop {
+  border-top: none 0  !important;
+}
+
+/************* use sprite *****************/
+/* line 467, ../../src/scss/style.scss */
+.dd .ddChild a.sprite, .dd .ddChild a.sprite:visited {
+  background-image: url(../icons/sprite.gif);
+  background-repeat: no-repeat;
+  padding-left: 24px;
+}
+
+/* line 473, ../../src/scss/style.scss */
+.dd .ddChild a.calendar, .dd .ddChild a.calendar:visited {
+  background-position: 0 -404px;
+}
+
+/* line 476, ../../src/scss/style.scss */
+.dd .ddChild a.shoppingcart, .dd .ddChild a.shoppingcart:visited {
+  background-position: 0 -330px;
+}
+
+/* line 479, ../../src/scss/style.scss */
+.dd .ddChild a.cd, .dd .ddChild a.cd:visited {
+  background-position: 0 -439px;
+}
+
+/* line 482, ../../src/scss/style.scss */
+.dd .ddChild a.email, .dd .ddChild a.email:visited {
+  background-position: 0 -256px;
+}
+
+/* line 485, ../../src/scss/style.scss */
+.dd .ddChild a.faq, .dd .ddChild a.faq:visited {
+  background-position: 0 -183px;
+}
+
+/* line 489, ../../src/scss/style.scss */
+.dd .ddChild a.games,
+.dd .ddChild a.games:visited {
+  background-position: 0 -365px;
+}
+
+/* line 492, ../../src/scss/style.scss */
+.dd .ddChild a.music, .dd .ddChild a.music:visited {
+  background-position: 0 -146px;
+}
+
+/* line 495, ../../src/scss/style.scss */
+.dd .ddChild a.phone, .dd .ddChild a.phone:visited {
+  background-position: 0 -109px;
+}
+
+/* line 498, ../../src/scss/style.scss */
+.dd .ddChild a.graph, .dd .ddChild a.graph:visited {
+  background-position: 0 -73px;
+}
+
+/* line 501, ../../src/scss/style.scss */
+.dd .ddChild a.secured, .dd .ddChild a.secured:visited {
+  background-position: 0 -37px;
+}
+
+/* line 504, ../../src/scss/style.scss */
+.dd .ddChild a.video, .dd .ddChild a.video:visited {
+  background-position: 0 0;
+}
+
+/*******************************/

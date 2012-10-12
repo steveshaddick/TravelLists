@@ -50,9 +50,7 @@
 			<?php
 			if ($main->isAdmin) {
 				?>
-				<div class="addLocation">
-					<a class="addLocationLink" href="javascript:void(0)">Add location to trip</a>
-				</div>
+				<a class="add-location-link" href="javascript:void(0)">Add a place</a>
 				<?php
 			}
 			?>
@@ -62,58 +60,77 @@
 	<div id="cls">
 
 		<div id="clsLocation" class="location">
-			<span class="locationName">$LOCATION$</span>
+			<span class="location-name">$LOCATION$</span>
 			<?php
 			if ($main->isAdmin) {
 				?>
-				<a class="deleteLocationLink" data-id="$LOCATION_ID$" href="javascript:void(0);">delete</a>
+				<a class="delete-location-link" data-id="$LOCATION_ID$" href="javascript:void(0);">X</a>
 				<?php
 			}
 			?>
-			<div class="locationNotes"></div>
-			<div class="addNote">
-				<a class="addNoteLink" href="javascript:void(0)">Add note to $LOCATION$</a>
+			<div class="location-notes"></div>
+			<div class="add-note">
+				<a class="add-note-link" href="javascript:void(0)">Suggest something in $LOCATION$</a>
 			</div>
 		</div>
 
 		<div id="clsCategory" class="category">
-			<div class="categoryHeader">
-				<span class="categoryName">$CATEGORY_NAME$</span><a class="showHide" href="javascript:void(0)">+</a>
+			<div class="category-header">
+				<table>
+					<tr>
+						<td class="category-name">$CATEGORY_NAME$</td>
+						<td><span class="middle-grey-line">&nbsp;</span></td>
+						<td class="show-hide"><a class="show-hide-link" href="javascript:void(0)">&#47;&#92;</a></td>
+					</tr>
+				</table>
 			</div>
 			<div class="notesWrapper"></div>
+			<div class="notes-hidden"></div>
 		</div>
 
 		<div id="clsNote" class="note">
 			<div class="note-text-wrapper">
 				<span class="note-text"></span>
 			</div>
-			<div class="noteLink">
+			<div class="note-link">
 				<table>
 					<tr>
 						<td><a target="_blank"><img class="link-image" src="/images/blank.gif" alt="" /></a></td>
-						<td><a target="_blank" class="link-title"></a></td>
+						<td class="link-info">
+							<a target="_blank" class="link-title"></a>
+							<span class="link-description"></span>
+						</td>
 					</tr>
 				</table>
 			</div>
-			<a class="deleteNoteLink" href="javascript:void(0)">delete</a>
+			<div class="note-from"></div>
+			<div class="note-delete">
+				<a class="note-delete-link" href="javascript:void(0)">x</a>
+			</div>
 		</div>
 
 		<div id="clsNoteEditor" class="note-editor">
 			<div class="note-text-wrapper">
-				<input type="text" id="txtNoteText" class="txtNoteText" />
+				<div style="padding: 0 22px 0 0;">
+					<input type="text" id="txtNoteText" class="txtNoteText" />
+				</div>
 			</div>
-			<div>
+			<div class="note-editor-bottom">
 				<label for"txtFromName">from</label>
 				<input type="text" id="txtFromName" class="txtFromName" />
 
-				<label for="selCategory">It's a</label>
-				<select id="selCategory">
-					<option value="0">Category</option>
-					<option value="1">Food</option>
-					<option value="2">Something Else</option>
-				</select>
-				<a class="submitNoteLink" href="javascript:void(0)">Add</a>
-				<a class="cancelNoteLink" href="javascript:void(0)">Cancel</a>
+				<div class="bottom-right-chunk">
+					<label class="category-label" for="selCategory">It's a</label>
+					<select name="category" id="selCategory" class="droptrip" style="width:188px">
+						<option value="0">[ choose ]</option>
+						<option value="1">place to stay</option>
+						<option value="2">place to eat</option>
+						<option value="3">thing to do</option>
+					</select>
+					<a class="submit-note-link" href="javascript:void(0)">+</a>
+					<a class="cancel-note-link" href="javascript:void(0)">Cancel</a>
+				</div>
+				<br class="clear" />
 			</div>
 		</div>
 
@@ -141,6 +158,8 @@
     	<?php
     }
     ?>
+
+    <script src="/js/jquery/jquery.dd.js"></script>
 
 	<script src="/js/Main.js"></script>
 

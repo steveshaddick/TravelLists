@@ -70,14 +70,15 @@ var ListAdmin = (function() {
 	var autocomplete = null;
 
 	function init() {
-		$('.addLocationLink').click(addLocation);
-		$(document).on('click', '.deleteLocationLink', deleteLocation);
+		$('.add-location-link').click(addLocation);
+		$(document).on('click', '.delete-location-link', deleteLocation);
 
 		var text = new EditText($("#tripTitle"), save);
 		text = new EditText($("#tripSubtitle"), save);
 	}
 
 	function addLocation() {
+		$('html, body').scrollTop(0);
 		Modal.load('/views/modal/addLocation.html', function() {
 			var options = {
 			  types: ['(regions)']

@@ -36,8 +36,8 @@ class URLMetaData {
 				$meta[strtolower($key)] = $meta[$key];
 			}
 
-			$meta['title'] = (isset($meta['title'])) ? htmlentities($meta['title']) : str_replace('http://', '', $url);
-			$meta['description'] = (isset($meta['description'])) ? htmlentities($meta['description']) : '';
+			$meta['title'] = (isset($meta['title'])) ? $meta['title'] : str_replace('http://', '', $url);
+			$meta['description'] = (isset($meta['description'])) ? $meta['description'] : '';
 			$meta['image'] = (isset($meta['image'])) ? $meta['image'] : '';
 
 		} catch (Exception $e) {

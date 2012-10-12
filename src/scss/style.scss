@@ -21,6 +21,15 @@ body {
 	display: none;
 }
 
+a {
+	text-decoration: none;
+	color: $green;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 a.generalButton {
 	display: inline-block;
 	padding: 10px;
@@ -30,6 +39,13 @@ a.generalButton {
 	&:hover {
 
 	}
+}
+
+input {
+	@include border($darkGrey);
+	background-color:#fff;
+	background-image: url('/images/input-bg.gif');
+	background-repeat: repeat-x;
 }
 
 #loadBlocker {
@@ -142,81 +158,350 @@ a.generalButton {
 
 	.location {
 		padding-bottom:33px;
+		margin-top: 25px;
 		border-bottom: 1px solid $darkGrey;
+		position:relative;
+
+		.location-name {
+			font-size:36px;
+			font-weight:bold;
+			background: url('/images/location-icon.png') no-repeat 0 7px;
+			padding-left:24px;
+		}
+
+		.location-notes {
+			min-height: 20px;
+		}
+
+		.delete-location-link {
+			color: #ff0000;
+			position:absolute;
+			top:15px;
+			right:0;
+		}
 	}
 
-	.locationName {
-		font-size:36px;
-		font-weight:bold;
-	}
 
-	.locationNotes {
-		margin:0 16px;
-	}
 
 
 	.notesWrapper {
 		margin: 0 40px;
+		/*min-height:44px;*/
+	}
+
+	.notes-hidden {
+		text-align:center;
+		color:$darkGrey;
+		font-weight:bold;
+		font-size:18px;
+		display:none;
+		padding-bottom: 15px;
 	}
 
 	.note {
+
 		font-size:30px;
 		margin: 22px 0;
+		position:relative;
+
+		.note-text {
+			font-style:italic;
+		}
+
+		.note-from {
+			font-size:14px;
+			color:$darkBlue;
+		}
+
+		.note-link {
+
+			td {
+				vertical-align: middle;
+			}
+
+			.link-info {
+				padding-left:16px;
+			}
+
+			.link-image {
+				border:1px solid $darkBlue;
+				max-width:170px;
+			}
+
+			.link-title {
+				font-size: 18px;
+				font-weight:bold;
+				display:inline-block;
+			}
+			.link-description {
+				font-size: 18px;
+				font-weight:normal;
+				display:inline-block;
+				font-style: italic;
+
+			}
+		}
+
+		.note-delete {
+			position:absolute;
+			top:0;
+			right:-10px;
+			
+			a {
+				color:#ff0000;
+			}
+		}
+
 	}
 
-	
+}
+
+a.add-location-link {
+	display:block;
+	padding: 20px 0;
+	font-size:14;
+	text-transform:uppercase;
+	font-weight:bold;
+	width: 300px;
+	margin: 20px auto;
+	text-align: center;
+	color: $darkGrey;
+
+	@include border($green);
+
+	&:hover {
+		background:#fff;
+		text-decoration: none;
+	}
 }
 
 .category {
+
+	table {
+		width: 100%;
+	}
 	
-	.categoryHeader {
-		position:relative;
-	}
+	.category-header {
+		margin: 0 10px 0 20px;
 
-	.showHide {
-		position:absolute;
-		right:0;
-	}
+		.category-name {
+			font-size:18px;
+			color:$darkGrey;
+			width:120px;
+			background: url('/images/category-icon.png') no-repeat;
+			padding-left:30px;
+		}
+		.middle-grey-line {
+			border-top: 1px solid $mediumGrey;
+    		display: block;
+    		height: 0px;
+		}
 
-	.categoryName {
-		font-size:18px;
-	}
+		.show-hide {
+			width:37px;
+			text-align: right;
+		}
+		.show-hide-link {
 
+		}
+	}
 }
 
-.addNote {
+.add-note {
+
+	padding: 0 10px;
 
 
 	.txtNoteText {
 		width:100%;
-		background:#fff;
+		font-size:18px;
 		padding:16px 10px;
-		border: 1px solid $lightGrey;
-
-		@include border-radius($borderRadius);
 
 	}
 
-	a.addNoteLink {
+	a.add-note-link {
 		display:block;
 		padding:16px 10px;
 		color: $darkBlue;
-		border: 1px solid $green;
 		text-decoration:none;
+		font-size:18px;
+		font-weight:bold;
+		font-style:italic;
+		background-image: url('/images/white-top.gif');
+		background-repeat:repeat-x;
 
-		@include border-radius($borderRadius);
+		@include border($green);
 	}
-	a.addNoteLink:hover {
+	a.add-note-link:hover {
 		background-color:#fff;
 	}
 
-	a.submitNoteLink {
+	a.submit-note-link {
 		display:inline-block;
 		background:$green;
-		height:55px;
-		width:55px;
+		@include border($green);
+		width:53px;
+		line-height: 53px;
+		position: relative;
+		top: -23px;
+		text-align: center;
+		text-decoration: none;
+		color: $lightGrey;
+		font-weight: bold;
+	}
+
+	.note-editor-bottom {
+		position:relative;
+		margin-top:18px;
+	}
+
+	.bottom-right-chunk {
+		float: right;
+	}
+
+	.category-label {
+		font-size: 18px;
+	    font-weight: bold;
+	    padding-right: 6px;
+	    position: relative;
+	    top: -22px;
 	}
 }
 
-	
+/************** Skin 1 *********************/
+.dd {
+	/*display:inline-block !important;*/
+	text-align:left;
+	font-size:21px;
+	position:relative;
+	display: inline-block;
 
+	.ddTitle {
+		padding:14px 10px;
+		text-indent:0;
+		cursor:pointer;
+		overflow:hidden;
+		font-style: italic;
+
+		@include border($darkGrey);
+
+		&:hover {
+			border-color:#000;
+		}
+
+		span.arrow {
+			background:url(dd_arrow.gif) no-repeat 0 0; 
+			float:right; 
+			display:inline-block;
+			width:16px; 
+			height:16px; 
+			cursor:pointer; 
+		}
+
+		span.ddTitleText {
+			text-indent:1px; 
+			overflow:hidden; 
+		}
+		span.ddTitleText img{
+			text-align:left; 
+			padding:0 2px 0 0;
+		}
+		img.selected {
+			padding:0 3px 0 0;
+			vertical-align:top;
+		}
+	}
+
+	.ddChild {
+		position:absolute;
+		border-top:none;
+		display:none;
+		margin:0;
+		width:auto;
+		overflow:auto;
+		overflow-x:hidden !important;
+		background-color:#ffffff;
+
+		@include border($darkGrey);
+
+		.opta a{
+			padding-left:10px
+		}
+
+		a {
+			display:block;
+			padding:5px 10px;
+			text-decoration:none;
+			color:#000;
+			overflow:hidden;
+			white-space:nowrap;
+			cursor:pointer;
+		}
+
+		a:hover {
+			background-color:$green;
+		}
+
+		a img {
+			border:0;
+			padding:0 2px 0 0;
+			vertical-align:middle;
+		}
+		a.selected {
+			background-color:$green;
+			color: $lightGrey;
+			
+		}
+	}
+}
+
+
+.hidden {display:none;}
+
+.dd .borderTop{border-top:1px solid #c3c3c3 !important;}
+.dd .noBorderTop{border-top:none 0  !important}
+
+
+
+/************* use sprite *****************/
+.dd .ddChild a.sprite, .dd .ddChild a.sprite:visited {
+	background-image:url(../icons/sprite.gif);
+	background-repeat:no-repeat;
+	padding-left:24px;
+}
+
+.dd .ddChild a.calendar, .dd .ddChild a.calendar:visited {
+	background-position:0 -404px;
+}
+.dd .ddChild a.shoppingcart, .dd .ddChild a.shoppingcart:visited {
+	background-position:0 -330px;
+}
+.dd .ddChild a.cd, .dd .ddChild a.cd:visited {
+	background-position:0 -439px;
+}
+.dd .ddChild a.email, .dd .ddChild a.email:visited {
+	background-position:0 -256px;
+}
+.dd .ddChild a.faq, .dd .ddChild a.faq:visited {
+	background-position:0 -183px;
+}
+.dd .ddChild a.games,
+.dd .ddChild a.games:visited {
+	background-position:0 -365px;
+}
+.dd .ddChild a.music, .dd .ddChild a.music:visited {
+	background-position:0 -146px;
+}
+.dd .ddChild a.phone, .dd .ddChild a.phone:visited {
+	background-position:0 -109px;
+}
+.dd .ddChild a.graph, .dd .ddChild a.graph:visited {
+	background-position:0 -73px;
+}
+.dd .ddChild a.secured, .dd .ddChild a.secured:visited {
+	background-position:0 -37px;
+}
+.dd .ddChild a.video, .dd .ddChild a.video:visited {
+	background-position:0 0;
+}
+/*******************************/
