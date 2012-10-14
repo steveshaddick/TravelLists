@@ -41,6 +41,12 @@ a.generalButton {
 	}
 }
 
+ul, li {
+	margin:0;
+	padding:0;
+	list-style-type: none;
+}
+
 input {
 	@include border($darkGrey);
 	background-color:#fff;
@@ -184,7 +190,7 @@ input {
 
 
 
-	.notesWrapper {
+	.notes-wrapper {
 		margin: 0 40px;
 		/*min-height:44px;*/
 	}

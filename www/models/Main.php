@@ -249,7 +249,12 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
+		if (!$this->isAdmin) {
+			return false;
+		}
+
 		$tripId = $_SESSION['trip_id'];
+
 
 		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Locations WHERE trip_id=?");
 		$stmt->execute(array($tripId));
@@ -352,6 +357,9 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
+		if (!$this->isAdmin) {
+			return false;
+		}
 		$tripId = $_SESSION['trip_id'];
 
 		if (!$this->isAdmin) {
@@ -371,13 +379,34 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
+		if (!$this->isAdmin) {
+			return false;
+		}
 		$tripId = $_SESSION['trip_id'];
 
-		$tripTitle = $arr['tripTitle'];
-		$tripSubtitle = $arr['tripSubtitle'];
+		foreach ($arr as $key=>$value) {
+			switch ($key) {
+				case 'tripTitle':
+					$stmt = $this->db->prepare("UPDATE Lists SET tripName=? WHERE _id=?");
+					$stmt->execute(array($arr['tripTitle'], $tripId));
+					break;
 
-		$stmt = $this->db->prepare("UPDATE Lists SET tripName=?, subtitle=? WHERE _id=?");
-		$stmt->execute(array($tripTitle, $tripSubtitle, $tripId));
+				case 'tripSubtitle':
+					$stmt = $this->db->prepare("UPDATE Lists SET tripName=? WHERE _id=?");
+					$stmt->execute(array($arr['tripSubtitle'], $tripId));
+					break;
+
+				case 'noteOrder':
+					$order = 1;
+					foreach ($value['notes'] as $note) {
+						$stmt = $this->db->prepare("UPDATE Notes SET listOrder=? WHERE _id=?");
+						$stmt->execute(array($order, $note));
+						$order ++;
+					}
+					break;
+			}
+		}
+
 
 		return true;
 

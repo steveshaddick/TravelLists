@@ -5,8 +5,7 @@ if (typeof console == "undefined") {
 }
 
 var GLOBAL = {
-
-
+	isAdmin: false
 };
 
 var EventDispatcher = (function() {
@@ -265,7 +264,7 @@ var Gate = (function() {
 
 	function sendEmailReturn(data) {
 		Main.loadRelease();
-		
+
 		$("#lostTripPage").addClass('hidden');
 		$("#txtAdminEmail").prop('disabled', true);
 
@@ -303,12 +302,16 @@ function Location(data) {
 	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
 	$("#locations").append(this.$element);
 
-
 	var notes;
 	for (var i=0, len=data.notes.length; i<len; i++) {
 		this.addNote(data.notes[i]);
 	}
 
+}
+Location.prototype.destroy = function() {
+	for (var category in this.categories) {
+		category.obj.destroy();
+	}
 }
 Location.prototype.addCategory = function(categoryId) {
 	
@@ -357,7 +360,7 @@ Location.prototype.addNote = function(note) {
 	} 
 	this.parseNote(note.id);
 
-	$('.notesWrapper', $category).append($note);
+	$('.notes-wrapper', $category).append($note);
 	this.categories[note.categoryId].obj.noteAdded();
 }
 Location.prototype.parseNote = function(noteId, linkData) {
@@ -436,16 +439,23 @@ var Category = function($element) {
 	this.isOpen = true;
 
 	$('.show-hide', this.$element).click({ category: this }, this.showHide);
+
+	if (GLOBAL.isAdmin) {
+		$('.notes-wrapper', $element).sortable({
+			update: ListAdmin.sortNotes
+		});
+		$('.notes-wrapper', $element).disableSelection();
+	}
 }
 Category.prototype.showHide = function (event) {
 	var category = event.data.category;
 
 	if (category.isOpen) {
-		$('.notesWrapper', category.$element).slideUp();
+		$('.notes-wrapper', category.$element).slideUp();
 		$('.notes-hidden', category.$element).show();
 		category.isOpen = false;
 	} else {
-		$('.notesWrapper', category.$element).slideDown();
+		$('.notes-wrapper', category.$element).slideDown();
 		$('.notes-hidden', category.$element).hide();
 		category.isOpen = true;
 	}
@@ -458,7 +468,7 @@ Category.prototype.noteAdded = function () {
 		$('.notes-hidden', this.$element).html(this.total + ' note hidden');
 	}
 	if (!this.isOpen) {
-		$('.notesWrapper', this.$element).slideDown();
+		$('.notes-wrapper', this.$element).slideDown();
 		$('.notes-hidden', this.$element).hide();
 		this.isOpen = true;
 	}
@@ -468,6 +478,7 @@ Category.prototype.destroy = function () {
 	this.$element = false;
 	this.total = 0;
 	$('.show-hide', this.$element).unbind('click');
+	$('.notes-wrapper', $element).destroy();
 }
 
 
@@ -599,6 +610,10 @@ var Trip = (function() {
 						addLocation(data.locations[i]);
 					}
 				}
+
+				if (GLOBAL.isAdmin) {
+					ListAdmin.init();
+				}
 			},
 			function() {
 				//error
@@ -677,6 +692,9 @@ var Trip = (function() {
 			locations[locationId].marker.setMap(null);
 			google.maps.event.removeEventListener(locations[locationId].marker, 'click');
 		}
+
+		locations[locationId].destroy();
+
 		locations.splice(locationId, 1);
 		locationCount --;
 
@@ -711,6 +729,7 @@ var Main = (function() {
 	function init(obj) {
 		
 		Ajax.init(obj.a);
+		GLOBAL.isAdmin = obj.isAdmin;
 
 
 	}

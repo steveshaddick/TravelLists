@@ -40,6 +40,13 @@ a.generalButton {
 }
 
 /* line 44, ../../src/scss/style.scss */
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* line 50, ../../src/scss/style.scss */
 input {
   border: 1px solid #858390;
   -webkit-border-radius: 4px;
@@ -52,7 +59,7 @@ input {
   background-repeat: repeat-x;
 }
 
-/* line 51, ../../src/scss/style.scss */
+/* line 57, ../../src/scss/style.scss */
 #loadBlocker {
   display: none;
   height: 100%;
@@ -63,14 +70,14 @@ input {
   background: #eee;
   z-index: 1000000;
 }
-/* line 61, ../../src/scss/style.scss */
+/* line 67, ../../src/scss/style.scss */
 #loadBlocker .blockerContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 68, ../../src/scss/style.scss */
+/* line 74, ../../src/scss/style.scss */
 #modal {
   display: none;
   height: 100%;
@@ -81,31 +88,31 @@ input {
   background: #eee;
   z-index: 100;
 }
-/* line 78, ../../src/scss/style.scss */
+/* line 84, ../../src/scss/style.scss */
 #modal .modalContent {
   width: 200px;
   margin: 100px auto 0;
   height: 100px;
 }
 
-/* line 86, ../../src/scss/style.scss */
+/* line 92, ../../src/scss/style.scss */
 #cls {
   display: none;
 }
 
-/* line 91, ../../src/scss/style.scss */
+/* line 97, ../../src/scss/style.scss */
 .siteTitle {
   max-width: 960px;
   margin: 0 auto;
 }
 
-/* line 96, ../../src/scss/style.scss */
+/* line 102, ../../src/scss/style.scss */
 #map {
   width: 800px;
   height: 200px;
 }
 
-/* line 101, ../../src/scss/style.scss */
+/* line 107, ../../src/scss/style.scss */
 .contentWrapper {
   max-width: 960px;
   position: relative;
@@ -113,7 +120,7 @@ input {
   margin: 0 auto;
 }
 
-/* line 108, ../../src/scss/style.scss */
+/* line 114, ../../src/scss/style.scss */
 .pageContent {
   max-width: 960px;
   -webkit-transition-property: left;
@@ -126,22 +133,22 @@ input {
   transition-duration: 0.5s;
 }
 
-/* line 116, ../../src/scss/style.scss */
+/* line 122, ../../src/scss/style.scss */
 .pageRight {
   left: 960px;
 }
 
-/* line 119, ../../src/scss/style.scss */
+/* line 125, ../../src/scss/style.scss */
 .pageLeft {
   left: -960px;
 }
 
-/* line 123, ../../src/scss/style.scss */
+/* line 129, ../../src/scss/style.scss */
 .editTextInput {
   border: none;
 }
 
-/* line 128, ../../src/scss/style.scss */
+/* line 134, ../../src/scss/style.scss */
 #header {
   color: #e8eced;
   background: #151633;
@@ -149,21 +156,21 @@ input {
   max-width: 1250px;
   margin: 0 auto;
 }
-/* line 136, ../../src/scss/style.scss */
+/* line 142, ../../src/scss/style.scss */
 #header .content {
   max-width: 960px;
   margin: 0 auto;
 }
-/* line 141, ../../src/scss/style.scss */
+/* line 147, ../../src/scss/style.scss */
 #header .tripTitle {
   font-size: 90px;
 }
-/* line 144, ../../src/scss/style.scss */
+/* line 150, ../../src/scss/style.scss */
 #header .tripSubtitle {
   font-size: 18px;
 }
 
-/* line 149, ../../src/scss/style.scss */
+/* line 155, ../../src/scss/style.scss */
 #map {
   width: 100%;
   height: 395px;
@@ -171,37 +178,37 @@ input {
   margin: 0 auto;
 }
 
-/* line 159, ../../src/scss/style.scss */
+/* line 165, ../../src/scss/style.scss */
 #locations .location {
   padding-bottom: 33px;
   margin-top: 25px;
   border-bottom: 1px solid #858390;
   position: relative;
 }
-/* line 165, ../../src/scss/style.scss */
+/* line 171, ../../src/scss/style.scss */
 #locations .location .location-name {
   font-size: 36px;
   font-weight: bold;
   background: url("/images/location-icon.png") no-repeat 0 7px;
   padding-left: 24px;
 }
-/* line 172, ../../src/scss/style.scss */
+/* line 178, ../../src/scss/style.scss */
 #locations .location .location-notes {
   min-height: 20px;
 }
-/* line 176, ../../src/scss/style.scss */
+/* line 182, ../../src/scss/style.scss */
 #locations .location .delete-location-link {
   color: #ff0000;
   position: absolute;
   top: 15px;
   right: 0;
 }
-/* line 187, ../../src/scss/style.scss */
-#locations .notesWrapper {
+/* line 193, ../../src/scss/style.scss */
+#locations .notes-wrapper {
   margin: 0 40px;
   /*min-height:44px;*/
 }
-/* line 192, ../../src/scss/style.scss */
+/* line 198, ../../src/scss/style.scss */
 #locations .notes-hidden {
   text-align: center;
   color: #858390;
@@ -210,59 +217,59 @@ input {
   display: none;
   padding-bottom: 15px;
 }
-/* line 201, ../../src/scss/style.scss */
+/* line 207, ../../src/scss/style.scss */
 #locations .note {
   font-size: 30px;
   margin: 22px 0;
   position: relative;
 }
-/* line 207, ../../src/scss/style.scss */
+/* line 213, ../../src/scss/style.scss */
 #locations .note .note-text {
   font-style: italic;
 }
-/* line 211, ../../src/scss/style.scss */
+/* line 217, ../../src/scss/style.scss */
 #locations .note .note-from {
   font-size: 14px;
   color: #151633;
 }
-/* line 218, ../../src/scss/style.scss */
+/* line 224, ../../src/scss/style.scss */
 #locations .note .note-link td {
   vertical-align: middle;
 }
-/* line 222, ../../src/scss/style.scss */
+/* line 228, ../../src/scss/style.scss */
 #locations .note .note-link .link-info {
   padding-left: 16px;
 }
-/* line 226, ../../src/scss/style.scss */
+/* line 232, ../../src/scss/style.scss */
 #locations .note .note-link .link-image {
   border: 1px solid #151633;
   max-width: 170px;
 }
-/* line 231, ../../src/scss/style.scss */
+/* line 237, ../../src/scss/style.scss */
 #locations .note .note-link .link-title {
   font-size: 18px;
   font-weight: bold;
   display: inline-block;
 }
-/* line 236, ../../src/scss/style.scss */
+/* line 242, ../../src/scss/style.scss */
 #locations .note .note-link .link-description {
   font-size: 18px;
   font-weight: normal;
   display: inline-block;
   font-style: italic;
 }
-/* line 245, ../../src/scss/style.scss */
+/* line 251, ../../src/scss/style.scss */
 #locations .note .note-delete {
   position: absolute;
   top: 0;
   right: -10px;
 }
-/* line 250, ../../src/scss/style.scss */
+/* line 256, ../../src/scss/style.scss */
 #locations .note .note-delete a {
   color: #ff0000;
 }
 
-/* line 259, ../../src/scss/style.scss */
+/* line 265, ../../src/scss/style.scss */
 a.add-location-link {
   display: block;
   padding: 20px 0;
@@ -280,21 +287,21 @@ a.add-location-link {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 272, ../../src/scss/style.scss */
+/* line 278, ../../src/scss/style.scss */
 a.add-location-link:hover {
   background: #fff;
   text-decoration: none;
 }
 
-/* line 280, ../../src/scss/style.scss */
+/* line 286, ../../src/scss/style.scss */
 .category table {
   width: 100%;
 }
-/* line 284, ../../src/scss/style.scss */
+/* line 290, ../../src/scss/style.scss */
 .category .category-header {
   margin: 0 10px 0 20px;
 }
-/* line 287, ../../src/scss/style.scss */
+/* line 293, ../../src/scss/style.scss */
 .category .category-header .category-name {
   font-size: 18px;
   color: #858390;
@@ -302,29 +309,29 @@ a.add-location-link:hover {
   background: url("/images/category-icon.png") no-repeat;
   padding-left: 30px;
 }
-/* line 294, ../../src/scss/style.scss */
+/* line 300, ../../src/scss/style.scss */
 .category .category-header .middle-grey-line {
   border-top: 1px solid #c0c2c8;
   display: block;
   height: 0px;
 }
-/* line 300, ../../src/scss/style.scss */
+/* line 306, ../../src/scss/style.scss */
 .category .category-header .show-hide {
   width: 37px;
   text-align: right;
 }
 
-/* line 310, ../../src/scss/style.scss */
+/* line 316, ../../src/scss/style.scss */
 .add-note {
   padding: 0 10px;
 }
-/* line 315, ../../src/scss/style.scss */
+/* line 321, ../../src/scss/style.scss */
 .add-note .txtNoteText {
   width: 100%;
   font-size: 18px;
   padding: 16px 10px;
 }
-/* line 322, ../../src/scss/style.scss */
+/* line 328, ../../src/scss/style.scss */
 .add-note a.add-note-link {
   display: block;
   padding: 16px 10px;
@@ -342,11 +349,11 @@ a.add-location-link:hover {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 335, ../../src/scss/style.scss */
+/* line 341, ../../src/scss/style.scss */
 .add-note a.add-note-link:hover {
   background-color: #fff;
 }
-/* line 339, ../../src/scss/style.scss */
+/* line 345, ../../src/scss/style.scss */
 .add-note a.submit-note-link {
   display: inline-block;
   background: #799b28;
@@ -365,16 +372,16 @@ a.add-location-link:hover {
   color: #e8eced;
   font-weight: bold;
 }
-/* line 353, ../../src/scss/style.scss */
+/* line 359, ../../src/scss/style.scss */
 .add-note .note-editor-bottom {
   position: relative;
   margin-top: 18px;
 }
-/* line 358, ../../src/scss/style.scss */
+/* line 364, ../../src/scss/style.scss */
 .add-note .bottom-right-chunk {
   float: right;
 }
-/* line 362, ../../src/scss/style.scss */
+/* line 368, ../../src/scss/style.scss */
 .add-note .category-label {
   font-size: 18px;
   font-weight: bold;
@@ -384,7 +391,7 @@ a.add-location-link:hover {
 }
 
 /************** Skin 1 *********************/
-/* line 372, ../../src/scss/style.scss */
+/* line 378, ../../src/scss/style.scss */
 .dd {
   /*display:inline-block !important;*/
   text-align: left;
@@ -392,7 +399,7 @@ a.add-location-link:hover {
   position: relative;
   display: inline-block;
 }
-/* line 379, ../../src/scss/style.scss */
+/* line 385, ../../src/scss/style.scss */
 .dd .ddTitle {
   padding: 14px 10px;
   text-indent: 0;
@@ -406,11 +413,11 @@ a.add-location-link:hover {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 388, ../../src/scss/style.scss */
+/* line 394, ../../src/scss/style.scss */
 .dd .ddTitle:hover {
   border-color: #000;
 }
-/* line 392, ../../src/scss/style.scss */
+/* line 398, ../../src/scss/style.scss */
 .dd .ddTitle span.arrow {
   background: url(dd_arrow.gif) no-repeat 0 0;
   float: right;
@@ -419,22 +426,22 @@ a.add-location-link:hover {
   height: 16px;
   cursor: pointer;
 }
-/* line 401, ../../src/scss/style.scss */
+/* line 407, ../../src/scss/style.scss */
 .dd .ddTitle span.ddTitleText {
   text-indent: 1px;
   overflow: hidden;
 }
-/* line 405, ../../src/scss/style.scss */
+/* line 411, ../../src/scss/style.scss */
 .dd .ddTitle span.ddTitleText img {
   text-align: left;
   padding: 0 2px 0 0;
 }
-/* line 409, ../../src/scss/style.scss */
+/* line 415, ../../src/scss/style.scss */
 .dd .ddTitle img.selected {
   padding: 0 3px 0 0;
   vertical-align: top;
 }
-/* line 415, ../../src/scss/style.scss */
+/* line 421, ../../src/scss/style.scss */
 .dd .ddChild {
   position: absolute;
   border-top: none;
@@ -451,11 +458,11 @@ a.add-location-link:hover {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 427, ../../src/scss/style.scss */
+/* line 433, ../../src/scss/style.scss */
 .dd .ddChild .opta a {
   padding-left: 10px;
 }
-/* line 431, ../../src/scss/style.scss */
+/* line 437, ../../src/scss/style.scss */
 .dd .ddChild a {
   display: block;
   padding: 5px 10px;
@@ -465,97 +472,97 @@ a.add-location-link:hover {
   white-space: nowrap;
   cursor: pointer;
 }
-/* line 441, ../../src/scss/style.scss */
+/* line 447, ../../src/scss/style.scss */
 .dd .ddChild a:hover {
   background-color: #799b28;
 }
-/* line 445, ../../src/scss/style.scss */
+/* line 451, ../../src/scss/style.scss */
 .dd .ddChild a img {
   border: 0;
   padding: 0 2px 0 0;
   vertical-align: middle;
 }
-/* line 450, ../../src/scss/style.scss */
+/* line 456, ../../src/scss/style.scss */
 .dd .ddChild a.selected {
   background-color: #799b28;
   color: #e8eced;
 }
 
-/* line 459, ../../src/scss/style.scss */
+/* line 465, ../../src/scss/style.scss */
 .hidden {
   display: none;
 }
 
-/* line 461, ../../src/scss/style.scss */
+/* line 467, ../../src/scss/style.scss */
 .dd .borderTop {
   border-top: 1px solid #c3c3c3 !important;
 }
 
-/* line 462, ../../src/scss/style.scss */
+/* line 468, ../../src/scss/style.scss */
 .dd .noBorderTop {
   border-top: none 0  !important;
 }
 
 /************* use sprite *****************/
-/* line 467, ../../src/scss/style.scss */
+/* line 473, ../../src/scss/style.scss */
 .dd .ddChild a.sprite, .dd .ddChild a.sprite:visited {
   background-image: url(../icons/sprite.gif);
   background-repeat: no-repeat;
   padding-left: 24px;
 }
 
-/* line 473, ../../src/scss/style.scss */
+/* line 479, ../../src/scss/style.scss */
 .dd .ddChild a.calendar, .dd .ddChild a.calendar:visited {
   background-position: 0 -404px;
 }
 
-/* line 476, ../../src/scss/style.scss */
+/* line 482, ../../src/scss/style.scss */
 .dd .ddChild a.shoppingcart, .dd .ddChild a.shoppingcart:visited {
   background-position: 0 -330px;
 }
 
-/* line 479, ../../src/scss/style.scss */
+/* line 485, ../../src/scss/style.scss */
 .dd .ddChild a.cd, .dd .ddChild a.cd:visited {
   background-position: 0 -439px;
 }
 
-/* line 482, ../../src/scss/style.scss */
+/* line 488, ../../src/scss/style.scss */
 .dd .ddChild a.email, .dd .ddChild a.email:visited {
   background-position: 0 -256px;
 }
 
-/* line 485, ../../src/scss/style.scss */
+/* line 491, ../../src/scss/style.scss */
 .dd .ddChild a.faq, .dd .ddChild a.faq:visited {
   background-position: 0 -183px;
 }
 
-/* line 489, ../../src/scss/style.scss */
+/* line 495, ../../src/scss/style.scss */
 .dd .ddChild a.games,
 .dd .ddChild a.games:visited {
   background-position: 0 -365px;
 }
 
-/* line 492, ../../src/scss/style.scss */
+/* line 498, ../../src/scss/style.scss */
 .dd .ddChild a.music, .dd .ddChild a.music:visited {
   background-position: 0 -146px;
 }
 
-/* line 495, ../../src/scss/style.scss */
+/* line 501, ../../src/scss/style.scss */
 .dd .ddChild a.phone, .dd .ddChild a.phone:visited {
   background-position: 0 -109px;
 }
 
-/* line 498, ../../src/scss/style.scss */
+/* line 504, ../../src/scss/style.scss */
 .dd .ddChild a.graph, .dd .ddChild a.graph:visited {
   background-position: 0 -73px;
 }
 
-/* line 501, ../../src/scss/style.scss */
+/* line 507, ../../src/scss/style.scss */
 .dd .ddChild a.secured, .dd .ddChild a.secured:visited {
   background-position: 0 -37px;
 }
 
-/* line 504, ../../src/scss/style.scss */
+/* line 510, ../../src/scss/style.scss */
 .dd .ddChild a.video, .dd .ddChild a.video:visited {
   background-position: 0 0;
 }

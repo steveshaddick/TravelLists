@@ -73,8 +73,13 @@ var ListAdmin = (function() {
 		$('.add-location-link').click(addLocation);
 		$(document).on('click', '.delete-location-link', deleteLocation);
 
-		var text = new EditText($("#tripTitle"), save);
-		text = new EditText($("#tripSubtitle"), save);
+		var text = new EditText($("#tripTitle"), function() {
+			save({tripTitle: $("#tripTitle").html()});
+		});
+		text = new EditText($("#tripSubtitle"), function() {
+			save({tripSubtitle: $("#tripSubtitle").html()});
+		});
+
 	}
 
 	function addLocation() {
@@ -119,19 +124,32 @@ var ListAdmin = (function() {
 			});
 	}
 
-	function save() {
+	function save(data) {
 
-		Ajax.call('saveTrip',
-		{
-			tripTitle: $("#tripTitle").html(),
-			tripSubtitle: $("#tripSubtitle").html()
+		Ajax.call('saveTrip', data);
+
+	}
+
+	function sortNotes(event, ui) {
+		var $parent = ui.item.parent();
+
+		var notes = [];
+		$('li', $parent).each(function(index) {
+			notes.push($(this).attr('id').replace('note_', ''));
 		});
 
+		save({
+			noteOrder: {	
+				category: $parent.parent().attr('id').replace('category_', ''),
+				notes: notes
+			}
+		});
 	}
 
 	return {
 		init: init,
-		save: save
+		save: save,
+		sortNotes: sortNotes
 	}
 
 }());
