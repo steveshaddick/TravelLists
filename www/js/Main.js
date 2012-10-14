@@ -216,6 +216,14 @@ var Gate = (function() {
 		$("#txtEmail").prop('disabled', false);
 	}
 
+	function showLostTrip() {
+		$("#landingPage").addClass('hidden');
+		$("#txtTripName").prop('disabled', true);
+
+		$("#lostTripPage").removeClass('hidden');
+		$("#txtAdminEmail").prop('disabled', false).focus();
+	}
+
 	function createTrip() {
 
 		//validate
@@ -235,21 +243,40 @@ var Gate = (function() {
 		);
 	}
 
+	function sendEmail() {
+		//validate
+
+		var adminEmail = $("#txtAdminEmail").val();
+		Main.loadBlock();
+		Ajax.call('sendEmail',
+			{
+				adminEmail: adminEmail
+			},
+			sendEmailReturn
+		);
+	}
+
 	function createTripReturn(data) {
 
 		//check for success
-		if (data && data.success) {
-			window.location = 'http://dev.maketripnotes.com/list/' + data.tripHash;
-		} else {
-			
-		}
-		
+		window.location = 'list/' + data.tripHash;
 
+	}
+
+	function sendEmailReturn(data) {
+		Main.loadRelease();
+		
+		$("#lostTripPage").addClass('hidden');
+		$("#txtAdminEmail").prop('disabled', true);
+
+		$("#sentEmailPage").removeClass('hidden');
 	}
 
 	return {
 		showInfo: showInfo,
-		createTrip: createTrip
+		createTrip: createTrip,
+		showLostTrip: showLostTrip,
+		sendEmail: sendEmail
 	};
 
 }());
@@ -559,6 +586,9 @@ var Trip = (function() {
 	var $hiddenNoteLink = null;
 
 	function loadTrip(obj) {
+
+		$("body select").msDropDown();
+
 		Ajax.call('loadTrip', {}, 
 			function(data) {
 
@@ -601,6 +631,10 @@ var Trip = (function() {
 				title: location.name
 			}
 			marker = new google.maps.Marker(markerOptions);
+			google.maps.event.addListener(marker, 'click', function() {
+				var scrollTo = location.$element.offset().top;
+				$('html, body').animate({scrollTop: scrollTo}, 500);
+			});
 			marker.setMap(map);
 
 			bounds.extend(markerOptions.position);
@@ -641,6 +675,7 @@ var Trip = (function() {
 		$("#location_" + locationId).remove();
 		if (locations[locationId].marker) {
 			locations[locationId].marker.setMap(null);
+			google.maps.event.removeEventListener(locations[locationId].marker, 'click');
 		}
 		locations.splice(locationId, 1);
 		locationCount --;
@@ -654,6 +689,10 @@ var Trip = (function() {
 				}
 			}
 		}
+	}
+
+	function markerClickHandler(event) {
+		console.log(event);
 	}
 
 	return {
@@ -672,7 +711,6 @@ var Main = (function() {
 	function init(obj) {
 		
 		Ajax.init(obj.a);
-		$("body select").msDropDown();
 
 
 	}

@@ -41,6 +41,52 @@ class Main {
 		return true;
 	}
 
+	public function sendEmail($email) {
+
+		require_once $this->basePath . 'lib/html2text.php';
+		require_once $this->basePath . 'lib/sendgrid-php/SendGrid_loader.php';
+		
+		$encryptedEmail = Encryptor::encrypt($email, SALT);
+		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE email=?");
+		$stmt->execute(array($encryptedEmail));
+
+		if ($stmt->rowCount() > 0) {
+			$message = $stmt->rowCount();
+			$sendgrid = new SendGrid(SENDGRID_USER, SENDGRID_PASS);
+			$mail = new SendGrid\Mail();
+
+			$subject = 'Email Subject';
+
+			$html = '<!doctype html><head></head><body>';
+			$html .= 'You have the following Trips:<br /><br />';
+
+			while($row = $stmt->fetch()) {
+				$html .= '<strong>' . $row['tripName'] . '</strong><br />';
+				$html .= 'Admin Link: <a href="http://' . SITE_URL . '/list/' . $row['adminHash'] . '">http://' . SITE_URL . '/list/' . $row['adminHash']  . '</a><br />';
+				$html .= 'Public Link: <a href="http://' . SITE_URL . '/list/' . $row['publicHash']  . '">http://' . SITE_URL . '/list/' . $row['publicHash'] . '</a><br /><br />';
+			}
+
+			$html .= '</body></html>';
+
+			$mail->addTo($email);
+			$mail->setFrom("forgot.trip@maketripnotes.com");
+			$mail->setSubject($subject);
+			$mail->setHtml($html);
+			$mail->setText(html2text($html));
+			
+			$responseRaw = $sendgrid->web->send($mail);
+			$response = json_decode($responseRaw);
+
+			if ($response->message != 'success') {
+			}
+		} else {
+			$message = "no trips, ".$encryptedEmail;
+		}
+
+		return array('message'=>$message);
+
+	}
+
 	public function createTrip($data) {
 
 		require_once $this->basePath . 'lib/html2text.php';
@@ -53,7 +99,11 @@ class Main {
 
 		//more validation?
 
-		//TODO: change this to something better, obvs
+		if (empty($tripName) || empty($userName) || empty($email)) {
+			return false;
+		}
+
+		//TODO: change this to something better
 		$stmt = $this->db->prepare("SELECT _id FROM Lists WHERE adminHash=? OR publicHash=? LIMIT 1");
 		do {
 			$adminHash = randomString(20);

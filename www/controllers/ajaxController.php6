@@ -50,6 +50,11 @@ header('Content-type: application/json');
 // Non-Authenticated pages
 switch ($action) {
 
+	case 'sendEmail':
+		echo returnJSON($main->sendEmail($_POST['adminEmail']));
+
+		break;
+
 	case 'createTrip':
 
 		$arr = $main->createTrip(array(

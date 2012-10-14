@@ -42,6 +42,10 @@
 					<input id="txtTripName" name="txtTripName" type="text" autofocus="autofocus" maxlength="75" placeholder="ex: Thailand" value="" /><br />
 					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showInfo();">Make Trip Notes</a>
 				</div>
+
+				<div class="forgot-trip">
+					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showLostTrip();">Lost your trip link?</a>
+				</div>
 			</div>
 
 			<div id="infoPage" class="pageContent hidden">
@@ -51,14 +55,38 @@
 				<div class="tripForm">
 					<div class="floatLeft">
 						<label for="txtName">Name</label><br />
-						<input id="txtName" name="txtName" disabled="disabled" type="text" maxlength="75" placeholder="Bob Dobalina" value="" /><br />
+						<input id="txtName" disabled="disabled" type="text" maxlength="75" placeholder="Bob Dobalina" value="" /><br />
 					</div>
 					<div class="floatLeft">
 						<label for="txtEmail">Email</label><br />
-						<input id="txtEmail" name="txtEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
+						<input id="txtEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
 					</div>
 					<br class="clear" />
 					<a class="generalButton" href="javascript:void(0)" onclick="Gate.createTrip();">Create</a>
+				</div>
+			</div>
+
+			<div id="lostTripPage" class="pageContent hidden">
+				<div class="overview">
+					Enter the email associated with your page.
+				</div>
+
+				<div class="tripForm">
+					<div class="floatLeft">
+						<label for="txtAdminEmail">Email</label><br />
+						<input id="txtAdminEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
+					</div>
+					<br class="clear" />
+					<a class="generalButton" href="javascript:void(0)" onclick="Gate.sendEmail();">Send</a>
+				</div>
+			</div>
+
+			<div id="sentEmailPage" class="pageContent hidden">
+				<div class="overview">
+				</div>
+
+				<div class="tripForm">
+					An email has been sent.
 				</div>
 			</div>
 		</div>
