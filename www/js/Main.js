@@ -335,7 +335,15 @@ Location.prototype.addCategory = function(categoryId) {
 		$('.location-notes', this.$element).prepend($category);
 	}
 
-	this.categories[categoryId].obj = new Category($category);
+	var newCategory = new Category($category);
+	
+	for (var cat in this.categories) {
+		if (cat.obj) {
+			cat.obj.connectSort(newCategory);
+		}
+	}
+
+	this.categories[categoryId].obj = newCategory;
 
 	return $category;
 }
@@ -471,6 +479,12 @@ Category.prototype.noteAdded = function () {
 		$('.notes-wrapper', this.$element).slideDown();
 		$('.notes-hidden', this.$element).hide();
 		this.isOpen = true;
+	}
+}
+Category.prototype.connectSort = function(category) {
+	if (GLOBAL.isAdmin) {
+		//$('.notes-wrapper', this.$element).option('connectWith', $('.notes-wrapper', category.$element));
+		//$('.notes-wrapper', category.$element).option('connectWith', $('.notes-wrapper', this.$element));
 	}
 }
 Category.prototype.destroy = function () {
