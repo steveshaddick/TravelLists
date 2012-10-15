@@ -392,7 +392,7 @@ class Main {
 					break;
 
 				case 'tripSubtitle':
-					$stmt = $this->db->prepare("UPDATE Lists SET tripName=? WHERE _id=?");
+					$stmt = $this->db->prepare("UPDATE Lists SET subtitle=? WHERE _id=?");
 					$stmt->execute(array($arr['tripSubtitle'], $tripId));
 					break;
 

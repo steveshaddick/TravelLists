@@ -178,14 +178,6 @@
 				lat: <?php echo $main->trip['lat']; ?>,
 				lng: <?php echo $main->trip['lng']; ?>
 			});
-
-			<?php
-			if ($main->isAdmin) {
-				?>
-				ListAdmin.init();
-				<?php
-			}
-			?>
 		}
 	)
 	
