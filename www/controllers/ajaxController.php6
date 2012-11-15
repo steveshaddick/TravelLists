@@ -106,9 +106,29 @@ switch ($action) {
 		echo returnJSON($arr);
 		break;
 
+	case 'deleteNotice':
+		//$arr = $main->deleteNote($_POST['noteId']);
+
+		echo returnJSON(true);
+		break;
+
 	case 'checkLink':
 		$arr = $main->checkLink($_POST['noteId'], $_POST['url']);
 		echo returnJSON($arr);
+		break;
+
+	case 'poll':
+		if (!isset($_SESSION['lastPoll'])) {
+			$_SESSION['lastPoll'] = time();
+		} else {
+			if ((time() - $_SESSION['lastPoll']) < 5) {
+				echo returnJSON(false);
+				exit();
+			} else {
+				$_SESSION['lastPoll'] = time();
+			}
+		}
+		echo returnJSON(array('pollTime'=>100000));
 		break;
 
 	default:

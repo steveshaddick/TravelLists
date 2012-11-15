@@ -239,7 +239,17 @@ class Main {
 			$locationsById[$row['location_id']]['notes'] []= $note;
 		}
 
-		return array('locations'=>$locations);
+		if ($this->isAdmin) {
+			$stmt = $this->db->prepare("SELECT * FROM Notices WHERE trip_id=? AND isSeen=0 ORDER BY dateAdded");
+			$stmt->execute(array($tripId));
+
+			$notices = array();
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$notices []= $row;
+			}
+		}
+
+		return array('locations'=>$locations, 'notices'=>$notices);
 
 	}
 

@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<!--[if IE 7 ]><html lang="en" class="ie7"><![endif]-->
-<!--[if IE 8 ]><html lang="en" class="ie8"><![endif]-->
-<!--[if IE 9 ]><html lang="en" class="ie9"><![endif]-->
-<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width = device-width" />
-	
-	<title>Trip Notes</title>
-	<meta name="title" content="Trip Notes" />
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	
-	<link href="/css/boilerplate_top.css" rel="stylesheet" type="text/css" />
-	<link href="/css/style.css" rel="stylesheet" type="text/css" />
-	<link href="/css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
-	
-	<script src="/js/Modernizr.js"></script>
-	
-</head>
-<body>
+<?php include(BASE_PATH . 'views/parts/header.php'); ?>
+
 
 	<div id="loadBlocker">
 		<div class="blockerContent">
@@ -37,6 +17,13 @@
 		<div class="content">
 			<div id="tripTitle" class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
 			<div id="tripSubtitle" class="tripSubtitle"><?php echo $main->trip['subtitle']; ?></div>
+		</div>
+	</div>
+
+	<div id="noticeContainer" class="notice-container">
+		<div class="notice up">
+			<span class="notice-text"></span>
+			<a href="javascript:void(0);" class="delete-link">X</a>
 		</div>
 	</div>
 
@@ -143,6 +130,8 @@
 	}
 	?>
 	</div>
+
+	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>

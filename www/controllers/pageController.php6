@@ -9,6 +9,7 @@ require_once BASE_PATH . 'lib/StringUtils.php';
 
 // Project specific includes
 require_once BASE_PATH . 'models/Main.php' ;
+require_once BASE_PATH . 'models/View.php' ;
 $main = new Main(BASE_PATH);
 
 
@@ -48,17 +49,16 @@ if (strpos($os, 'windows')) {
 }
 
 if (isset($_GET['action'])) {
-	$view = $_GET['action'];
+	$action = $_GET['action'];
 } else {
-	$view = '';
+	$action = '';
 }
 
 
 // Non-Authenticated pages
-switch ($view) {
+switch ($action) {
 	case 'index':
-		
-		
+		$view = new View($action);
 		include(BASE_PATH . 'views/index.php');
 		exit();
 		break;
@@ -68,12 +68,29 @@ switch ($view) {
 		if ($main->getTripList() !== true) {
 			header('Location: http://' . SITE_URL);
 		}
+		$view = new View($action, $main);
 		include(BASE_PATH . 'views/list.php');
 		exit();
 
 		break;
+
+	case 'about':
+		$view = new View($action);
+		include(BASE_PATH . 'views/about.php');
+		break;
+
+	case 'privacy-policy':
+		$view = new View($action);
+		include(BASE_PATH . 'views/privacy-policy.php');
+		break;
+
+	case 'terms':
+		$view = new View($action);
+		include(BASE_PATH . 'views/terms.php');
+		break;
 		
 	default:
+		$view = new View($action);
 		include(BASE_PATH . 'views/404.php');
 		exit();
 		break;

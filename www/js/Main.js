@@ -5,8 +5,47 @@ if (typeof console == "undefined") {
 }
 
 var GLOBAL = {
-	isAdmin: false
+	isAdmin: false,
+	pollTime: 5000
 };
+
+var TransitionController = (function() {
+
+	var prefix = '';
+	
+	function transitionEnd($obj, callback) {
+		if (prefix === '') {
+			if ($.browser.webkit) {
+			    prefix = "webkitTransitionEnd";
+			} else if ($.browser.msie) {
+			    prefix = "msTransitionEnd";  
+			} else if ($.browser.mozilla) {
+			    prefix = "transitionend";
+			} else if ($.browser.opera) {
+			   prefix = "oTransitionEnd";
+			}  else {
+				prefix = 'none';
+			}
+		}
+
+		if ((Modernizr.csstransitions) && (prefix !== 'none')){
+			
+			$obj.unbind(prefix);
+			
+			$obj.bind(prefix, function() {
+				$obj.unbind(prefix);
+				callback($obj);
+			});
+		} else {
+			callback($obj);
+		}
+	}
+	
+	return {
+		transitionEnd: transitionEnd
+	};
+	
+}());
 
 var EventDispatcher = (function() {
 	
@@ -626,8 +665,10 @@ var Trip = (function() {
 				}
 
 				if (GLOBAL.isAdmin) {
-					ListAdmin.init();
+					ListAdmin.init(data.notices);
 				}
+
+				Main.poll();
 			},
 			function() {
 				//error
@@ -785,12 +826,34 @@ var Main = (function() {
 
 		linkQueue.shift();
 	}
+
+	function poll() {
+		
+		setTimeout(sendPoll, GLOBAL.pollTime);
+	}
+
+	function sendPoll() {
+		Ajax.call('poll',
+			{},
+			pollReturn,
+			pollReturn,
+			true);
+	}
+
+	function pollReturn(data) {
+		if (data && data.success) {
+
+			GLOBAL.pollTime = (data.pollTime) ? data.pollTime : GLOBAL.pollTime;
+		}
+		setTimeout(sendPoll, GLOBAL.pollTime);
+	}
 	
 	return {
 		init : init,
 		loadBlock: loadBlock,
 		loadRelease: loadRelease,
-		queueLinkCheck: queueLinkCheck
+		queueLinkCheck: queueLinkCheck,
+		poll: poll
 	};
 	
 }());

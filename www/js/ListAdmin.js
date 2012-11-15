@@ -62,14 +62,113 @@ EditText.prototype.finishText = function(event) {
 	}
 }
 
+var Notice = (function() {
 
+	var notices = [];
+
+	var $notice = null;
+	var $container = null;
+
+	var offset = 0;
+	var $doc = null;
+	var wait = false;
+
+	function addNotice(notice, skip) {
+
+		skip = (typeof skip === "undefined") ? false : skip;
+
+		notices.unshift(notice);
+		if (!skip) {
+			showNotice();
+		}
+
+	}
+
+	function showNotice() {
+		
+		
+		if (!$notice) {
+			$container = $("#noticeContainer");
+			$container.css('display', 'block');
+			$notice = $(".notice", $container);
+			
+			offset = $container.offset().top;
+			$doc = $(document);
+			$(window).scroll(checkScroll);
+		}
+		
+		checkScroll();
+		$notice.removeClass('down').addClass('up');
+
+		$('.notice-text', $notice).html(notices[0].notice);
+		$('.delete-link', $notice).unbind('click');
+
+		setTimeout(function() {
+			
+			$notice.removeClass('up');
+			TransitionController.transitionEnd($notice, function() {
+				$('.delete-link', $notice).bind('click', removeNoticeClick);
+			});
+
+		}, 1);
+	}
+
+	function removeNoticeClick(event) {
+		
+		$('.delete-link', $notice).unbind('click');
+		$notice.removeClass('up').addClass('down');
+		TransitionController.transitionEnd($notice, function() {
+			removeNotice();
+		});
+		
+		Ajax.call('deleteNotice', {noticeId: notices[0]._id}, 
+			null,
+			null,
+			true
+		);
+	}
+
+	function checkScroll() {
+
+		if (wait) {
+			return;
+		}
+
+		if($doc.scrollTop() >= offset){
+			$container.addClass('fixed');
+		} else {
+			$container.removeClass('fixed');
+		}
+		wait = true;
+		setTimeout(function(){ wait = false; }, 50);
+	}
+
+	function removeNotice() {
+		
+		notices.shift();
+		if ( notices.length > 0) {
+			showNotice();
+		} else {
+			$container.css('display', 'none');
+			$notice = null;
+			$container = null;
+			$(window).unbind('scroll', checkScroll);
+
+		}
+	}
+
+	return {
+		addNotice: addNotice
+	}
+
+}());
 
 
 var ListAdmin = (function() {
 
 	var autocomplete = null;
 
-	function init() {
+	function init(notices) {
 		$('.add-location-link').click(addLocation);
 		$(document).on('click', '.delete-location-link', deleteLocation);
 
@@ -79,6 +178,19 @@ var ListAdmin = (function() {
 		text = new EditText($("#tripSubtitle"), function() {
 			save({tripSubtitle: $("#tripSubtitle").html()});
 		});
+
+		setTimeout(function() {
+			if (typeof notices !== "undefined") {
+				for (var i=0,len=notices.length; i<len; i++) {
+					if (i < len-1) {
+						Notice.addNotice(notices[i], true);
+					} else {
+						Notice.addNotice(notices[i]);
+					}
+				}
+			}
+		}, 1000);
+		
 
 	}
 

@@ -1,0 +1,137 @@
+/************** Skin 1 *********************/
+.dd {
+	/*display:inline-block !important;*/
+	text-align:left;
+	font-size:21px;
+	position:relative;
+	display: inline-block;
+
+	.ddTitle {
+		padding:14px 10px;
+		text-indent:0;
+		cursor:pointer;
+		overflow:hidden;
+		font-style: italic;
+
+		@include border($darkGrey);
+
+		&:hover {
+			border-color:#000;
+		}
+
+		span.arrow {
+			background:url(dd_arrow.gif) no-repeat 0 0; 
+			float:right; 
+			display:inline-block;
+			width:16px; 
+			height:16px; 
+			cursor:pointer; 
+		}
+
+		span.ddTitleText {
+			text-indent:1px; 
+			overflow:hidden; 
+		}
+		span.ddTitleText img{
+			text-align:left; 
+			padding:0 2px 0 0;
+		}
+		img.selected {
+			padding:0 3px 0 0;
+			vertical-align:top;
+		}
+	}
+
+	.ddChild {
+		position:absolute;
+		border-top:none;
+		display:none;
+		margin:0;
+		width:auto;
+		overflow:auto;
+		overflow-x:hidden !important;
+		background-color:#ffffff;
+
+		@include border($darkGrey);
+
+		.opta a{
+			padding-left:10px
+		}
+
+		a {
+			display:block;
+			padding:5px 10px;
+			text-decoration:none;
+			color:#000;
+			overflow:hidden;
+			white-space:nowrap;
+			cursor:pointer;
+		}
+
+		a:hover {
+			background-color:$green;
+		}
+
+		a img {
+			border:0;
+			padding:0 2px 0 0;
+			vertical-align:middle;
+		}
+		a.selected {
+			background-color:$green;
+			color: $lightGrey;
+			
+		}
+	}
+}
+
+
+.hidden {display:none;}
+
+.dd .borderTop{border-top:1px solid #c3c3c3 !important;}
+.dd .noBorderTop{border-top:none 0  !important}
+
+
+
+/************* use sprite *****************/
+.dd .ddChild a.sprite, .dd .ddChild a.sprite:visited {
+	background-image:url(../icons/sprite.gif);
+	background-repeat:no-repeat;
+	padding-left:24px;
+}
+
+.dd .ddChild a.calendar, .dd .ddChild a.calendar:visited {
+	background-position:0 -404px;
+}
+.dd .ddChild a.shoppingcart, .dd .ddChild a.shoppingcart:visited {
+	background-position:0 -330px;
+}
+.dd .ddChild a.cd, .dd .ddChild a.cd:visited {
+	background-position:0 -439px;
+}
+.dd .ddChild a.email, .dd .ddChild a.email:visited {
+	background-position:0 -256px;
+}
+.dd .ddChild a.faq, .dd .ddChild a.faq:visited {
+	background-position:0 -183px;
+}
+.dd .ddChild a.games,
+.dd .ddChild a.games:visited {
+	background-position:0 -365px;
+}
+.dd .ddChild a.music, .dd .ddChild a.music:visited {
+	background-position:0 -146px;
+}
+.dd .ddChild a.phone, .dd .ddChild a.phone:visited {
+	background-position:0 -109px;
+}
+.dd .ddChild a.graph, .dd .ddChild a.graph:visited {
+	background-position:0 -73px;
+}
+.dd .ddChild a.secured, .dd .ddChild a.secured:visited {
+	background-position:0 -37px;
+}
+.dd .ddChild a.video, .dd .ddChild a.video:visited {
+	background-position:0 0;
+}
+/*******************************/
