@@ -6,7 +6,10 @@ if (typeof console == "undefined") {
 
 var GLOBAL = {
 	isAdmin: false,
-	pollTime: 5000
+	polltime: 15000,
+	lastLocation: 0,
+	lastNote: 0,
+	lastNotice: 0
 };
 
 var TransitionController = (function() {
@@ -366,6 +369,9 @@ function Location(data, isLast) {
 	var notes;
 	for (var i=0, len=data.notes.length; i<len; i++) {
 		this.addNote(data.notes[i]);
+		if (data.notes[i].id > GLOBAL.lastNote) {
+			GLOBAL.lastNote = data.notes[i].id;
+		}
 	}
 
 }
@@ -684,6 +690,9 @@ var Trip = (function() {
 					} else {
 						addLocation(data.locations[i]);
 					}
+					if (data.locations[i].id > GLOBAL.lastLocation) {
+						GLOBAL.lastLocation = data.locations[i].id;
+					}
 				}
 
 				if (GLOBAL.isAdmin) {
@@ -851,12 +860,16 @@ var Main = (function() {
 
 	function poll() {
 		
-		setTimeout(sendPoll, GLOBAL.pollTime);
+		setTimeout(sendPoll, GLOBAL.polltime);
 	}
 
 	function sendPoll() {
 		Ajax.call('poll',
-			{},
+			{
+				lastLocation: GLOBAL.lastLocation,
+				lastNote: GLOBAL.lastNote,
+				lastNotice: GLOBAL.lastNotice
+			},
 			pollReturn,
 			pollReturn,
 			true);
@@ -865,9 +878,9 @@ var Main = (function() {
 	function pollReturn(data) {
 		if (data && data.success) {
 
-			GLOBAL.pollTime = (data.pollTime) ? data.pollTime : GLOBAL.pollTime;
+			GLOBAL.polltime = (data.polltime) ? data.polltime : GLOBAL.polltime;
 		}
-		setTimeout(sendPoll, GLOBAL.pollTime);
+		poll();
 	}
 	
 	return {

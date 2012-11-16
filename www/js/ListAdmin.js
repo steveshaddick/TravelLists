@@ -78,6 +78,9 @@ var Notice = (function() {
 		skip = (typeof skip === "undefined") ? false : skip;
 
 		notices.unshift(notice);
+		if (notice._id > GLOBAL.lastNotice) {
+			GLOBAL.lastNotice = notice._id;
+		}
 		if (!skip) {
 			showNotice();
 		}

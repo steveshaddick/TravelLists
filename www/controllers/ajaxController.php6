@@ -120,6 +120,7 @@ switch ($action) {
 	case 'poll':
 		if (!isset($_SESSION['lastPoll'])) {
 			$_SESSION['lastPoll'] = time();
+			$_SESSION['polltime'] = 15000;
 		} else {
 			if ((time() - $_SESSION['lastPoll']) < 5) {
 				echo returnJSON(false);
@@ -128,11 +129,17 @@ switch ($action) {
 				$_SESSION['lastPoll'] = time();
 			}
 		}
-		$arr = $main->fetchTrip();
+
+		$arr = $main->fetchTrip(intval($_POST['lastLocation']), intval($_POST['lastNote']), intval($_POST['lastNotice']) );
 		if ((count($arr['locations']) === 0) && (count($arr['notes']) === 0) && (count($arr['notices']) === 0)) {
-			
+			if ($_SESSION['polltime'] < 600000) {
+				$_SESSION['polltime'] += 15000;
+			}
+		} else {
+			$_SESSION['polltime'] = 5000;
 		}
-		echo returnJSON(array('pollTime'=>100000));
+		$arr['polltime'] = $_SESSION['polltime'];
+		echo returnJSON($arr);
 		break;
 
 	default:

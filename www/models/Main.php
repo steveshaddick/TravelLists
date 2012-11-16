@@ -186,20 +186,15 @@ class Main {
 
 	}
 
-	public function fetchTrip() {
+	public function fetchTrip($lastLocation = 0 , $lastNote = 0, $lastNotice = 0) {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
-		}
-		if (!isset($_SESSION['last_location_id'])) {
-			$_SESSION['last_location_id'] = 0;
-			$_SESSION['last_note_id'] = 0;
-			$_SESSION['last_notice_id'] = 0;
 		}
 
 		$tripId = $_SESSION['trip_id'];
 
 		$stmt = $this->db->prepare("SELECT * FROM Locations WHERE trip_id=? AND _id > ? ORDER BY listOrder");
-		$stmt->execute(array($tripId, $_SESSION['last_location_id']));
+		$stmt->execute(array($tripId, $lastLocation));
 		
 		$locations = array();
 		$locationsById = array();
@@ -214,16 +209,13 @@ class Main {
 				'notes'=>array()
 				);
 
-			if ($_SESSION['last_location_id'] < $row['_id']) {
-				$_SESSION['last_location_id'] = $row['_id'];
-			}
 
 			$locations []= $location;
 			$locationsById[$row['_id']] = &$locations[count($locations) - 1];
 		}
 
 		$stmt = $this->db->prepare("SELECT * FROM Notes WHERE trip_id=? AND _id > ? ORDER BY category_id, listOrder");
-		$stmt->execute(array($tripId, $_SESSION['last_note_id']));
+		$stmt->execute(array($tripId, $lastNote));
 
 		$notes = array();
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -240,9 +232,6 @@ class Main {
 				'listOrder'=>$row['listOrder']
 				);
 
-			if ($_SESSION['last_note_id'] < $row['_id']) {
-				$_SESSION['last_note_id'] = $row['_id'];
-			}
 
 			if ($this->isAdmin) {
 				$note['canDelete'] = true;
@@ -259,13 +248,10 @@ class Main {
 		$notices = array();
 		if ($this->isAdmin) {
 			$stmt = $this->db->prepare("SELECT * FROM Notices WHERE trip_id=? AND isSeen=0 AND _id > ? ORDER BY dateAdded");
-			$stmt->execute(array($tripId, $_SESSION['last_notice_id']));
+			$stmt->execute(array($tripId, $lastNotice));
 
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 				$notices []= $row;
-				if ($_SESSION['last_notice_id'] < $row['_id']) {
-					$_SESSION['last_notice_id'] = $row['_id'];
-				}
 			}
 		}
 
