@@ -222,8 +222,9 @@ class Main {
 			$note = array(
 				'id'=>$row['_id'],
 				'categoryId'=>$row['category_id'],
-				'from'=>stripslashes($row['from']),
+				'fromName'=>stripslashes($row['fromName']),
 				'note'=>stripslashes($row['note']),
+				'locationId'=>$row['location_id'],
 				'linkUrl'=>$row['linkUrl'],
 				'linkImage'=>$row['linkImage'],
 				'linkTitle'=>$row['linkTitle'],
@@ -297,9 +298,6 @@ class Main {
 		}
 		$tripId = $_SESSION['trip_id'];
 		
-		if (!$this->isAdmin) {
-			return false;
-		}
 
 		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Notes WHERE trip_id=? AND location_id=? AND category_id=?");
 		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId']));
@@ -337,13 +335,13 @@ class Main {
 		}
 
 
-		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?");
-		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder));
+		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, fromName=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['fromName'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder));
 
 		$noteId = $this->db->lastInsertId();
 
 		$_SESSION['addedNotes'][$noteId] = true;
-		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
+		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'fromName'=>$note['fromName'], 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
 
 	}
 

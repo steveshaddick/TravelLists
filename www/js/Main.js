@@ -369,9 +369,6 @@ function Location(data, isLast) {
 	var notes;
 	for (var i=0, len=data.notes.length; i<len; i++) {
 		this.addNote(data.notes[i]);
-		if (data.notes[i].id > GLOBAL.lastNote) {
-			GLOBAL.lastNote = data.notes[i].id;
-		}
 	}
 
 }
@@ -414,11 +411,12 @@ Location.prototype.addCategory = function(categoryId) {
 
 	return $category;
 };
-Location.prototype.addNote = function(note) {
+Location.prototype.addNote = function(note, animate) {
 	
 	var $category = (this.categories[note.categoryId].obj === null) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].obj.$element;
-
 	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
+
+	animate = (typeof animate == "undefined") ? false : animate;
 	
 
 	if (note.canDelete) {
@@ -437,6 +435,15 @@ Location.prototype.addNote = function(note) {
 
 	$('.notes-wrapper', $category).append($note);
 	this.categories[note.categoryId].obj.noteAdded();
+
+	if (animate) {
+		$note.hide().show('slow');
+	}
+
+
+	if (note.id > GLOBAL.lastNote) {
+		GLOBAL.lastNote = note.id;
+	}
 };
 Location.prototype.parseNote = function(noteId, linkData) {
 
@@ -483,7 +490,7 @@ Location.prototype.parseNote = function(noteId, linkData) {
 	htmlString = htmlString.replace(regex,"<a target=\"_blank\" href=\"$1\">$1</a>").replace(/href="\(/g, 'href="').replace(/\)">/g, '">');
 
 	$('.note-text', note.$element).html(htmlString);
-	$('.note-from', note.$element).html('-' + note.from);
+	$('.note-from', note.$element).html('-' + note.fromName);
 
 };
 Location.prototype.deleteNoteClickHandler = function(event) {
@@ -598,10 +605,10 @@ var NoteEditor = (function() {
 	function submitNoteClickHandler(event) {
 		var noteText = $("#txtNoteText").val();
 		var categoryId = $('#selCategory').val();
-		var from = $('#txtFromName').val();
+		var fromName = $('#txtFromName').val();
 
-		if (from == '') {
-			from = 'Anonymous';
+		if (fromName == '') {
+			fromName = 'Anonymous';
 		}
 
 		var location = event.data.currentLocation;
@@ -611,7 +618,7 @@ var NoteEditor = (function() {
 		Ajax.call('addNote', 
 			{
 				noteText: noteText,
-				from: from,
+				fromName: fromName,
 				categoryId: categoryId,
 				locationId: currentLocation.id
 			},
@@ -690,9 +697,6 @@ var Trip = (function() {
 					} else {
 						addLocation(data.locations[i]);
 					}
-					if (data.locations[i].id > GLOBAL.lastLocation) {
-						GLOBAL.lastLocation = data.locations[i].id;
-					}
 				}
 
 				if (GLOBAL.isAdmin) {
@@ -747,6 +751,10 @@ var Trip = (function() {
 		};
 		locationCount ++;
 
+		if (locationData.id > GLOBAL.lastLocation) {
+			GLOBAL.lastLocation = locationData.id;
+		}
+
 		if (typeof loopOverride == "undefined") {
 			if (locationCount > 1) {
 				map.fitBounds(bounds);
@@ -756,6 +764,12 @@ var Trip = (function() {
 		}
 
 		$('.add-note-link', location.$element).click({location: location}, addNoteClickHandler);
+	}
+
+	function addNote(note, animate) {
+		if (typeof locations[note.locationId] !== "undefined") {
+			locations[note.locationId].location.addNote(note, animate);
+		}
 	}
 
 	function addNoteClickHandler(event) {
@@ -802,6 +816,7 @@ var Trip = (function() {
 	return {
 		loadTrip: loadTrip,
 		addLocation: addLocation,
+		addNote: addNote,
 		deleteLocation: deleteLocation
 	}
 }());
@@ -868,7 +883,8 @@ var Main = (function() {
 			{
 				lastLocation: GLOBAL.lastLocation,
 				lastNote: GLOBAL.lastNote,
-				lastNotice: GLOBAL.lastNotice
+				lastNotice: GLOBAL.lastNotice,
+				polltime: GLOBAL.polltime
 			},
 			pollReturn,
 			pollReturn,
@@ -879,6 +895,21 @@ var Main = (function() {
 		if (data && data.success) {
 
 			GLOBAL.polltime = (data.polltime) ? data.polltime : GLOBAL.polltime;
+			var i;
+			for (i=0; i<data.locations.length; i++) {
+				
+				Trip.addLocation(data.locations[i]);
+			}
+			for (i=0; i<data.notes.length; i++) {
+				
+				Trip.addNote(data.notes[i], true);
+			}
+			if (GLOBAL.isAdmin) {
+				for (i=0; i<data.notices.length; i++) {
+					
+					Notice.addNotice(data.notices[i]);
+				}
+			}
 		}
 		poll();
 	}
