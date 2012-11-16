@@ -319,7 +319,7 @@ var Gate = (function() {
 
 }());
 
-function Location(data) {
+function Location(data, isLast) {
 	this.name = data.name;
 	this.id = data.id;
 	this.listOrder = data.listOrder;
@@ -327,6 +327,8 @@ function Location(data) {
 	this.lng = data.lng;
 
 	this.$element = null;
+
+	isLast = (typeof isLast === "undefined") ? false : isLast;
 
 	this.categories = [
 		{ title: 'General', obj:null},
@@ -339,7 +341,27 @@ function Location(data) {
 
 	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
 	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
-	$("#locations").append(this.$element);
+	this.$element.attr('data-order', this.listOrder);
+
+	var locations = $("#locations > .location");
+	if ((locations.length === 0) || (isLast)){
+		$("#locations").append(this.$element);
+	} else {
+		
+		var me = this;
+		var isAdded = false;
+		locations.each(function() {
+			if (!isAdded) {
+				if ($(this).attr('data-order') > me.listOrder) {
+					$(this).before(me.$element);
+					isAdded = true;
+				}
+			}
+		});
+		if (!isAdded) {
+			$("#locations").append(this.$element);
+		}
+	}
 
 	var notes;
 	for (var i=0, len=data.notes.length; i<len; i++) {
@@ -351,7 +373,7 @@ Location.prototype.destroy = function() {
 	for (var category in this.categories) {
 		category.obj.destroy();
 	}
-}
+};
 Location.prototype.addCategory = function(categoryId) {
 	
 	var $category = $("#clsCategory").clone().attr('id', 'category_' + this.id + '_' + categoryId);
@@ -385,7 +407,7 @@ Location.prototype.addCategory = function(categoryId) {
 	this.categories[categoryId].obj = newCategory;
 
 	return $category;
-}
+};
 Location.prototype.addNote = function(note) {
 	
 	var $category = (this.categories[note.categoryId].obj === null) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].obj.$element;
@@ -409,7 +431,7 @@ Location.prototype.addNote = function(note) {
 
 	$('.notes-wrapper', $category).append($note);
 	this.categories[note.categoryId].obj.noteAdded();
-}
+};
 Location.prototype.parseNote = function(noteId, linkData) {
 
 	var note = this.notes[noteId];
@@ -457,7 +479,7 @@ Location.prototype.parseNote = function(noteId, linkData) {
 	$('.note-text', note.$element).html(htmlString);
 	$('.note-from', note.$element).html('-' + note.from);
 
-}
+};
 Location.prototype.deleteNoteClickHandler = function(event) {
 	
 	var location = event.data.location;
@@ -477,7 +499,7 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 		function() {
 			//error
 		});
-}
+};
 
 var Category = function($element) {
 	this.$element = $element;

@@ -67,7 +67,7 @@ switch ($action) {
 		break;
 
 	case 'loadTrip':
-		$arr = $main->loadTrip();
+		$arr = $main->fetchTrip();
 		echo returnJSON($arr);
 		break;
 
@@ -127,6 +127,10 @@ switch ($action) {
 			} else {
 				$_SESSION['lastPoll'] = time();
 			}
+		}
+		$arr = $main->fetchTrip();
+		if ((count($arr['locations']) === 0) && (count($arr['notes']) === 0) && (count($arr['notices']) === 0)) {
+			
 		}
 		echo returnJSON(array('pollTime'=>100000));
 		break;
