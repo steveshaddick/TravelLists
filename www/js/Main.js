@@ -265,6 +265,15 @@ var Gate = (function() {
 		$("#txtAdminEmail").prop('disabled', false).focus();
 	}
 
+	function showLocation() {
+		$("#infoPage").addClass('hidden');
+		$("#locationPage").removeClass('hidden');
+		var options = {
+		  types: ['(regions)']
+		};
+		autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtLocation'), options);
+	}
+
 	function createTrip() {
 
 		//validate
@@ -272,13 +281,15 @@ var Gate = (function() {
 		var name = $("#txtName").val();
 		var email = $("#txtEmail").val();
 		var tripName = $("#txtTripName").val();
+		var location = $("#txtLocation").val();
 
 		Main.loadBlock();
 		Ajax.call('createTrip',
 			{
 				name: name,
 				email: email,
-				tripName: tripName
+				tripName: tripName,
+				location: location
 			},
 			createTripReturn
 		);
@@ -315,6 +326,7 @@ var Gate = (function() {
 
 	return {
 		showInfo: showInfo,
+		showLocation: showLocation,
 		createTrip: createTrip,
 		showLostTrip: showLostTrip,
 		sendEmail: sendEmail

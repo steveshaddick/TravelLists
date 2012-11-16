@@ -96,6 +96,7 @@ class Main {
 		$tripName = $data['tripName'];
 		$userName = $data['userName'];
 		$email = Encryptor::encrypt($data['email'], SALT);
+		$location = $data['location'];
 
 		//more validation?
 
@@ -114,15 +115,17 @@ class Main {
 
 		$now = date( 'Y-m-d H:i:s');
 
-		$location = Geocoder::getLocation($tripName);
-		if ($location === false) {
-			$location = array('lat'=>0, 'lng'=> 0);
+		$tripLocation = Geocoder::getLocation($location);
+		if ($tripLocation === false) {
+			$tripLocation = array('lat'=>0, 'lng'=> 0);
 		}
 
 		$subtitle = 'by '.$userName;
 		
 		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, subtitle=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
-		$stmt->execute(array($adminHash, $publicHash, $tripName, $subtitle, $userName, $email, $location['lat'], $location['lng']));
+		$stmt->execute(array($adminHash, $publicHash, $tripName, $subtitle, $userName, $email, $tripLocation['lat'], $tripLocation['lng']));
+
+		$_SESSION['trip_id'] = $this->db->lastInsertId();
 
 		if (!isset($_SESSION['addedNotes'])) {
 			$_SESSION['addedNotes'] = array();
@@ -157,6 +160,8 @@ class Main {
 				'publichash'=>$publicHash)
 			);
 		}
+
+		$this->addLocation($location);
 
 		return array('tripHash'=>$adminHash);
 

@@ -41,6 +41,20 @@
 						<input id="txtEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
 					</div>
 					<br class="clear" />
+					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showLocation();">Next</a>
+				</div>
+			</div>
+
+			<div id="locationPage" class="pageContent hidden">
+				<div class="overview">
+				</div>
+
+				<div class="tripForm">
+					<div class="floatLeft">
+						<label for="txtLocation">Add your first location</label><br />
+						<input id="txtLocation" name="txtLocation" type="text" />
+					</div>
+					<br class="clear" />
 					<a class="generalButton" href="javascript:void(0)" onclick="Gate.createTrip();">Create</a>
 				</div>
 			</div>
@@ -76,6 +90,8 @@
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
 	<script src="/js/Main.js"></script>
 

@@ -60,7 +60,8 @@ switch ($action) {
 		$arr = $main->createTrip(array(
 			'tripName'=>$_POST['tripName'],
 			'userName'=>$_POST['name'],
-			'email'=>$_POST['email']
+			'email'=>$_POST['email'],
+			'location'=>$_POST['location']
 			));
 
 		echo returnJSON($arr);
