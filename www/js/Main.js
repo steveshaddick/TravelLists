@@ -984,6 +984,7 @@ var Home = (function() {
 
 	function nextPage() {
 		if (isTransition) return;
+		if ($nextButton.hasClass('hidden')) return;
 		
 		var initFunc;
 		
