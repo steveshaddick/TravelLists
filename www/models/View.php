@@ -7,12 +7,16 @@ class View {
 
 	public function __construct($action, $main = null) {
 
-		$baseTitle = 'Trip Notes';
+		$baseTitle = 'Tripnotes';
 		$sep = ' | ';
 
 		switch ($action) {
 			case 'index':
 				$this->title = $baseTitle;
+				break;
+
+			case 'lost':
+				$this->title = $baseTitle . $sep . 'Lost Tripnotes?';
 				break;
 
 			case 'list':

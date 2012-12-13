@@ -2,10 +2,13 @@ body {
 	border:0;
 	margin:0;
 	padding:0;
-	color: $darkBlue;
-	background: $lightGrey;
-	font-family:Arial, Helvetica, sans-serif;
+	color: $mediumGrey;
+	background: $bgGrey url('/images/bg.png');
 //	@include border-radius($borderRadius);
+}
+
+h1 {
+	margin:0;
 }
 
 .clear {
@@ -16,23 +19,33 @@ body {
 	display: none;
 }
 
-a {
-	text-decoration: none;
-	color: $green;
-
+.none {
+	color:inherit;
+	font-size:inherit;
 	&:hover {
-		text-decoration: underline;
+		color:inherit;
 	}
 }
 
-a.generalButton {
-	display: inline-block;
-	padding: 10px;
+a {
+	text-decoration: none;
+	color: $mediumGrey;
 
-	@include border-radius($borderRadius);
+	@include sans-serif(14px);
 
 	&:hover {
+		color: $green;
+	}
+}
 
+a.create-button,
+a.next-button {
+	@include block-button();
+
+	background: $green;
+	
+	&:hover {
+		background: $lightGreen;
 	}
 }
 
@@ -43,10 +56,24 @@ ul, li {
 }
 
 input {
-	@include border($darkGrey);
-	background-color:#fff;
-	background-image: url('/images/input-bg.gif');
-	background-repeat: repeat-x;
+	border: 0;
+	background: transparent url('/images/dot.png') repeat-x bottom;
+	text-align: center;
+	@include sans-serif(36px);
+	height: 36px;
+	width: 460px;
+	color:$darkGrey;
+}
+
+input:focus {
+	color:#000;
+}
+
+label {
+	color:$darkGrey;
+	@include serif(36px);
+	font-weight:600;
+	font-style: italic;
 }
 
 #loadBlocker {
@@ -59,10 +86,14 @@ input {
 	background:#eee;
 	z-index:1000000;
 
+	@include sans-serif(76px);
+
 	.blockerContent {
-		width:200px;
-		margin:100px auto 0;
-		height:100px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		margin-top:-36px;
+		margin-left: -150px;
 	}
 }
 
@@ -89,10 +120,6 @@ input {
 }
 
 
-.siteTitle {
-	max-width: $maxContentWidth;
-	margin:0 auto;
-}
 
 #map {
 	width:800px;
@@ -106,19 +133,58 @@ input {
 	margin: 0 auto;
 }
 
-.pageContent {
+.home-wrapper {
 	max-width: $maxContentWidth;
+	position: relative;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 800px;
+	height: 600px;
 
+	.trip-title {
+		color: $darkGrey;
+		@include sans-serif(46px);
+	}
+
+	.trip-subtitle {
+		color: $darkGrey;
+		@include serif(16px);
+		font-style:italic;
+	}
+
+	.email {
+		color: $mediumGrey;
+		@include sans-serif(14px);
+	}
+}
+.info-header {
+	width: 800px;
+	text-align: left;
+	margin-top:96px;
+}
+
+.home-page {
+	width: 800px;
+	position:absolute;
+	text-align:center;
+	left:0px;
 
 	@include transition-property(left);
   	@include transition-duration(0.5s);
 }
 
-.pageRight {
-	left: $contentWidth;
+.error {
+	border: 1px solid #ff0000;
 }
-.pageLeft {
-	left: -$contentWidth;
+
+.page-left {
+	left: -800px;
+}
+.page-current {
+	left: 0px;
+}
+.page-right {
+	left: 800px;
 }
 
 .editTextInput {
@@ -126,26 +192,30 @@ input {
 
 }
 
-#header {
-
-	color: $lightGrey;
-	background: $darkBlue;
+.start-header {
 	width:100%;
 	max-width: $maxWidth;
 	margin:0 auto;
+	text-align: center;
+	margin-top:132px;
 
-	.content {
-		max-width: $maxContentWidth;
-		margin:0 auto;
+	.site-title {
+		@include sans-serif(76px);
+		color: $darkGrey;
+	}
+	.site-subtitle {
+		@include serif(23px);
+		color: $mediumGrey;
 	}
 
-	.tripTitle {
-		font-size:90px;
-	}
-	.tripSubtitle {
-		font-size:18px;
-	}
 }
+
+.home-form {
+	text-align: center;
+}
+
+
+
 
 .notice-container {
 	width:100%;
@@ -259,7 +329,7 @@ input {
 
 		.note-from {
 			font-size:14px;
-			color:$darkBlue;
+			color:$blue;
 		}
 
 		.note-link {
@@ -273,7 +343,7 @@ input {
 			}
 
 			.link-image {
-				border:1px solid $darkBlue;
+				border:1px solid $blue;
 				max-width:170px;
 			}
 
@@ -371,7 +441,7 @@ a.add-location-link {
 	a.add-note-link {
 		display:block;
 		padding:16px 10px;
-		color: $darkBlue;
+		color: $blue;
 		text-decoration:none;
 		font-size:18px;
 		font-weight:bold;
@@ -419,4 +489,9 @@ a.add-location-link {
 
 .footer {
 	text-align: center;
+
+	.spacer {
+		display: inline-block;
+		width:85px;
+	}
 }

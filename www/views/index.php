@@ -6,58 +6,60 @@
 		</div>
 	</div>
 
-	<div id="header">
-		<div class="siteTitle">Trip Notes</div>
-	</div>
+	
 
 	<div id="body">
-		<div class="contentWrapper">
-			<div id="landingPage" class="pageContent">
-				<div class="overview">
+		<div class="home-wrapper">
+			
+			<section id="startPage" class="home-page page-current">
+				
+				<header class="start-header">
+					<h1 class="site-title">Tripnotes</h1>
+					<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
+				</header>
+
+
+				<div class="home-form" style="margin:175px 0;">
+					<input id="txtTripName" name="txtTripName" type="text" autofocus="autofocus" maxlength="75" value="" />
+					<a class="next-button hidden" style="position:absolute;" href="javascript:void(0)">Next</a><br />
+					<label for="txtTripName">Start by naming your trip.</label>
+					<br /><br />
+					<a style="padding-left: 23px;" href="/lost">Lost your tripnotes?</a>
 				</div>
 
-				<div class="tripForm">
-					<label for="txtTripName">Name your trip</label><br />
-					<input id="txtTripName" name="txtTripName" type="text" autofocus="autofocus" maxlength="75" placeholder="ex: Thailand" value="" /><br />
-					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showInfo();">Make Trip Notes</a>
-				</div>
+			</section>
 
-				<div class="forgot-trip">
-					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showLostTrip();">Lost your trip link?</a>
-				</div>
-			</div>
+			<section id="infoPage" class="home-page page-right">
+				<header class="info-header">
+					<span class="trip-title"></span>
+				</header>
 
-			<div id="infoPage" class="pageContent hidden">
-				<div class="overview">
-				</div>
+				<div class="home-form" style="margin:50px 0;">
+					<input id="txtName" disabled="disabled" type="text" maxlength="75" value="" /><br />
+					<label for="txtName">Your name please.</label><br /><br />
 
-				<div class="tripForm">
+					<input id="txtEmail" disabled="disabled" type="email" maxlength="255" value="" /><br />
+					<label for="txtEmail">And your email address, only so we can send you a link.</label><br /><br />
+
+					<a class="next-button hidden" href="javascript:void(0)">Next</a>
+				</div>
+			</section>
+
+			<section id="locationPage" class="home-page page-right">
+				<header class="info-header">
+					<span class="trip-title"></span>
+					<span class="trip-subtitle"></span><br />
+					<span class="email"></span>
+				</header>
+
+				<div class="home-form" style="margin:50px 0;">
 					<div class="floatLeft">
-						<label for="txtName">Name</label><br />
-						<input id="txtName" disabled="disabled" type="text" maxlength="75" placeholder="Bob Dobalina" value="" /><br />
+						<input id="txtLocation" name="txtLocation" type="text" placeholder="ex. Bangkok, Thailand" /><br />
+						<label for="txtLocation">Lastly, one place we can add to the map of your trip.</label>
 					</div>
-					<div class="floatLeft">
-						<label for="txtEmail">Email</label><br />
-						<input id="txtEmail" disabled="disabled" type="email" maxlength="255" placeholder="email@example.com" value="" /><br />
-					</div>
-					<br class="clear" />
-					<a class="generalButton" href="javascript:void(0)" onclick="Gate.showLocation();">Next</a>
+					<a class="create-button hidden" href="javascript:void(0)">Start Planning</a>
 				</div>
-			</div>
-
-			<div id="locationPage" class="pageContent hidden">
-				<div class="overview">
-				</div>
-
-				<div class="tripForm">
-					<div class="floatLeft">
-						<label for="txtLocation">Add your first location</label><br />
-						<input id="txtLocation" name="txtLocation" type="text" />
-					</div>
-					<br class="clear" />
-					<a class="generalButton" href="javascript:void(0)" onclick="Gate.createTrip();">Create</a>
-				</div>
-			</div>
+			</section>
 
 			<div id="lostTripPage" class="pageContent hidden">
 				<div class="overview">
@@ -82,6 +84,9 @@
 					An email has been sent.
 				</div>
 			</div>
+
+
+			
 		</div>
 	</div>
 
@@ -104,6 +109,8 @@
 				os: '<?php echo $os; ?>',
 				a: '<?php echo $ajaxToken; ?>'
 			});
+
+			Home.init();
 		}
 	)
 	

@@ -1,8 +1,17 @@
-$darkBlue : #151633;
-$lightGrey : #e8eced;
-$mediumGrey: #c0c2c8;
-$darkGrey: #858390;
+$bgGrey: #f1f1ec;
+
+$lightGrey: #e6e3e1;
+$mediumGrey: #b8b8b8;
+$darkGrey: #5f5c66;
+
+$lightOrange: #f0a959;
+$orange: #f53d12;
+
+$lightGreen: #a5bb77;
 $green: #799b28;
+
+$lightBlue: #5f5c66;
+$blue: #151633;
 
 $borderRadius : 4px;
 
@@ -11,13 +20,32 @@ $maxContentWidth: 960px;
 $maxWidth: 1250px;
 
 @mixin serif($size) {
-	font-family: "chaparral-pro", serif;
-	font-style: italic;
+	font-family: "chaparral-pro", georgia, serif;
 	font-size: $size;
+	line-height:$size;
+}
+
+@mixin sans-serif($size) {
+	font-family: "pragmatica-web", helvetica, arial, sans-serif;
+	font-weight: 600;
+	font-size: $size;
+	line-height:$size;
 }
 
 @mixin border($color) {
 	border:1px solid $color;
 
 	@include border-radius($borderRadius);
+}
+
+@mixin block-button() {
+	display: inline-block;
+	padding: 10px;
+	min-width: 133px;
+	font-size:18px;
+	text-align: center;
+	color:#fff;
+
+	@include border-radius($borderRadius);
+
 }

@@ -14,6 +14,9 @@
 	<link href="/css/boilerplate_top.css" rel="stylesheet" type="text/css" />
 	<link href="/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="/css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
+
+	<script src="//use.typekit.net/cyh8uls.js"></script>
+	<script >try{Typekit.load();}catch(e){}</script>
 	
 	<script src="/js/Modernizr.js"></script>
 	

@@ -63,6 +63,12 @@ switch ($action) {
 		exit();
 		break;
 
+	case 'lost':
+		$view = new View($action);
+		include(BASE_PATH . 'views/lost.php');
+		exit();
+		break;
+
 	case 'list':
 
 		if ($main->getTripList() !== true) {

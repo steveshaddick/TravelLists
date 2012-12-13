@@ -80,7 +80,7 @@ class Main {
 			if ($response->message != 'success') {
 			}
 		} else {
-			$message = "no trips, ".$encryptedEmail;
+			$message = "no trips";
 		}
 
 		return array('message'=>$message);
@@ -92,6 +92,7 @@ class Main {
 		require_once $this->basePath . 'lib/html2text.php';
 		require_once $this->basePath . 'lib/sendgrid-php/SendGrid_loader.php';
 
+		die();
 
 		$tripName = $data['tripName'];
 		$userName = $data['userName'];
