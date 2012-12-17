@@ -12,111 +12,126 @@
 			Loading...
 		</div>
 	</div>
-
-	<div id="header">
-		<div class="content">
-			<div id="tripTitle" class="tripTitle"><?php echo $main->trip['tripName']; ?></div>
-			<div id="tripSubtitle" class="tripSubtitle"><?php echo $main->trip['subtitle']; ?></div>
-		</div>
-	</div>
-
-	<div id="noticeContainer" class="notice-container">
-		<div class="notice up">
-			<span class="notice-text"></span>
-			<a href="javascript:void(0);" class="delete-link">X</a>
-		</div>
-	</div>
-
-	<div id="map"></div>
-
 	<div id="body">
-		<div class="contentWrapper">
-			<div id="locations">
+		<div class="list-wrapper">
+			<header id="header">
+				<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
+				<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
+				<a class="settings-button sprite-button" href="javascript:void(0)" title="Settings">&nbsp;</a>
+			</header>
+
+			<section id="tripSettings" class="trip-settings">
+				<div class="content">
+					<label for="txtTripName">Trip</label> <input id="txtTripName" name="txtTripName" type="text" maxlength="75" value="" />
+					<label for="txtTripAuthor">Author</label> <input id="txtTripAuthor" name="txtTripAuthor" type="text" maxlength="75" value="" />
+					<label for="txtEmail">Email</label> <input id="txtEmail" name="txtEmail" type="text" maxlength="255" value="" />
+					
+					<a class="done-button" href="javascript:void(0)">Done</a><br />
+				</div>
 				
+			</section>
+
+			<div id="noticeContainer" class="notice-container">
+				<div class="notice up">
+					<span class="notice-text"></span>
+					<a href="javascript:void(0);" class="x-button sprite-button">&nbsp;</a>
+				</div>
 			</div>
-			<?php
-			if ($main->isAdmin) {
-				?>
-				<a class="add-location-link" href="javascript:void(0)">Add a place</a>
+
+			<div id="map"></div>
+
+		
+			<div class="contentWrapper">
+				<section id="locations">
+					
+				</section>
 				<?php
-			}
-			?>
+				if ($main->isAdmin) {
+					?>
+					<a class="add-location-link" href="javascript:void(0)">Add another location</a>
+					<?php
+				}
+				?>
+			</div>
 		</div>
 	</div>
 
 	<div id="cls">
 
 		<div id="clsLocation" class="location">
-			<span class="location-name">$LOCATION$</span>
+			<span class="location-name">$LOCATION$ <a class="show-hide-link" href="javascript:void(0)">&#150;</a></span>
 			<?php
 			if ($main->isAdmin) {
 				?>
-				<a class="delete-location-link" data-id="$LOCATION_ID$" href="javascript:void(0);">X</a>
+				<a class="x-button sprite-button" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
 				<?php
 			}
 			?>
-			<div class="location-notes"></div>
+			<div class="location-notes">
+				<ul class="notes-wrapper"></ul>
+				<div class="notes-hidden"></div>
+			</div>
 			<div class="add-note">
 				<a class="add-note-link" href="javascript:void(0)">Suggest something in $LOCATION$</a>
 			</div>
 		</div>
 
-		<div id="clsCategory" class="category">
-			<div class="category-header">
-				<table>
-					<tr>
-						<td class="category-name">$CATEGORY_NAME$</td>
-						<td><span class="middle-grey-line">&nbsp;</span></td>
-						<td class="show-hide"><a class="show-hide-link" href="javascript:void(0)">&#47;&#92;</a></td>
-					</tr>
-				</table>
-			</div>
-			<ul class="notes-wrapper"></ul>
-			<div class="notes-hidden"></div>
-		</div>
-
 		<li id="clsNote" class="note">
-			<div class="note-text-wrapper">
-				<span class="note-text"></span>
-			</div>
-			<div class="note-link">
-				<table>
-					<tr>
-						<td><a target="_blank"><img class="link-image" src="/images/blank.gif" alt="" /></a></td>
-						<td class="link-info">
-							<a target="_blank" class="link-title"></a>
-							<span class="link-description"></span>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="note-from"></div>
-			<div class="note-delete">
-				<a class="note-delete-link" href="javascript:void(0)">x</a>
-			</div>
+			<table>
+				<tr>
+					<td class="note-category">&nbsp;</td>
+					<td class="note-text-wrapper">
+						<span class="note-text"></span>
+						<div class="note-link">
+							<table>
+								<tr>
+									<td><a target="_blank"><img class="link-image" src="/images/blank.gif" alt="" /></a></td>
+									<td class="link-info">
+										<a target="_blank" class="link-title"></a>
+										<span class="link-description"></span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="note-from"></div>
+						<div class="note-delete">
+							<a class="x-button sprite-button" href="javascript:void(0)">&nbsp;</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+			
 		</li>
 
 		<div id="clsNoteEditor" class="note-editor">
+			<div id="noteEditorBlocker" class="blocker hidden"><div class="blockerContent">Submitting...</div></div>
+
 			<div class="note-text-wrapper">
 				<div style="padding: 0 22px 0 0;">
 					<input type="text" id="txtNoteText" class="txtNoteText" />
+					<label for="txtNoteText" class="note-text-label"></label>
 				</div>
 			</div>
-			<div class="note-editor-bottom">
-				<label for"txtFromName">from</label>
-				<input type="text" id="txtFromName" class="txtFromName" />
-
-				<div class="bottom-right-chunk">
-					<label class="category-label" for="selCategory">It's a</label>
-					<select name="category" id="selCategory" class="droptrip" style="width:188px">
-						<option value="0">[ choose ]</option>
-						<option value="1">place to stay</option>
-						<option value="2">place to eat</option>
-						<option value="3">thing to do</option>
+			
+			<div class="note-editor-bottom hidden">
+				<div class="category-wrapper">
+					<div class="category-selector">
+					<select name="category" id="selCategory" class="droptrip" style="width:100px">
+						<option value="1">Stay</option>
+						<option value="2">Eat</option>
+						<option value="3">Do</option>
 					</select>
-					<a class="submit-note-link" href="javascript:void(0)">+</a>
-					<a class="cancel-note-link" href="javascript:void(0)">Cancel</a>
+					</div>
+					<div class="note-text"></div>
 				</div>
+
+				<input type="text" id="txtFromName" class="txtFromName" />
+				<label for"txtFromName" class="note-from-label">Your name</label>
+				
+				<a class="submit-note-link" href="javascript:void(0)">Finished</a>
+				<a class="cancel-note-link" href="javascript:void(0)">Cancel</a>
+
+				
 				<br class="clear" />
 			</div>
 		</div>

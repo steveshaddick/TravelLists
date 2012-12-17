@@ -31,8 +31,6 @@ a {
 	text-decoration: none;
 	color: $mediumGrey;
 
-	@include sans-serif(14px);
-
 	&:hover {
 		color: $green;
 	}
@@ -71,9 +69,7 @@ input:focus {
 
 label {
 	color:$darkGrey;
-	@include serif(36px);
-	font-weight:600;
-	font-style: italic;
+	@include serif-italic(36px);
 }
 
 #loadBlocker {
@@ -88,13 +84,24 @@ label {
 
 	@include sans-serif(76px);
 
-	.blockerContent {
-		position:absolute;
-		top:50%;
-		left:50%;
-		margin-top:-36px;
-		margin-left: -150px;
-	}
+	
+}
+.blockerContent {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-36px;
+	margin-left: -150px;
+}
+
+.blocker {
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:1000000;
+	background:#eee;
 }
 
 #modal {
@@ -129,7 +136,6 @@ label {
 .contentWrapper {
 	max-width: $maxContentWidth;
 	position: relative;
-	overflow-x: hidden;
 	margin: 0 auto;
 }
 
@@ -148,8 +154,7 @@ label {
 
 	.trip-subtitle {
 		color: $darkGrey;
-		@include serif(16px);
-		font-style:italic;
+		@include serif-italic(16px);
 	}
 
 	.email {
@@ -214,7 +219,42 @@ label {
 	text-align: center;
 }
 
+.content {
+	max-width:$maxContentWidth;
+	margin: 0 auto;
+}
 
+.list-wrapper {
+
+	header {
+		max-width: $maxContentWidth;
+		margin:0 auto;
+		padding: 35px 0;
+	}
+
+	.trip-title {
+		color: $darkGrey;
+		display: inline-block;
+		@include sans-serif(66px);
+	}
+
+	.trip-subtitle {
+		color: $blue;
+		display: inline-block;
+		@include serif-italic(18px);
+	}
+
+}
+
+.trip-settings {
+	display:hidden;
+	background: $lightGrey url('/images/top-inner-shadow.png') repeat-x top;
+	height:0;
+
+	.settings-button {
+    	background-image: url('/images/gear-button.png');
+	}
+}
 
 
 .notice-container {
@@ -236,7 +276,7 @@ label {
 		@include transition(top 0.5s ease-in);
 
 		.notice-text {
-			@include serif(24);
+			@include serif(24px);
 		}
 	}
 
@@ -258,11 +298,23 @@ label {
 	top:0;
 }
 
-.delete-link {
+.sprite-button {
+	background-position:left;
+	&:hover {
+    	background-position:right;
+    }
+}
+
+.x-button {
 	color: #FF0000;
+	cursor:pointer;
     position: absolute;
-    right: 0;
+    right: 5px;
     top: 15px;
+    width:17px;
+    height:16px;
+    overflow:hidden;
+    background-image: url('/images/x-button.png');
 }
 
 #map {
@@ -278,14 +330,12 @@ label {
 	.location {
 		padding-bottom:33px;
 		margin-top: 25px;
-		border-bottom: 1px solid $darkGrey;
+		border-bottom: 1px solid $mediumGrey;
 		position:relative;
 
 		.location-name {
-			font-size:36px;
-			font-weight:bold;
-			background: url('/images/location-icon.png') no-repeat 0 7px;
-			padding-left:24px;
+			color:$darkGrey;
+			@include sans-serif(36px);
 		}
 
 		.location-notes {
@@ -304,7 +354,7 @@ label {
 
 
 	.notes-wrapper {
-		margin: 0 40px;
+		margin: 0;
 		/*min-height:44px;*/
 	}
 
@@ -317,112 +367,122 @@ label {
 		padding-bottom: 15px;
 	}
 
-	.note {
+}
 
-		font-size:30px;
-		margin: 22px 0;
-		position:relative;
+.note-category {
+	width:25px;
+	background-image: url('/images/category-icons.png');
+	background-position: 100px 5px;
+	background-repeat: no-repeat;
+	overflow:hidden;
+	vertical-align: top;
 
-		.note-text {
-			font-style:italic;
-		}
+	&.poi {
+		background-position:0 5px;
+	}
 
-		.note-from {
-			font-size:14px;
-			color:$blue;
-		}
+	&.food {
+		background-position: -25px 5px;
+	}
 
-		.note-link {
+	&.stay {
+		background-position: -50px 5px;
+	}
+}
 
-			td {
-				vertical-align: middle;
-			}
+.note {
 
-			.link-info {
-				padding-left:16px;
-			}
+	font-size:30px;
+	margin: 22px 0;
+	position:relative;
 
-			.link-image {
-				border:1px solid $blue;
-				max-width:170px;
-			}
+	
 
-			.link-title {
-				font-size: 18px;
-				font-weight:bold;
-				display:inline-block;
-			}
-			.link-description {
-				font-size: 18px;
-				font-weight:normal;
-				display:inline-block;
-				font-style: italic;
+	.note-text-wrapper {
+		vertical-align: top;
+		padding-left:8px;
+	}
 
-			}
-		}
+	.note-text {
+		@include serif-italic(30px);
+		color:$blue;
 
-		.note-delete {
-			position:absolute;
-			top:0;
-			right:-10px;
-			
-			a {
-				color:#ff0000;
+		a {
+			font-size:inherit;
+			color: inherit;
+			font-family: inherit;
+			font-size: inherit;
+			line-height: inherit;
+
+			&:hover {
+				color: $lightBlue;
 			}
 		}
+	}
 
+	.note-from {
+		@include serif-italic(18px);
+		color:$blue;
+	}
+
+	.note-link {
+
+		@include sans-serif(18px);
+
+		td {
+			vertical-align: middle;
+		}
+
+		.link-info {
+			padding-left:16px;
+		}
+
+		.link-image {
+			border:1px solid $blue;
+			max-width:170px;
+		}
+
+		.link-title {
+			display:inline-block;
+		}
+		.link-description {
+			@include serif(18px);
+			font-weight: normal;
+			display:inline-block;
+			margin-top:5px;
+		}
+	}
+
+	.note-delete {
+		position:absolute;
+		top:0;
+		right:0;
+		
+		a {
+			color:#ff0000;
+		}
 	}
 
 }
 
 a.add-location-link {
+	
+	@include sans-serif(14px);
+
 	display:block;
-	padding: 20px 0;
-	font-size:14;
+	padding: 20px 0 18px;
 	text-transform:uppercase;
-	font-weight:bold;
 	width: 300px;
 	margin: 20px auto;
 	text-align: center;
-	color: $darkGrey;
+	color: #000;
+	background:#fff;
 
 	@include border($green);
 
 	&:hover {
-		background:#fff;
+		color:$mediumGrey;
 		text-decoration: none;
-	}
-}
-
-.category {
-
-	table {
-		width: 100%;
-	}
-	
-	.category-header {
-		margin: 0 10px 0 20px;
-
-		.category-name {
-			font-size:18px;
-			color:$darkGrey;
-			width:120px;
-			background: url('/images/category-icon.png') no-repeat;
-			padding-left:30px;
-		}
-		.middle-grey-line {
-			border-top: 1px solid $mediumGrey;
-    		display: block;
-    		height: 0px;
-		}
-
-		.show-hide {
-			width:37px;
-			text-align: right;
-		}
-		.show-hide-link {
-
-		}
 	}
 }
 
@@ -431,11 +491,38 @@ a.add-location-link {
 	padding: 0 10px;
 
 
-	.txtNoteText {
-		width:100%;
-		font-size:18px;
-		padding:16px 10px;
+	.note-text-wrapper {
+		text-align:center;
+	}
 
+	.txtNoteText {
+		@include sans-serif(20px);
+		width:100%;
+		padding:0 10px;
+
+	}
+
+	.txtFromName {
+		@include sans-serif(20px);
+		width:250px;
+	}
+
+	label {
+		@include serif(18px);
+		color:$green;
+		font-style: italic;
+		font-weight:normal;
+		margin:12px 0;
+		display:block;
+
+		strong {
+			font-weight:600;
+		}
+	}
+
+	.note-text {
+		@include serif-italic(30px);
+		color:$blue;
 	}
 
 	a.add-note-link {
@@ -459,14 +546,23 @@ a.add-location-link {
 		display:inline-block;
 		background:$green;
 		@include border($green);
-		width:53px;
-		line-height: 53px;
-		position: relative;
-		top: -23px;
+		@include sans-serif(14px);
+		text-transform: uppercase;
+		padding: 14px 10px;
 		text-align: center;
 		text-decoration: none;
 		color: $lightGrey;
-		font-weight: bold;
+
+		&:hover {
+			background:$lightGreen;
+		}
+	}
+
+	a.cancel-note-link {
+		color: $orange;
+		@include sans-serif(14px);
+		text-transform: uppercase;
+		padding-left:20px;
 	}
 
 	.note-editor-bottom {
@@ -474,8 +570,12 @@ a.add-location-link {
 		margin-top:18px;
 	}
 
-	.bottom-right-chunk {
-		float: right;
+	.category-wrapper {
+		position: relative;
+	}
+	.category-selector {
+		position:absolute;
+		left:-100px;
 	}
 
 	.category-label {
@@ -489,6 +589,7 @@ a.add-location-link {
 
 .footer {
 	text-align: center;
+	@include sans-serif(14px);
 
 	.spacer {
 		display: inline-block;

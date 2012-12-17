@@ -311,7 +311,7 @@ var Gate = (function() {
 	function createTripReturn(data) {
 
 		//check for success
-		window.location = 'list/' + data.tripHash;
+		window.location = '/' + data.tripHash;
 
 	}
 
@@ -342,17 +342,11 @@ function Location(data, isLast) {
 	this.lng = data.lng;
 
 	this.$element = null;
-
-	isLast = (typeof isLast === "undefined") ? false : isLast;
-
-	this.categories = [
-		{ title: 'General', obj:null},
-		{ title: 'Places to Stay', obj:null },
-		{ title: 'Places to Eat', obj:null },
-		{ title: 'Things to Do', obj:null }
-		];
+	this.$notesElement = null;
 
 	this.notes = [];
+
+	var isLast = (typeof isLast === "undefined") ? false : isLast;
 
 	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
 	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
@@ -378,6 +372,8 @@ function Location(data, isLast) {
 		}
 	}
 
+	this.$notesElement = $('.notes-wrapper', this.$element);
+
 	var notes;
 	for (var i=0, len=data.notes.length; i<len; i++) {
 		this.addNote(data.notes[i]);
@@ -385,47 +381,11 @@ function Location(data, isLast) {
 
 }
 Location.prototype.destroy = function() {
-	for (var category in this.categories) {
-		category.obj.destroy();
-	}
+
 };
-Location.prototype.addCategory = function(categoryId) {
-	
-	var $category = $("#clsCategory").clone().attr('id', 'category_' + this.id + '_' + categoryId);
-	$category.html($category.html().replace(/\$CATEGORY_NAME\$/g, this.categories[categoryId].title));
 
-	var $before = false;
-	var beforeId = 0;
-	var $check;
-	while (beforeId < categoryId) {
-		$check = $('#category_' + this.id + '_' + beforeId, this.$element);
-		if ($check.length > 0) {
-			$before = $check;
-		}
-		beforeId ++;
-	}
-
-	if ($before) {
-		$before.after($category);
-	} else {
-		$('.location-notes', this.$element).prepend($category);
-	}
-
-	var newCategory = new Category($category);
-	
-	for (var cat in this.categories) {
-		if (cat.obj) {
-			cat.obj.connectSort(newCategory);
-		}
-	}
-
-	this.categories[categoryId].obj = newCategory;
-
-	return $category;
-};
 Location.prototype.addNote = function(note, animate) {
 	
-	var $category = (this.categories[note.categoryId].obj === null) ? this.addCategory(note.categoryId) : this.categories[note.categoryId].obj.$element;
 	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
 
 	animate = (typeof animate == "undefined") ? false : animate;
@@ -445,8 +405,7 @@ Location.prototype.addNote = function(note, animate) {
 	} 
 	this.parseNote(note.id);
 
-	$('.notes-wrapper', $category).append($note);
-	this.categories[note.categoryId].obj.noteAdded();
+	this.$notesElement.append($note);
 
 	if (animate) {
 		$note.hide().show('slow');
@@ -472,7 +431,7 @@ Location.prototype.parseNote = function(noteId, linkData) {
 
 	if (note.linkUrl != '') {
 
-		if (note.linkTitle != '') {
+		if ((note.linkImage != '') || (note.linkDescription != '') ){
 			
 			$('.link-title', note.$element).attr('href', note.linkUrl).html(note.linkTitle);
 			if (htmlString == note.linkUrl) {
@@ -484,6 +443,8 @@ Location.prototype.parseNote = function(noteId, linkData) {
 			
 			if (note.linkImage != '') {
 				$('.link-image', note.$element).attr('src', note.linkImage).parent().attr('href', note.linkUrl);
+			} else {
+				$('.link-image', note.$element).addClass('hidden');
 			}
 
 			if (note.linkDescription != '') {
@@ -501,6 +462,21 @@ Location.prototype.parseNote = function(noteId, linkData) {
 	regex = /(\(?\bhttps?:\/\/[-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#\/%=~_()|])/g;
 	htmlString = htmlString.replace(regex,"<a target=\"_blank\" href=\"$1\">$1</a>").replace(/href="\(/g, 'href="').replace(/\)">/g, '">');
 
+	switch (note.categoryId) {
+		case '1':
+		 	$('.note-category', note.$element).addClass('stay');
+			break;
+		case '2':
+		 	$('.note-category', note.$element).addClass('food');
+			break;
+		case '3':
+		 	$('.note-category', note.$element).addClass('poi');
+			break;
+	}
+
+	if (note.fromName == '') {
+		note.fromName = 'Anonymous';
+	}
 	$('.note-text', note.$element).html(htmlString);
 	$('.note-from', note.$element).html('-' + note.fromName);
 
@@ -509,82 +485,24 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 	
 	var location = event.data.location;
 	var note = location.notes[event.data.noteId];
-	var category = location.categories[note.categoryId].obj;
+
 	if (!note.canDelete) return;
 
 	Ajax.call('deleteNote', { noteId: note.id },
 		function() {
 			$("#note_" + note.id ).remove();
-			category.total --;
-			if (category.total < 1) {
-				category.destroy();
-				location.categories[note.categoryId].obj = null;
-			}
+			
 		},
 		function() {
 			//error
 		});
 };
 
-var Category = function($element) {
-	this.$element = $element;
-	this.total = 0;
-
-	this.isOpen = true;
-
-	$('.show-hide', this.$element).click({ category: this }, this.showHide);
-
-	if (GLOBAL.isAdmin) {
-		$('.notes-wrapper', $element).sortable({
-			update: ListAdmin.sortNotes
-		});
-		$('.notes-wrapper', $element).disableSelection();
-	}
-}
-Category.prototype.showHide = function (event) {
-	var category = event.data.category;
-
-	if (category.isOpen) {
-		$('.notes-wrapper', category.$element).slideUp();
-		$('.notes-hidden', category.$element).show();
-		category.isOpen = false;
-	} else {
-		$('.notes-wrapper', category.$element).slideDown();
-		$('.notes-hidden', category.$element).hide();
-		category.isOpen = true;
-	}
-}
-Category.prototype.noteAdded = function () {
-	this.total ++;
-	if (this.total > 1) {
-		$('.notes-hidden', this.$element).html(this.total + ' notes hidden');
-	} else {
-		$('.notes-hidden', this.$element).html(this.total + ' note hidden');
-	}
-	if (!this.isOpen) {
-		$('.notes-wrapper', this.$element).slideDown();
-		$('.notes-hidden', this.$element).hide();
-		this.isOpen = true;
-	}
-}
-Category.prototype.connectSort = function(category) {
-	if (GLOBAL.isAdmin) {
-		//$('.notes-wrapper', this.$element).option('connectWith', $('.notes-wrapper', category.$element));
-		//$('.notes-wrapper', category.$element).option('connectWith', $('.notes-wrapper', this.$element));
-	}
-}
-Category.prototype.destroy = function () {
-	this.$element.remove();
-	this.$element = false;
-	this.total = 0;
-	$('.show-hide', this.$element).unbind('click');
-	$('.notes-wrapper', $element).destroy();
-}
-
-
 var NoteEditor = (function() {
 
 	var $noteEditor;
+	var $txtNoteText;
+	var $txtNameText;
 	var linkTimeout;
 	var isInit = false;
 	var isEditing = false;
@@ -593,31 +511,86 @@ var NoteEditor = (function() {
 	
 	var currentLocation = false;
 	var currentLink = '';
+	
+	var labelIndex = -1;
+	var labels = [
+		'Suggest somewhere to eat, stay or do.',
+		'Press <strong>enter</strong> to add.'
+	];
 
 
 	function init($element) {
 
 		$noteEditor = $("#clsNoteEditor");
+		resetEditor();
 		isInit = true;
 	}
 
 	function setHandlers() {
-		
-		$("#txtNoteText").focus();
+		$txtNoteText = $("#txtNoteText");
+		$txtNameText = $("#txtFromName");
+		$txtNoteText.prop('disabled', false).keyup(noteKeyUpHandler).focus();
 
 		$('.submit-note-link', $noteEditor).click({location: currentLocation}, submitNoteClickHandler);
 		$('.cancel-note-link', $noteEditor).click(cancelNoteClickHandler);
 	}
 
 	function clearHandlers() {
+		$txtNoteText.prop('disabled', true).unbind('keyup');
+		$txtNameText.prop('disabled', true).unbind('keyup');
 		$('.submit-note-link', $noteEditor).unbind('click');
 		$('.cancel-note-link', $noteEditor).unbind('click');
+		$txtNameText = $txtNoteText = null;
+	}
+
+	function noteKeyUpHandler(e) {
+		if (e.which == 27) {
+			cancelNoteClickHandler();
+			return;
+		}
+		if ($.trim($txtNoteText) != '') {
+			if (labelIndex !== 1) {
+				labelIndex = 1;
+				$('.note-text-label', $noteEditor).html(labels[labelIndex]);
+			}
+			if (e.which == 13) {
+				showBottom();
+			}
+		} else {
+			if (labelIndex !== 0) {
+				labelIndex = 0;
+				$('.note-text-label', $noteEditor).html(labels[labelIndex]);
+			}
+		}
+	}
+
+	function nameKeyUpHandler(e) {
+		switch (e.which) {
+			case 13:
+				submitNoteClickHandler();
+				break;
+			case 27:
+				cancelNoteClickHandler();
+				break;
+		}
+	}
+
+	function showBottom() {
+
+		$txtNoteText.prop('disabled', true).unbind('keyup');
+		$('.note-editor-bottom', $noteEditor).removeClass('hidden');
+
+		$('.note-text', $noteEditor).html($.trim($txtNoteText.val()));
+		$('.note-text-wrapper', $noteEditor).addClass('hidden');
+		$('.note-editor-bottom', $noteEditor).removeClass('hidden');
+		$txtNameText.prop('disabled', false).keyup(nameKeyUpHandler).focus();
 	}
 
 	function submitNoteClickHandler(event) {
 		var noteText = $("#txtNoteText").val();
 		var categoryId = $('#selCategory').val();
 		var fromName = $('#txtFromName').val();
+
 
 		if (fromName == '') {
 			fromName = 'Anonymous';
@@ -626,6 +599,8 @@ var NoteEditor = (function() {
 		var location = event.data.currentLocation;
 
 		//TODO form error checking, loading
+		
+		$("#noteEditorBlocker").removeClass('hidden');
 
 		Ajax.call('addNote', 
 			{
@@ -658,7 +633,15 @@ var NoteEditor = (function() {
 		$hiddenElement = false;
 
 		$("#txtNoteText").val('');
-		$('#selCategory').val('0');
+		$('#selCategory').val('1');
+
+		labelIndex = 0;
+		$('.note-text-label', $noteEditor).html(labels[labelIndex]);
+
+		$("#noteEditorBlocker").addClass('hidden');
+		$('.note-editor-bottom', $noteEditor).addClass('hidden');
+
+		$('.note-text-wrapper', $noteEditor).removeClass('hidden');
 
 		clearHandlers();
 		$("#cls").append($noteEditor);
@@ -674,6 +657,7 @@ var NoteEditor = (function() {
 		$hiddenElement = $(':first-child', $element).css('display', 'none');
 
 		currentLocation = location;
+		
 
 		$element.append($noteEditor);
 		setHandlers(currentLocation);
@@ -694,6 +678,10 @@ var Trip = (function() {
 	var locationCount = 0;
 	var bounds;
 
+	var tripName = '';
+	var tripAuthor = '';
+	var email = '';
+
 	var $hiddenNoteLink = null;
 
 	function loadTrip(obj) {
@@ -710,6 +698,10 @@ var Trip = (function() {
 						addLocation(data.locations[i]);
 					}
 				}
+
+				tripName = data.tripName;
+				tripAuthor = data.tripAuthor;
+				email = data.email;
 
 				if (GLOBAL.isAdmin) {
 					ListAdmin.init(data.notices);
@@ -825,11 +817,19 @@ var Trip = (function() {
 		console.log(event);
 	}
 
+	function getTripInfo() {
+		return {
+			tripName: tripName,
+			tripAuthor: tripAuthor
+		};
+	}
+
 	return {
 		loadTrip: loadTrip,
 		addLocation: addLocation,
 		addNote: addNote,
-		deleteLocation: deleteLocation
+		deleteLocation: deleteLocation,
+		getTripInfo: getTripInfo
 	}
 }());
 
@@ -1073,7 +1073,7 @@ var Home = (function() {
 	function createTripReturn(data) {
 
 		//check for success
-		window.location = 'list/' + data.tripHash;
+		window.location = '/' + data.tripHash;
 
 	}
 

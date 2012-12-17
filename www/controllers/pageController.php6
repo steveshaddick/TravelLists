@@ -69,17 +69,6 @@ switch ($action) {
 		exit();
 		break;
 
-	case 'list':
-
-		if ($main->getTripList() !== true) {
-			header('Location: http://' . SITE_URL);
-		}
-		$view = new View($action, $main);
-		include(BASE_PATH . 'views/list.php');
-		exit();
-
-		break;
-
 	case 'about':
 		$view = new View($action);
 		include(BASE_PATH . 'views/about.php');
@@ -96,9 +85,20 @@ switch ($action) {
 		break;
 		
 	default:
-		$view = new View($action);
-		include(BASE_PATH . 'views/404.php');
-		exit();
+
+		if ($main->getTripList($action) === true) {
+
+			$view = new View('list', $main);
+			include(BASE_PATH . 'views/list.php');
+			exit();
+
+		} else {
+
+			$view = new View($action);
+			include(BASE_PATH . 'views/404.php');
+			exit();
+
+		}
 		break;
 	
 }

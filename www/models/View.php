@@ -4,13 +4,15 @@ class View {
 
 	public $title;
 	public $description;
+	public $type;
 
-	public function __construct($action, $main = null) {
+	public function __construct($type, $main = null) {
 
 		$baseTitle = 'Tripnotes';
 		$sep = ' | ';
+		$this->type = $type;
 
-		switch ($action) {
+		switch ($this->type) {
 			case 'index':
 				$this->title = $baseTitle;
 				break;

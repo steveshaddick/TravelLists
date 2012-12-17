@@ -6,6 +6,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width = device-width" />
+
+	<?php
+	if ($view->type == 'list') {
+		?>
+		<meta name="robots" content="noindex, nofollow" />
+		<?php
+	}
+	?>
 	
 	<title><?php echo $view->title; ?></title>
 	<meta name="title" content="<?php echo $view->title; ?>s" />

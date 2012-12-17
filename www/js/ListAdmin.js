@@ -166,21 +166,44 @@ var Notice = (function() {
 
 }());
 
+var Settings = (function() {
+
+	var isInit = false;
+	var isOpen = false;
+
+
+	function open() {
+		$("txtTripName").val()
+
+	}
+
+	function toggleSettings() {
+		if (isOpen) {
+			open();
+		} else {
+			close();
+		}
+	}
+
+	return {
+		toggleSettings: toggleSettings
+	};
+}());
+
 
 var ListAdmin = (function() {
 
 	var autocomplete = null;
 
-	function init(notices) {
+	function init(data) {
+		
+		var notices = data.notices;
+
 		$('.add-location-link').click(addLocation);
 		$(document).on('click', '.delete-location-link', deleteLocation);
 
-		var text = new EditText($("#tripTitle"), function() {
-			save({tripTitle: $("#tripTitle").html()});
-		});
-		text = new EditText($("#tripSubtitle"), function() {
-			save({tripSubtitle: $("#tripSubtitle").html()});
-		});
+		$(".settings-button").click(Settings.toggleSettings);
+
 
 		setTimeout(function() {
 			if (typeof notices !== "undefined") {

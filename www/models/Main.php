@@ -62,8 +62,8 @@ class Main {
 
 			while($row = $stmt->fetch()) {
 				$html .= '<strong>' . $row['tripName'] . '</strong><br />';
-				$html .= 'Admin Link: <a href="http://' . SITE_URL . '/list/' . $row['adminHash'] . '">http://' . SITE_URL . '/list/' . $row['adminHash']  . '</a><br />';
-				$html .= 'Public Link: <a href="http://' . SITE_URL . '/list/' . $row['publicHash']  . '">http://' . SITE_URL . '/list/' . $row['publicHash'] . '</a><br /><br />';
+				$html .= 'Admin Link: <a href="http://' . SITE_URL . '/' . $row['adminHash'] . '">http://' . SITE_URL . '/' . $row['adminHash']  . '</a><br />';
+				$html .= 'Public Link: <a href="http://' . SITE_URL . '/' . $row['publicHash']  . '">http://' . SITE_URL . '/' . $row['publicHash'] . '</a><br /><br />';
 			}
 
 			$html .= '</body></html>';
@@ -94,10 +94,10 @@ class Main {
 
 		die();
 
-		$tripName = $data['tripName'];
-		$userName = $data['userName'];
-		$email = Encryptor::encrypt($data['email'], SALT);
-		$location = $data['location'];
+		$tripName = trim($data['tripName']);
+		$userName = trim($data['userName']);
+		$email = Encryptor::encrypt(trim($data['email']), SALT);
+		$location = trim($data['location']);
 
 		//more validation?
 
@@ -138,8 +138,8 @@ class Main {
 		$subject = 'Email Subject';
 
 		$html = '<!doctype html><head></head><body>';
-		$html .= 'Admin Link: <a href="http://' . SITE_URL . '/list/' . $adminHash . '">http://' . SITE_URL . '/list/' . $adminHash . '</a><br />';
-		$html .= 'Public Link: <a href="http://' . SITE_URL . '/list/' . $publicHash . '">http://' . SITE_URL . '/list/' . $publicHash . '</a><br />';
+		$html .= 'Admin Link: <a href="http://' . SITE_URL . '/' . $adminHash . '">http://' . SITE_URL . '/' . $adminHash . '</a><br />';
+		$html .= 'Public Link: <a href="http://' . SITE_URL . '/' . $publicHash . '">http://' . SITE_URL . '/' . $publicHash . '</a><br />';
 		$html .= '</body></html>';
 
 		//$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
@@ -168,13 +168,13 @@ class Main {
 
 	}
 
-	public function getTripList() {
+	public function getTripList($id) {
 
-		if (!isset($_GET['id']) || ($_GET['id'] == '')) {
+		if (empty($id)) {
 			return false;
 		}
 
-		$list = $_GET['id'];
+		$list = $id;
 
 
 		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE adminHash=? OR publicHash=? LIMIT 1");
@@ -187,6 +187,11 @@ class Main {
 
 		$this->isAdmin = $_SESSION['isAdmin'] = ($this->trip['adminHash'] == $list);
 		$_SESSION['trip_id'] = intval($this->trip['_id']);
+
+		$_SESSION['trip'] = array();
+		$_SESSION['trip']['tripName'] = $this->trip['tripName'];
+		$_SESSION['trip']['tripAuthor'] = $this->trip['userName'];
+		 
 		
 		return true;
 
