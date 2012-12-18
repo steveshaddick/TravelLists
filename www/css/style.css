@@ -453,36 +453,38 @@ label {
 .note-category {
   width: 25px;
   background-image: url("/images/category-icons.png");
-  background-position: 100px 5px;
+  background-position: 100px;
   background-repeat: no-repeat;
   overflow: hidden;
   vertical-align: top;
+  display: block;
+  height: 28px;
 }
-/* line 380, ../../src/scss/_content.scss */
+/* line 382, ../../src/scss/_content.scss */
 .note-category.poi {
-  background-position: 0 5px;
+  background-position: 0;
 }
-/* line 384, ../../src/scss/_content.scss */
+/* line 386, ../../src/scss/_content.scss */
 .note-category.food {
-  background-position: -25px 5px;
+  background-position: -25px;
 }
-/* line 388, ../../src/scss/_content.scss */
+/* line 390, ../../src/scss/_content.scss */
 .note-category.stay {
-  background-position: -50px 5px;
+  background-position: -50px;
 }
 
-/* line 393, ../../src/scss/_content.scss */
+/* line 395, ../../src/scss/_content.scss */
 .note {
   font-size: 30px;
   margin: 22px 0;
   position: relative;
 }
-/* line 401, ../../src/scss/_content.scss */
+/* line 403, ../../src/scss/_content.scss */
 .note .note-text-wrapper {
   vertical-align: top;
   padding-left: 8px;
 }
-/* line 406, ../../src/scss/_content.scss */
+/* line 408, ../../src/scss/_content.scss */
 .note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
@@ -491,7 +493,7 @@ label {
   font-weight: 600;
   color: #151633;
 }
-/* line 410, ../../src/scss/_content.scss */
+/* line 412, ../../src/scss/_content.scss */
 .note .note-text a {
   font-size: inherit;
   color: inherit;
@@ -499,11 +501,11 @@ label {
   font-size: inherit;
   line-height: inherit;
 }
-/* line 417, ../../src/scss/_content.scss */
+/* line 419, ../../src/scss/_content.scss */
 .note .note-text a:hover {
   color: #5f5c66;
 }
-/* line 423, ../../src/scss/_content.scss */
+/* line 425, ../../src/scss/_content.scss */
 .note .note-from {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -512,31 +514,31 @@ label {
   font-weight: 600;
   color: #151633;
 }
-/* line 428, ../../src/scss/_content.scss */
+/* line 430, ../../src/scss/_content.scss */
 .note .note-link {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
   font-size: 18px;
   line-height: 18px;
 }
-/* line 432, ../../src/scss/_content.scss */
+/* line 434, ../../src/scss/_content.scss */
 .note .note-link td {
   vertical-align: middle;
 }
-/* line 436, ../../src/scss/_content.scss */
+/* line 438, ../../src/scss/_content.scss */
 .note .note-link .link-info {
   padding-left: 16px;
 }
-/* line 440, ../../src/scss/_content.scss */
+/* line 442, ../../src/scss/_content.scss */
 .note .note-link .link-image {
   border: 1px solid #151633;
   max-width: 170px;
 }
-/* line 445, ../../src/scss/_content.scss */
+/* line 447, ../../src/scss/_content.scss */
 .note .note-link .link-title {
   display: inline-block;
 }
-/* line 448, ../../src/scss/_content.scss */
+/* line 450, ../../src/scss/_content.scss */
 .note .note-link .link-description {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -545,18 +547,18 @@ label {
   display: inline-block;
   margin-top: 5px;
 }
-/* line 456, ../../src/scss/_content.scss */
+/* line 458, ../../src/scss/_content.scss */
 .note .note-delete {
   position: absolute;
   top: 0;
   right: 0;
 }
-/* line 461, ../../src/scss/_content.scss */
+/* line 463, ../../src/scss/_content.scss */
 .note .note-delete a {
   color: #ff0000;
 }
 
-/* line 468, ../../src/scss/_content.scss */
+/* line 470, ../../src/scss/_content.scss */
 a.add-location-link {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -577,21 +579,21 @@ a.add-location-link {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 483, ../../src/scss/_content.scss */
+/* line 485, ../../src/scss/_content.scss */
 a.add-location-link:hover {
   color: #b8b8b8;
   text-decoration: none;
 }
 
-/* line 489, ../../src/scss/_content.scss */
+/* line 491, ../../src/scss/_content.scss */
 .add-note {
   padding: 0 10px;
 }
-/* line 494, ../../src/scss/_content.scss */
+/* line 496, ../../src/scss/_content.scss */
 .add-note .note-text-wrapper {
   text-align: center;
 }
-/* line 498, ../../src/scss/_content.scss */
+/* line 500, ../../src/scss/_content.scss */
 .add-note .txtNoteText {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -600,7 +602,7 @@ a.add-location-link:hover {
   width: 100%;
   padding: 0 10px;
 }
-/* line 505, ../../src/scss/_content.scss */
+/* line 507, ../../src/scss/_content.scss */
 .add-note .txtFromName {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -608,7 +610,7 @@ a.add-location-link:hover {
   line-height: 20px;
   width: 250px;
 }
-/* line 510, ../../src/scss/_content.scss */
+/* line 512, ../../src/scss/_content.scss */
 .add-note label {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -619,11 +621,11 @@ a.add-location-link:hover {
   margin: 12px 0;
   display: block;
 }
-/* line 518, ../../src/scss/_content.scss */
+/* line 520, ../../src/scss/_content.scss */
 .add-note label strong {
   font-weight: 600;
 }
-/* line 523, ../../src/scss/_content.scss */
+/* line 525, ../../src/scss/_content.scss */
 .add-note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
@@ -632,7 +634,7 @@ a.add-location-link:hover {
   font-weight: 600;
   color: #151633;
 }
-/* line 528, ../../src/scss/_content.scss */
+/* line 530, ../../src/scss/_content.scss */
 .add-note a.add-note-link {
   display: block;
   padding: 16px 10px;
@@ -650,11 +652,11 @@ a.add-location-link:hover {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 541, ../../src/scss/_content.scss */
+/* line 543, ../../src/scss/_content.scss */
 .add-note a.add-note-link:hover {
   background-color: #fff;
 }
-/* line 545, ../../src/scss/_content.scss */
+/* line 547, ../../src/scss/_content.scss */
 .add-note a.submit-note-link {
   display: inline-block;
   background: #799b28;
@@ -674,11 +676,11 @@ a.add-location-link:hover {
   text-decoration: none;
   color: #e6e3e1;
 }
-/* line 556, ../../src/scss/_content.scss */
+/* line 558, ../../src/scss/_content.scss */
 .add-note a.submit-note-link:hover {
   background: #a5bb77;
 }
-/* line 561, ../../src/scss/_content.scss */
+/* line 563, ../../src/scss/_content.scss */
 .add-note a.cancel-note-link {
   color: #f53d12;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -688,21 +690,21 @@ a.add-location-link:hover {
   text-transform: uppercase;
   padding-left: 20px;
 }
-/* line 568, ../../src/scss/_content.scss */
+/* line 570, ../../src/scss/_content.scss */
 .add-note .note-editor-bottom {
   position: relative;
   margin-top: 18px;
 }
-/* line 573, ../../src/scss/_content.scss */
+/* line 575, ../../src/scss/_content.scss */
 .add-note .category-wrapper {
   position: relative;
 }
-/* line 576, ../../src/scss/_content.scss */
+/* line 578, ../../src/scss/_content.scss */
 .add-note .category-selector {
   position: absolute;
   left: -100px;
 }
-/* line 581, ../../src/scss/_content.scss */
+/* line 583, ../../src/scss/_content.scss */
 .add-note .category-label {
   font-size: 18px;
   font-weight: bold;
@@ -711,7 +713,7 @@ a.add-location-link:hover {
   top: -22px;
 }
 
-/* line 590, ../../src/scss/_content.scss */
+/* line 592, ../../src/scss/_content.scss */
 .footer {
   text-align: center;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -719,7 +721,7 @@ a.add-location-link:hover {
   font-size: 14px;
   line-height: 14px;
 }
-/* line 594, ../../src/scss/_content.scss */
+/* line 596, ../../src/scss/_content.scss */
 .footer .spacer {
   display: inline-block;
   width: 85px;

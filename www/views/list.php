@@ -79,7 +79,7 @@
 		<li id="clsNote" class="note">
 			<table>
 				<tr>
-					<td class="note-category">&nbsp;</td>
+					<td style="vertical-align:top; padding-top:7px"><span class="note-category">&nbsp;</span></td>
 					<td class="note-text-wrapper">
 						<span class="note-text"></span>
 						<div class="note-link">
