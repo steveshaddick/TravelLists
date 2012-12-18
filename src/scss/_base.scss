@@ -23,6 +23,7 @@ $maxWidth: 1250px;
 	font-family: "chaparral-pro", georgia, serif;
 	font-size: $size;
 	line-height:$size;
+	letter-spacing: 1px;
 }
 
 @mixin serif-italic($size) {

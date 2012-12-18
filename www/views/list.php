@@ -116,10 +116,11 @@
 			<div class="note-editor-bottom hidden">
 				<div class="category-wrapper">
 					<div class="category-selector">
-					<select name="category" id="selCategory" class="droptrip" style="width:100px">
-						<option value="1">Stay</option>
-						<option value="2">Eat</option>
-						<option value="3">Do</option>
+					<select name="category" id="selCategory" class="droptrip" style="width:100px;">
+						<option value="0" selected>None</option>
+						<option value="2" data-image="/images/icon-food.png">Eat</option>
+						<option value="1" data-image="/images/icon-stay.png">Stay</option>
+						<option value="3" data-image="/images/icon-poi.png">Do</option>
 					</select>
 					</div>
 					<div class="note-text"></div>
@@ -164,7 +165,9 @@
     }
     ?>
 
+    <script src="/js/jquery/jquery.cookie.min.js"></script>
     <script src="/js/jquery/jquery.dd.js"></script>
+    <script src="/js/json2.js"></script>
 
 	<script src="/js/Main.js"></script>
 

@@ -391,10 +391,10 @@ Location.prototype.addNote = function(note, animate) {
 	animate = (typeof animate == "undefined") ? false : animate;
 	
 
-	if (note.canDelete) {
-		$('.note-delete-link', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+	if (note.canDelete){
+		$('.note-delete', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	} else {
-		$('.note-delete-link', $note).remove();
+		$('.note-delete', $note).remove();
 	}
 
 	note.$element = $note;
@@ -488,7 +488,11 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 
 	if (!note.canDelete) return;
 
-	Ajax.call('deleteNote', { noteId: note.id },
+	Ajax.call('deleteNote', 
+		{ 
+			noteId: note.id
+
+		},
 		function() {
 			$("#note_" + note.id ).remove();
 			
@@ -522,8 +526,16 @@ var NoteEditor = (function() {
 	function init($element) {
 
 		$noteEditor = $("#clsNoteEditor");
-		resetEditor();
+		
+		labelIndex = 0;
+		$('.note-text-label', $noteEditor).html(labels[labelIndex]);
+
+		if ($.cookie('from')) {
+			$("#txtFromName").val($.cookie('from'));
+		}
+		
 		isInit = true;
+
 	}
 
 	function setHandlers() {
@@ -587,9 +599,9 @@ var NoteEditor = (function() {
 	}
 
 	function submitNoteClickHandler(event) {
-		var noteText = $("#txtNoteText").val();
+		var noteText = $.trim($("#txtNoteText").val());
 		var categoryId = $('#selCategory').val();
-		var fromName = $('#txtFromName').val();
+		var fromName = $.trim($('#txtFromName').val());
 
 
 		if (fromName == '') {
@@ -597,6 +609,8 @@ var NoteEditor = (function() {
 		}
 
 		var location = event.data.currentLocation;
+
+		$.cookie('from', fromName, { expires: 365, path: '/' });
 
 		//TODO form error checking, loading
 		
@@ -1104,8 +1118,6 @@ var Main = (function() {
 		
 		Ajax.init(obj.a);
 		GLOBAL.isAdmin = obj.isAdmin;
-
-
 	}
 
 	function loadBlock() {

@@ -490,7 +490,7 @@ a.add-location-link {
 
 .add-note {
 
-	padding: 0 10px;
+	padding: 0 40px;
 
 
 	.note-text-wrapper {
@@ -514,7 +514,7 @@ a.add-location-link {
 		color:$green;
 		font-style: italic;
 		font-weight:normal;
-		margin:12px 0;
+		margin:12px 0 24px;
 		display:block;
 
 		strong {
@@ -565,6 +565,10 @@ a.add-location-link {
 		@include sans-serif(14px);
 		text-transform: uppercase;
 		padding-left:20px;
+
+		&:hover {
+			color: $lightOrange;
+		}
 	}
 
 	.note-editor-bottom {
@@ -574,10 +578,12 @@ a.add-location-link {
 
 	.category-wrapper {
 		position: relative;
+		margin-bottom:12px;
 	}
 	.category-selector {
 		position:absolute;
-		left:-100px;
+		left:-105px;
+		top: -5px;
 	}
 
 	.category-label {

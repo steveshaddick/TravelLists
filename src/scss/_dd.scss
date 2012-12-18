@@ -7,11 +7,13 @@
 	display: inline-block;
 
 	.ddTitle {
-		padding:14px 10px;
+		padding:14px 10px 0;
 		text-indent:0;
 		cursor:pointer;
 		overflow:hidden;
 		font-style: italic;
+		text-align: right;
+		height:28px;
 
 		@include border($darkGrey);
 
@@ -20,11 +22,11 @@
 		}
 
 		span.arrow {
-			background:url(dd_arrow.gif) no-repeat 0 0; 
-			float:right; 
+			background:url(/images/dd_down-arrow.png) no-repeat 0 0; 
+			float:left; 
 			display:inline-block;
 			width:16px; 
-			height:16px; 
+			height:10px; 
 			cursor:pointer; 
 		}
 
@@ -35,6 +37,8 @@
 		span.ddTitleText img{
 			text-align:left; 
 			padding:0 2px 0 0;
+			position:relative;
+			top:-10px;
 		}
 		img.selected {
 			padding:0 3px 0 0;
@@ -42,15 +46,23 @@
 		}
 	}
 
+	.ddTitleText {
+
+		.ddlabel {
+			display:none;
+		}
+	}
+
 	.ddChild {
 		position:absolute;
-		border-top:none;
 		display:none;
 		margin:0;
 		width:auto;
 		overflow:auto;
 		overflow-x:hidden !important;
 		background-color:#ffffff;
+		width:98px;
+		cursor: pointer;
 
 		@include border($darkGrey);
 
@@ -75,12 +87,28 @@
 		a img {
 			border:0;
 			padding:0 2px 0 0;
-			vertical-align:middle;
+			vertical-align:top;
+			float:right;
+			padding-top:10px;
 		}
 		a.selected {
 			background-color:$green;
 			color: $lightGrey;
 			
+		}
+
+		.ddlabel {
+			float:left;
+			@include serif-italic(21px);
+			padding: 10px 5px;
+			color: $blue;
+			width:50px;
+			text-align:right;
+			display:inline-block;
+		}
+
+		.hover {
+			background: $lightGrey;
 		}
 	}
 }
