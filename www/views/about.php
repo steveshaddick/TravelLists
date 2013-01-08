@@ -1,22 +1,33 @@
 <?php include(BASE_PATH . 'views/parts/header.php'); ?>
 
-
 	<div id="body">
 		<div class="contentWrapper">
-			<div id="landingPage" class="pageContent">
-				What is Trip Notes?
+		
+			<header class="page-header">
+				<h1 class="site-title"><a href="/">Tripnotes</a></h1>
+				<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
+			</header>		
+			
+			
+			<section class="page-content about-page">
 
-				Trip Notes is the place to capture and organize your travel ideas by yourself and with others.  Planning a trip can be messy and overwhelming, so we built Trip Notes to help people make sense of their travels and ultimately, have better travels.
+				<p>Tripnotes is the place to capture and organize travel ideas by yourself and with others.  Planning a trip can be overwhelming, so we built Trip Notes to help people get and organize suggestions.
+				</p>
+				
+				<p>Trip Notes is new, and we'd love your feedback on how to make it better.
+				</p>
+				
+				<img src="../images/icons/twitter-3.png" alt="twitter"> <a href="http://www.twitter.com/maketripnotes">@maketripnotes</a>
+				
+				<br><br>
+				
+				<img src="../images/icons/mail.png" alt="email"> <a href="mailto:help@tripnotes.com">
+				help@tripnotes.com</a>
+				<br><br>
+				
 
-				Trip Notes is new, and we'd love your feedback on how to make it better.
 
-				TWITTER @maketripnotes 
-				EMAIL hello@maketripnotes.com
-
-				The Team
-
-				The Trip Notes team comprises of three Toronto makers who are curious about the world and passionate in making it better.
-			</div>
+			</section>
 		</div>
 	</div>
 

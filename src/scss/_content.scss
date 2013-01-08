@@ -11,6 +11,8 @@ h1 {
 	margin:0;
 }
 
+
+
 .clear {
 	clear:both;
 }
@@ -197,6 +199,7 @@ label {
 
 }
 
+.page-header,
 .start-header {
 	width:100%;
 	max-width: $maxWidth;
@@ -213,6 +216,18 @@ label {
 		color: $mediumGrey;
 	}
 
+	a {
+		color: inherit;
+
+		&:hover {
+			color: $green;
+		}
+	}
+
+}
+
+.page-header {
+	margin-top:50px;
 }
 
 .home-form {
@@ -222,6 +237,21 @@ label {
 .content {
 	max-width:$maxContentWidth;
 	margin: 0 auto;
+}
+
+.page-content {
+	color:$darkGrey;
+	@include serif(18px);
+	margin:70px auto;
+
+	h2 {
+		margin-top:34px;
+	}
+}
+
+.about-page {
+	max-width:800px;
+	@include serif(24px);
 }
 
 .list-wrapper {

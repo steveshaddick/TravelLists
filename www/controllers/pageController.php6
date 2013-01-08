@@ -54,7 +54,6 @@ if (isset($_GET['action'])) {
 	$action = '';
 }
 
-
 // Non-Authenticated pages
 switch ($action) {
 	case 'index':
@@ -79,7 +78,7 @@ switch ($action) {
 		include(BASE_PATH . 'views/privacy-policy.php');
 		break;
 
-	case 'terms':
+	case 'terms-of-use':
 		$view = new View($action);
 		include(BASE_PATH . 'views/terms.php');
 		break;

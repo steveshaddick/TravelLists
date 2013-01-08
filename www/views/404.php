@@ -5,25 +5,7 @@
 <!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
 <head>
 	<meta charset="UTF-8">
-	<?php
-	switch($userAgent) {
-		case 'iPhone':
-			?>
-			
-			<meta name="viewport" content="initial-scale = 0.4, width = device-width" />
-			
-			<?php
-			break;
-			
-		default:
-			?>
-			
-			<meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width" />
-			
-			<?php
-			break;
-	}
-	?>
+
 	
 	<title></title>
 	<meta name="title" content="" />
