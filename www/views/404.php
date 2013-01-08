@@ -1,49 +1,29 @@
-<!DOCTYPE html>
-<!--[if IE 7 ]><html lang="en" class="ie7"><![endif]-->
-<!--[if IE 8 ]><html lang="en" class="ie8"><![endif]-->
-<!--[if IE 9 ]><html lang="en" class="ie9"><![endif]-->
-<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
-<head>
-	<meta charset="UTF-8">
+<?php include(BASE_PATH . 'views/parts/header.php'); ?>
 
-	
-	<title></title>
-	<meta name="title" content="" />
-	
-	<link href="css/min.css" rel="stylesheet" type="text/css" />
+	<div id="body">
+		<div class="contentWrapper">
+		
+			<header class="page-header">
+				<h1 class="site-title"><a href="/">Tripnotes</a></h1>
+				<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
+			</header>		
 			
-</head>
-<body>
+			
+			<section class="page-content about-page">
+
+				404!
+				
+
+
+			</section>
+		</div>
+	</div>
+
+	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 	
-	Custom 404
-	
-	
-	<script type="text/javascript">
-	
-	<?php
-		switch (ENVIRONMENT) {
-			case 'production':
-				?>
-				
-				function analytics(pageLocation, subTopic, details) {
-					_gaq.push(['_trackEvent',pageLocation, subTopic, details]);
-				}
-				
-				
-				var _gaq = _gaq || [];
-				_gaq.push(['_setAccount', '<?php echo GOOGLE_ANALYTICS_UA; ?>' ]);
-				_gaq.push(['_trackPageview']);
-				
-				(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-				})();
-				
-				<?php
-				break;
-		}
-		?>
-	</script>
+	<?php include(BASE_PATH . 'views/parts/bottom-scripts.php'); ?>
+
+	<?php include(BASE_PATH . 'views/parts/ga.php'); ?>
+			
 </body>
 </html>

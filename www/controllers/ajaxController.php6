@@ -57,14 +57,22 @@ switch ($action) {
 
 	case 'createTrip':
 
-		$arr = $main->createTrip(array(
-			'tripName'=>$_POST['tripName'],
-			'userName'=>$_POST['name'],
-			'email'=>$_POST['email'],
-			'location'=>$_POST['location']
-			));
+		if ((ENVIRONMENT === 'development') && ($_POST['tripName'] == 'error')) {
 
-		echo returnJSON($arr);
+			echo returnJSON(false);
+
+		} else {
+
+			$arr = $main->createTrip(array(
+				'tripName'=>$_POST['tripName'],
+				'userName'=>$_POST['name'],
+				'email'=>$_POST['email'],
+				'location'=>$_POST['location']
+				));
+
+			echo returnJSON($arr);
+
+		}
 		break;
 
 	case 'loadTrip':

@@ -93,8 +93,6 @@ class Main {
 		require_once $this->basePath . 'lib/html2text.php';
 		require_once $this->basePath . 'lib/sendgrid-php/SendGrid_loader.php';
 
-		die();
-
 		$tripName = trim($data['tripName']);
 		$userName = trim($data['userName']);
 		$email = Encryptor::encrypt(trim($data['email']), SALT);

@@ -37,10 +37,14 @@ var TransitionController = (function() {
 			
 			$obj.bind(prefix, function() {
 				$obj.unbind(prefix);
-				callback($obj);
+				if (callback) {
+					callback($obj);
+				}
 			});
 		} else {
-			callback($obj);
+			if (callback) {
+				callback($obj);
+			}
 		}
 	}
 	
@@ -242,97 +246,6 @@ var Modal = (function() {
 
 }());
 
-
-var Gate = (function() {
-
-
-
-	function showInfo() {
-		$("#landingPage").addClass('hidden');
-		$("#txtTripName").prop('disabled', true);
-
-
-		$("#infoPage").removeClass('hidden');
-		$("#txtName").prop('disabled', false).focus();
-		$("#txtEmail").prop('disabled', false);
-	}
-
-	function showLostTrip() {
-		$("#landingPage").addClass('hidden');
-		$("#txtTripName").prop('disabled', true);
-
-		$("#lostTripPage").removeClass('hidden');
-		$("#txtAdminEmail").prop('disabled', false).focus();
-	}
-
-	function showLocation() {
-		$("#infoPage").addClass('hidden');
-		$("#locationPage").removeClass('hidden');
-		var options = {
-		  types: ['(regions)']
-		};
-		autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtLocation'), options);
-	}
-
-	function createTrip() {
-
-		//validate
-
-		var name = $("#txtName").val();
-		var email = $("#txtEmail").val();
-		var tripName = $("#txtTripName").val();
-		var location = $("#txtLocation").val();
-
-		Main.loadBlock();
-		Ajax.call('createTrip',
-			{
-				name: name,
-				email: email,
-				tripName: tripName,
-				location: location
-			},
-			createTripReturn
-		);
-	}
-
-	function sendEmail() {
-		//validate
-
-		var adminEmail = $("#txtAdminEmail").val();
-		Main.loadBlock();
-		Ajax.call('sendEmail',
-			{
-				adminEmail: adminEmail
-			},
-			sendEmailReturn
-		);
-	}
-
-	function createTripReturn(data) {
-
-		//check for success
-		window.location = '/' + data.tripHash;
-
-	}
-
-	function sendEmailReturn(data) {
-		Main.loadRelease();
-
-		$("#lostTripPage").addClass('hidden');
-		$("#txtAdminEmail").prop('disabled', true);
-
-		$("#sentEmailPage").removeClass('hidden');
-	}
-
-	return {
-		showInfo: showInfo,
-		showLocation: showLocation,
-		createTrip: createTrip,
-		showLostTrip: showLostTrip,
-		sendEmail: sendEmail
-	};
-
-}());
 
 function Location(data, isLast) {
 	this.name = data.name;
@@ -866,6 +779,7 @@ var Home = (function() {
 	function init(page) {
 		
 		$('.next-button').click(nextPage);
+		$('.back-button').click(backPage);
 		$('.create-button').click(nextPage);
 		
 		switch (page) {
@@ -926,10 +840,12 @@ var Home = (function() {
 		$txts = [$("#txtTripName")];
 		$txts[0].prop('disabled', false).keyup(txtChange).focus();
 		$nextButton = $('.next-button', $startPage);
+		txtChange();
 	}
 	function dinitStartPage() {
 		$txts[0].val($.trim($txts[0].val()));
 		$txts[0].prop('disabled', true).unbind('keyup');
+		$nextButton.addClass('hidden');
 	}
 
 	function initInfoPage() {
@@ -938,12 +854,16 @@ var Home = (function() {
 		$txts[0].prop('disabled', false).keyup(txtChange).focus();
 		$txts[1].prop('disabled', false).keyup(txtChange);
 		$nextButton = $('.next-button', $infoPage);
+		$('.back-button', $infoPage).removeClass('hidden');
+		txtChange();
 	}
 	function dinitInfoPage() {
 		$txts[0].prop('disabled', true).unbind('keyup');
 		$txts[1].prop('disabled', true).unbind('keyup');
 		$txts[0].val($.trim($txts[0].val()));
 		$txts[1].val($.trim($txts[1].val()));
+		$nextButton.addClass('hidden');
+		$('.back-button', $infoPage).addClass('hidden');
 	}
 
 	function initLocationPage() {
@@ -951,6 +871,8 @@ var Home = (function() {
 		$txts = [$("#txtLocation")];
 		$txts[0].prop('disabled', false).keyup(txtChange).focus();
 		$nextButton = $('.create-button', $locationPage);
+		$('.back-button', $locationPage).removeClass('hidden');
+		txtChange();
 
 		var options = {
 		  types: ['(regions)']
@@ -959,6 +881,8 @@ var Home = (function() {
 	}
 	function dinitLocationPage() {
 		$txts[0].prop('disabled', true).unbind('keyup');
+		$nextButton.addClass('hidden');
+		$('.back-button', $locationPage).addClass('hidden');
 	}
 
 	function initLostTripPage() {
@@ -998,7 +922,17 @@ var Home = (function() {
 
 	function nextPage() {
 		if (isTransition) return;
-		if ($nextButton.hasClass('hidden')) return;
+		if ($nextButton.hasClass('hidden')) {
+			if (($txts) && ($txts.length > 1)) {
+				for (var i=0, len = $txts.length - 1; i<len; i++) {
+					if ($txts[i].is(":focus")) {
+						$txts[i + 1].focus();
+						break;
+					}
+				}
+			}
+			return;
+		}
 		
 		var initFunc;
 		
@@ -1015,6 +949,7 @@ var Home = (function() {
 				break;
 
 			case $infoPage:
+				
 				if (!validateEmail($txts[1].val())) {
 					$txts[1].addClass('error');
 					return;
@@ -1072,9 +1007,14 @@ var Home = (function() {
 	}
 
 	function sendEmail() {
-		//validate
-
+		
 		var adminEmail = $("#txtEmail").val();
+
+		if (!validateEmail(adminEmail)) {
+			$("#txtEmail").addClass('error');
+			return;
+		}
+
 		Main.loadBlock();
 		Ajax.call('sendEmail',
 			{
@@ -1086,13 +1026,23 @@ var Home = (function() {
 
 	function createTripReturn(data) {
 
+		if (data.success) {
+			window.location = '/' + data.tripHash;
+
+		} else {
+			alert("ERROR!");
+		}
 		//check for success
-		window.location = '/' + data.tripHash;
 
 	}
 
 	function sendEmailReturn(data) {
 		Main.loadRelease();
+
+		if (data.message == 'no trips') {
+			alert('No trips were found.');
+			return;
+		}
 		
 		isTransition = true;
 		$currentPage.removeClass('page-current').addClass('page-left');

@@ -38,8 +38,16 @@ a {
 	}
 }
 
-a.create-button,
-a.next-button {
+.back-button {
+	@include block-button();
+	background: $mediumGrey;
+	
+	&:hover {
+		background: $lightGreen;
+	}
+}
+.create-button,
+.next-button {
 	@include block-button();
 
 	background: $green;
@@ -69,10 +77,6 @@ input:focus {
 	color:#000;
 }
 
-label {
-	color:$darkGrey;
-	@include serif-italic(36px);
-}
 
 #loadBlocker {
 	display:none;
@@ -146,8 +150,8 @@ label {
 	position: relative;
 	overflow: hidden;
 	margin: 0 auto;
-	width: 800px;
-	height: 600px;
+	width: 850px;
+	height: 650px;
 
 	.trip-title {
 		color: $darkGrey;
@@ -165,13 +169,13 @@ label {
 	}
 }
 .info-header {
-	width: 800px;
+	width: 850px;
 	text-align: left;
 	margin-top:96px;
 }
 
 .home-page {
-	width: 800px;
+	width: 850px;
 	position:absolute;
 	text-align:center;
 	left:0px;
@@ -180,18 +184,23 @@ label {
   	@include transition-duration(0.5s);
 }
 
+
+.lost-link {
+	@include serif-italic(18px);
+}
+
 .error {
 	border: 1px solid #ff0000;
 }
 
 .page-left {
-	left: -800px;
+	left: -850px;
 }
 .page-current {
 	left: 0px;
 }
 .page-right {
-	left: 800px;
+	left: 850px;
 }
 
 .editTextInput {
@@ -210,6 +219,7 @@ label {
 	.site-title {
 		@include sans-serif(76px);
 		color: $darkGrey;
+		margin-bottom:12px;
 	}
 	.site-subtitle {
 		@include serif(23px);
@@ -232,12 +242,43 @@ label {
 
 .home-form {
 	text-align: center;
+
+
+	label {
+		color:$darkGrey;
+		@include serif-italic(36px);
+		margin-top:15px;
+		display:inline-block;
+	}
+
+	#txtTripName {
+		width:550px;
+	}
+
+	#txtEmail {
+		width:550px;
+	}
+
+	#txtLocation {
+		width:700px;
+	}
 }
 
 .content {
 	max-width:$maxContentWidth;
 	margin: 0 auto;
 }
+
+.pac-container {
+	@include sans-serif(20px);
+	border:0;
+	padding:5px;
+}
+.pac-item {
+	padding: 10px 0;
+}
+
+
 
 .page-content {
 	color:$darkGrey;
