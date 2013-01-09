@@ -9,7 +9,8 @@ var GLOBAL = {
 	polltime: 15000,
 	lastLocation: 0,
 	lastNote: 0,
-	lastNotice: 0
+	lastNotice: 0,
+	activeNoteLocation: null
 };
 
 var TransitionController = (function() {
@@ -17,6 +18,9 @@ var TransitionController = (function() {
 	var prefix = '';
 	
 	function transitionEnd($obj, callback) {
+		if (typeof callback == "undefined") {
+			return;
+		}
 		if (prefix === '') {
 			if ($.browser.webkit) {
 			    prefix = "webkitTransitionEnd";
@@ -37,14 +41,10 @@ var TransitionController = (function() {
 			
 			$obj.bind(prefix, function() {
 				$obj.unbind(prefix);
-				if (callback) {
-					callback($obj);
-				}
+				callback($obj);
 			});
 		} else {
-			if (callback) {
-				callback($obj);
-			}
+			callback($obj);
 		}
 	}
 	
@@ -253,9 +253,17 @@ function Location(data, isLast) {
 	this.listOrder = data.listOrder;
 	this.lat = data.lat;
 	this.lng = data.lng;
+	this.isOpen = true;
+	this.totalNotes = 0;
+
+	this.text = [];
+	this.text['suggestCTA'] = '';
+	this.text['noteTextPlaceholder'] = '';
 
 	this.$element = null;
 	this.$notesElement = null;
+	this.$showHideButton = null;
+	this.$noteText = null;
 
 	this.notes = [];
 
@@ -264,6 +272,31 @@ function Location(data, isLast) {
 	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
 	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
 	this.$element.attr('data-order', this.listOrder);
+
+	this.$noteText = $(".txtNoteText", this.$element);
+	this.text['suggestCTA'] = $(".note-text-label", this.$element).html();
+
+	var rnd = Math.floor(Math.random() * 10);
+	this.text['noteTextPlaceholder'] = "ex. You've got to try the skybar!";
+	switch (rnd) {
+		
+		case 0:
+			this.text['noteTextPlaceholder'] = "ex. There's a great hostel called Best Hostel Ever.";
+			break;
+
+		case 1:
+			this.text['noteTextPlaceholder'] = "ex. Go to Mindy's and order the soup.";
+			break;	
+
+		case 2:
+			this.text['noteTextPlaceholder'] = "ex. Contemporary art gallery. Don't miss it.";
+			break;
+	}
+	this.$noteText.attr('placeholder', this.text['noteTextPlaceholder']).focus({ location: this }, this.noteTextFocus);
+
+
+	this.$showHideButton = $('.show-hide-link', this.$element);
+	this.$showHideButton.click({ location: this }, this.showHide);
 
 	var locations = $("#locations > .location");
 	if ((locations.length === 0) || (isLast)){
@@ -303,7 +336,6 @@ Location.prototype.addNote = function(note, animate) {
 
 	animate = (typeof animate == "undefined") ? false : animate;
 	
-
 	if (note.canDelete){
 		$('.note-delete', $note).click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	} else {
@@ -320,10 +352,18 @@ Location.prototype.addNote = function(note, animate) {
 
 	this.$notesElement.append($note);
 
-	if (animate) {
+	if ((this.isOpen) && (animate)) {
 		$note.hide().show('slow');
 	}
 
+	this.$showHideButton.removeClass('hidden');
+
+	this.totalNotes ++;
+	if (this.totalNotes > 1) {
+		$('.notes-hidden', this.$element).html(this.totalNotes + ' notes hidden');
+	} else {
+		$('.notes-hidden', this.$element).html(this.totalNotes + ' note hidden');
+	}
 
 	if (note.id > GLOBAL.lastNote) {
 		GLOBAL.lastNote = note.id;
@@ -399,7 +439,7 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 	var location = event.data.location;
 	var note = location.notes[event.data.noteId];
 
-	if (!note.canDelete) return;
+	if ((typeof note == "undefined") || (!note.canDelete)) return;
 
 	Ajax.call('deleteNote', 
 		{ 
@@ -408,12 +448,149 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 		},
 		function() {
 			$("#note_" + note.id ).remove();
+			delete location.notes[note.id];
+			
+			location.totalNotes --;
+			if ((location.totalNotes > 1) || (location.totalNotes == 0)) {
+				$('.notes-hidden', location.$element).html(location.totalNotes + ' notes hidden');
+			} else {
+				$('.notes-hidden', location.$element).html(location.totalNotes + ' note hidden');
+			}
 			
 		},
 		function() {
 			//error
 		});
 };
+Location.prototype.showHide = function(event) {
+	var location = event.data.location;
+
+	if (location.isOpen) {
+		$('.notes-wrapper', location.$element).slideUp();
+		$('.notes-hidden', location.$element).show();
+		location.isOpen = false;
+		location.$showHideButton.html('+').attr('title', 'Expand');
+	} else {
+		$('.notes-wrapper', location.$element).slideDown();
+		$('.notes-hidden', location.$element).hide();
+		location.isOpen = true;
+		location.$showHideButton.html('&#150;').attr('title', 'Collapse');
+	}
+}
+Location.prototype.noteTextFocus = function(event) {
+	var location = event.data.location;
+	if (GLOBAL.activeNoteLocation) {
+		GLOBAL.activeNoteLocation.cancelNote();
+	}
+	location.editNote();
+	
+}
+Location.prototype.noteTextBlur = function(event) {
+
+	var location = event.data.location;
+
+	if ($.trim(location.$noteText.val()) == '') {
+		location.cancelNote();
+		return;
+	}
+
+	
+}
+Location.prototype.editNote = function() {
+	
+	var me = this;
+	GLOBAL.activeNoteLocation = this;
+
+	this.$noteText.blur({ location: this }, this.noteTextBlur);
+
+	$('.note-text-label', this.$element).addClass('hidden');
+	this.$noteText.attr('placeholder', '').addClass('editing');
+	this.$noteText.keyup(
+		function(e) {
+			if (e.which == 27) {
+				me.cancelNote();
+				return;
+			}
+			if (e.which == 13) {
+				if ($("#txtFromName").val() == '') {
+					$("#txtFromName").focus();
+				} else {
+					me.submitNote();
+				}
+			}
+		}
+	);
+
+	$('.category-wrapper', this.$element).append($('#clsCategorySelector'));
+	$('.note-editor-bottom', this.$element).append($('#clsNoteFrom')).append($('#clsSubmitNote')); 
+
+	$("#txtFromName").keyup(
+		function(e) {
+			if (e.which == 27) {
+				me.cancelNote();
+				return;
+			}
+			if (e.which == 13) {
+				me.submitNote();
+			}
+		}
+	);
+
+	$("#submitNoteButton").click(function() { me.submitNote(); });
+	$("#cancelNoteButton").click(function() { me.cancelNote(); });
+
+}
+Location.prototype.cancelNote = function() {
+	GLOBAL.activeNoteLocation = null;
+
+	$('.note-text-label', this.$element).removeClass('hidden');
+	this.$noteText.attr('placeholder', this.text['noteTextPlaceholder']).removeClass('editing');
+	this.$noteText.unbind('keyup').unbind('blur');
+	this.$noteText.val('').blur();
+
+	$('#cls').append($('#clsCategorySelector')).append($('#clsNoteFrom')).append($('#clsSubmitNote')); 
+
+}
+Location.prototype.submitNote = function() {
+	var noteText = $.trim(this.$noteText.val());
+	var categoryId = $('#selCategory').val();
+	var fromName = $.trim($('#txtFromName').val());
+
+	if (noteText == '') {
+		this.cancelNote();
+		return;
+	}
+
+	if (fromName == '') {
+		fromName = 'Anonymous';
+	}
+
+	$.cookie('from', fromName, { expires: 365, path: '/' });
+
+	//TODO form error checking, loading
+	
+	$(".blocker", this.$element).removeClass('hidden');
+
+	var me = this;
+	Ajax.call('addNote', 
+		{
+			noteText: noteText,
+			fromName: fromName,
+			categoryId: categoryId,
+			locationId: this.id
+		},
+		function(data) {
+			
+			me.cancelNote();
+			$(".blocker", this.$element).addClass('hidden');
+			data.categoryId = categoryId;
+			me.addNote(data);
+		},
+		function() {
+			//error
+		});
+
+}
 
 var NoteEditor = (function() {
 
@@ -653,6 +830,10 @@ var Trip = (function() {
         };
 
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        if ($.cookie('from')) {
+			$("#txtFromName").val($.cookie('from'));
+		}
 
 	}
 

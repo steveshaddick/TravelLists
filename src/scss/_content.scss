@@ -430,12 +430,11 @@ input:focus {
 	}
 
 	.notes-hidden {
+		@include serif-italic(24px);
 		text-align:center;
 		color:$darkGrey;
-		font-weight:bold;
-		font-size:18px;
 		display:none;
-		padding-bottom: 15px;
+		padding:20px 0;
 	}
 
 }
@@ -563,28 +562,53 @@ a.add-location-link {
 
 	padding: 0 40px;
 
+	.note-editor {
+		position: relative;
 
+	}
 	.note-text-wrapper {
-		text-align:center;
+		text-align: center;
 	}
 
 	.txtNoteText {
 		@include sans-serif(20px);
 		width:100%;
 		padding:0 10px;
+		color:$lightGrey;
+
+		&:focus {
+			color:#000;
+		}
+
+		&.editing {
+			color:#000;
+		}
 
 	}
 
+	.note-from-wrapper {
+
+		width:250px;
+		display:inline-block;
+		margin-right:24px;
+		text-align:center;
+	}
 	.txtFromName {
 		@include sans-serif(20px);
-		width:250px;
+		width: auto;
+	}
+
+	.note-submit-wrapper {
+
+		display:inline-block;
+		vertical-align: top;
+		position:relative;
+		top: -2px;
 	}
 
 	label {
-		@include serif(18px);
+		@include serif-italic(18px);
 		color:$green;
-		font-style: italic;
-		font-weight:normal;
 		margin:12px 0 24px;
 		display:block;
 
@@ -621,10 +645,11 @@ a.add-location-link {
 		@include border($green);
 		@include sans-serif(14px);
 		text-transform: uppercase;
-		padding: 14px 10px;
+		padding: 14px 10px 12px;
 		text-align: center;
 		text-decoration: none;
 		color: $lightGrey;
+		letter-spacing: 1px;
 
 		&:hover {
 			background:$lightGreen;
@@ -636,6 +661,7 @@ a.add-location-link {
 		@include sans-serif(14px);
 		text-transform: uppercase;
 		padding-left:20px;
+		letter-spacing: 1px;
 
 		&:hover {
 			color: $lightOrange;
@@ -644,12 +670,10 @@ a.add-location-link {
 
 	.note-editor-bottom {
 		position:relative;
-		margin-top:18px;
+		margin-top:24px;
 	}
 
 	.category-wrapper {
-		position: relative;
-		margin-bottom:12px;
 	}
 	.category-selector {
 		position:absolute;

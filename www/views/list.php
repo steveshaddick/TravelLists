@@ -59,7 +59,7 @@
 	<div id="cls">
 
 		<div id="clsLocation" class="location">
-			<span class="location-name">$LOCATION$ <a class="show-hide-link" href="javascript:void(0)">&#150;</a></span>
+			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="javascript:void(0)" title="Collapse">&#150;</a></span>
 			<?php
 			if ($main->isAdmin) {
 				?>
@@ -72,7 +72,21 @@
 				<div class="notes-hidden"></div>
 			</div>
 			<div class="add-note">
-				<a class="add-note-link" href="javascript:void(0)">Suggest something in $LOCATION$</a>
+				<div class="note-editor">
+					<div class="blocker hidden"><div class="blockerContent">Submitting...</div></div>
+
+					<div class="note-text-wrapper">
+						<div style="padding: 0 22px 0 0;">
+							<input type="text" id="txtNoteText_$LOCATION_ID$" class="txtNoteText" placeholder="" />
+							<label for="txtNoteText_$LOCATION_ID$" class="note-text-label">Suggest something in $LOCATION$.</label>
+						</div>
+
+					</div>
+
+					<div class="category-wrapper"></div>
+					<div class="note-editor-bottom"></div>
+
+				</div>
 			</div>
 		</div>
 
@@ -103,38 +117,23 @@
 			
 		</li>
 
-		<div id="clsNoteEditor" class="note-editor">
-			<div id="noteEditorBlocker" class="blocker hidden"><div class="blockerContent">Submitting...</div></div>
+		<div id="clsCategorySelector" class="category-selector">
+			<select name="category" id="selCategory" class="droptrip" style="width:100px;">
+				<option value="0" selected>None</option>
+				<option value="2" data-image="/images/icon-food.png">Eat</option>
+				<option value="1" data-image="/images/icon-stay.png">Stay</option>
+				<option value="3" data-image="/images/icon-poi.png">Do</option>
+			</select>
+		</div>
 
-			<div class="note-text-wrapper">
-				<div style="padding: 0 22px 0 0;">
-					<input type="text" id="txtNoteText" class="txtNoteText" />
-					<label for="txtNoteText" class="note-text-label"></label>
-				</div>
-			</div>
-			
-			<div class="note-editor-bottom hidden">
-				<div class="category-wrapper">
-					<div class="category-selector">
-					<select name="category" id="selCategory" class="droptrip" style="width:100px;">
-						<option value="0" selected>None</option>
-						<option value="2" data-image="/images/icon-food.png">Eat</option>
-						<option value="1" data-image="/images/icon-stay.png">Stay</option>
-						<option value="3" data-image="/images/icon-poi.png">Do</option>
-					</select>
-					</div>
-					<div class="note-text"></div>
-				</div>
+		<div id="clsNoteFrom" class="note-from-wrapper">
+			<input type="text" id="txtFromName" class="txtFromName" placeholder="Anonymous" />
+			<label for"txtFromName" class="note-from-label">Your name</label>
+		</div>
 
-				<input type="text" id="txtFromName" class="txtFromName" />
-				<label for"txtFromName" class="note-from-label">Your name</label>
-				
-				<a class="submit-note-link" href="javascript:void(0)">Finished</a>
-				<a class="cancel-note-link" href="javascript:void(0)">Cancel</a>
-
-				
-				<br class="clear" />
-			</div>
+		<div id="clsSubmitNote" class="note-submit-wrapper">
+			<a id="submitNoteButton" class="submit-note-link" href="javascript:void(0)">Finished</a>
+			<a id="cancelNoteButton" class="cancel-note-link" href="javascript:void(0)">Cancel</a>
 		</div>
 
 
