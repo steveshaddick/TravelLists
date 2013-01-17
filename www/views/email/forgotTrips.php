@@ -11,6 +11,8 @@ ob_start();
 This is the subject
 
 <?php
+// ********** END EDIT **************/
+// ************************************/
 $emailContent['subject'] = trim(ob_get_clean());
 
 

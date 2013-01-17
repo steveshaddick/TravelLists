@@ -12,6 +12,8 @@ ob_start();
 New Tripnote: $TRIP_NAME$
 
 <?php
+// ********** END EDIT **************/
+// ************************************/
 $emailContent['subject'] = str_replace(array("\r\n", "\n", "\r"), "", ob_get_clean());
 
 
