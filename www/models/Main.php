@@ -52,22 +52,22 @@ class Main {
 		$stmt->execute(array($encryptedEmail));
 
 		if ($stmt->rowCount() > 0) {
-			$message = $stmt->rowCount();
+			
 			$sendgrid = new SendGrid(SENDGRID_USER, SENDGRID_PASS);
 			$mail = new SendGrid\Mail();
 
-			$subject = 'Email Subject';
+			require_once $this->basePath . 'views/email/forgotTrips.php';
 
-			$html = '<!doctype html><head></head><body>';
-			$html .= 'You have the following Trips:<br /><br />';
+			$subject = $emailContent['subject'];
 
+			$html = $emailContent['head'];
+			$html .= $emailContent['beforeItems'];
 			while($row = $stmt->fetch()) {
-				$html .= '<strong>' . $row['tripName'] . '</strong><br />';
-				$html .= 'Admin Link: <a href="http://' . SITE_URL . '/' . $row['adminHash'] . '">http://' . SITE_URL . '/' . $row['adminHash']  . '</a><br />';
-				$html .= 'Public Link: <a href="http://' . SITE_URL . '/' . $row['publicHash']  . '">http://' . SITE_URL . '/' . $row['publicHash'] . '</a><br /><br />';
+				$html .= str_replace(['$TRIP_NAME$', '$TRIP_LINK$'], [$row['tripName'], 'http://' . SITE_URL . $row['publicHash']], $emailContent['tripItem']);
 			}
-
-			$html .= '</body></html>';
+			$html .= $emailContent['afterItems'];
+			$html .= $emailContent['foot'];
+			$html = str_replace(array("\r\n", "\n", "\r"), "", $html);
 
 			$mail->addTo($email);
 			$mail->setFrom("forgot.trip@maketripnotes.com");
@@ -84,7 +84,7 @@ class Main {
 			$message = "no trips";
 		}
 
-		return array('message'=>$message);
+		return array('message'=>'');
 
 	}
 
@@ -134,12 +134,11 @@ class Main {
 		$sendgrid = new SendGrid(SENDGRID_USER, SENDGRID_PASS);
 		$mail = new SendGrid\Mail();
 
-		$subject = 'Email Subject';
+		require_once $this->basePath . 'views/email/welcome.php';
 
-		$html = '<!doctype html><head></head><body>';
-		$html .= 'Admin Link: <a href="http://' . SITE_URL . '/' . $adminHash . '">http://' . SITE_URL . '/' . $adminHash . '</a><br />';
-		$html .= 'Public Link: <a href="http://' . SITE_URL . '/' . $publicHash . '">http://' . SITE_URL . '/' . $publicHash . '</a><br />';
-		$html .= '</body></html>';
+		$subject = str_replace(['$TRIP_NAME$'], [$row['tripName']], $emailContent['subject']);
+
+		$html = str_replace(['$TRIP_LINK$'], ['http://' . SITE_URL . $row['publicHash']], $emailContent['body']);
 
 		//$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
 		//$html = str_replace("<p>", '<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#7d7d7d; margin-top:10px;">', $html);
