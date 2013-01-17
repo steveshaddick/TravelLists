@@ -136,9 +136,11 @@ class Main {
 
 		require_once $this->basePath . 'views/email/welcome.php';
 
-		$subject = str_replace(['$TRIP_NAME$'], [$row['tripName']], $emailContent['subject']);
+		$subject = str_replace(['$TRIP_NAME$'], [$tripName], $emailContent['subject']);
 
-		$html = str_replace(['$TRIP_LINK$'], ['http://' . SITE_URL . $row['publicHash']], $emailContent['body']);
+		$html = $emailContent['head'];
+		$html .= str_replace(['$TRIP_LINK$'], ['http://' . SITE_URL . $publicHash], $emailContent['body']);
+		$html .= $emailContent['foot'];
 
 		//$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
 		//$html = str_replace("<p>", '<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#7d7d7d; margin-top:10px;">', $html);
