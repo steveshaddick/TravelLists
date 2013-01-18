@@ -364,7 +364,7 @@ Location.prototype.addNote = function(note, animate) {
 	} else {
 		$('.notes-hidden', this.$element).html(this.totalNotes + ' note hidden');
 	}
-
+	
 	if (note.id > GLOBAL.lastNote) {
 		GLOBAL.lastNote = note.id;
 	}

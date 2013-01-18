@@ -63,7 +63,7 @@ class Main {
 			$html = $emailContent['head'];
 			$html .= $emailContent['beforeItems'];
 			while($row = $stmt->fetch()) {
-				$html .= str_replace(['$TRIP_NAME$', '$TRIP_LINK$'], [$row['tripName'], 'http://' . SITE_URL . $row['publicHash']], $emailContent['tripItem']);
+				$html .= str_replace(array('$TRIP_NAME$', '$TRIP_LINK$'), array($row['tripName'], 'http://' . SITE_URL . $row['publicHash']), $emailContent['tripItem']);
 			}
 			$html .= $emailContent['afterItems'];
 			$html .= $emailContent['foot'];
@@ -136,10 +136,10 @@ class Main {
 
 		require_once $this->basePath . 'views/email/welcome.php';
 
-		$subject = str_replace(['$TRIP_NAME$'], [$tripName], $emailContent['subject']);
+		$subject = str_replace('$TRIP_NAME$', $tripName, $emailContent['subject']);
 
 		$html = $emailContent['head'];
-		$html .= str_replace(['$TRIP_LINK$'], ['http://' . SITE_URL . $publicHash], $emailContent['body']);
+		$html .= str_replace('$TRIP_LINK$', 'http://' . SITE_URL . $publicHash, $emailContent['body']);
 		$html .= $emailContent['foot'];
 
 		//$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
@@ -226,12 +226,13 @@ class Main {
 		}
 
 		$stmt = $this->db->prepare("SELECT * FROM Notes WHERE trip_id=? AND _id > ? ORDER BY category_id, listOrder");
+
 		$stmt->execute(array($tripId, $lastNote));
 
 		$notes = array();
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$note = array(
-				'id'=>$row['_id'],
+				'id'=>intval($row['_id']),
 				'categoryId'=>$row['category_id'],
 				'fromName'=>stripslashes($row['fromName']),
 				'note'=>stripslashes($row['note']),
