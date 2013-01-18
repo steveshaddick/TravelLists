@@ -8,7 +8,7 @@ class Main {
 	public $trip;
 	public $locations;
 	public $notes;
-	public $isAdmin = false;
+	public $isEditMode = false;
 
 	private $db;
 	private $basePath;
@@ -23,8 +23,8 @@ class Main {
 
 		$this->errorLogger = new ErrorLogger(ERROR_LOG_PATH);
 
-		if (isset($_SESSION['isAdmin'])) {
-			$this->isAdmin = $_SESSION['isAdmin'];
+		if (isset($_SESSION['isEditMode'])) {
+			$this->isEditMode = $_SESSION['isEditMode'];
 		}
 
 	}
@@ -185,7 +185,6 @@ class Main {
 			return false;
 		}
 
-		$this->isAdmin = $_SESSION['isAdmin'] = ($this->trip['adminHash'] == $list);
 		$_SESSION['trip_id'] = intval($this->trip['_id']);
 
 		$_SESSION['trip'] = array();
@@ -246,7 +245,7 @@ class Main {
 				);
 
 
-			if ($this->isAdmin) {
+			if ($this->isEditMode) {
 				$note['canDelete'] = true;
 			} else {
 				$note['canDelete'] = (isset($_SESSION['addedNotes'][$row['_id']])) ? true : false;
@@ -259,7 +258,9 @@ class Main {
 		}
 
 		$notices = array();
-		if ($this->isAdmin) {
+
+		//TODO: notices
+		if ($this->isEditMode) {
 			$stmt = $this->db->prepare("SELECT * FROM Notices WHERE trip_id=? AND isSeen=0 AND _id > ? ORDER BY dateAdded");
 			$stmt->execute(array($tripId, $lastNotice));
 
@@ -278,7 +279,7 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
-		if (!$this->isAdmin) {
+		if (!$this->isEditMode) {
 			return false;
 		}
 
@@ -364,7 +365,7 @@ class Main {
 		$tripId = $_SESSION['trip_id'];
 		
 		$noteId = intval($noteId);
-		if (!$this->isAdmin) {
+		if (!$this->isEditMode) {
 			if ($_SESSION['addedNotes'][$noteId] !== true) {
 				return false;
 			}
@@ -383,14 +384,11 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
-		if (!$this->isAdmin) {
+		if (!$this->isEditMode) {
 			return false;
 		}
 		$tripId = $_SESSION['trip_id'];
 
-		if (!$this->isAdmin) {
-			return false;
-		}
 
 		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND location_id=?");
 		$stmt->execute(array($tripId, $locationId));
@@ -405,7 +403,7 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
-		if (!$this->isAdmin) {
+		if (!$this->isEditMode) {
 			return false;
 		}
 		$tripId = $_SESSION['trip_id'];
@@ -476,6 +474,23 @@ class Main {
 		}
 
 		return array('linkTitle'=>$metaData['title'], 'linkImage'=>$metaData['image'], 'linkDescription'=>$metaData['description'], 'linkCheck'=>$nextCheck);
+
+	}
+
+	public function checkEditMode($email) {
+		$email = Encryptor::encrypt($email, SALT);
+		
+		$tripId = $_SESSION['trip_id'];
+		$stmt = $this->db->prepare("SELECT _id FROM Lists WHERE email=? AND _id=? LIMIT 1");
+		$stmt->execute(array($email, $tripId));
+		
+		if ($stmt->rowCount() == 0) {
+			return false;
+		} else {
+			$_SESSION['isEditMode'] = true;
+			return true;
+		}
+
 
 	}
 }

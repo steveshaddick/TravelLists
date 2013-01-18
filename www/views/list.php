@@ -17,7 +17,7 @@
 			<header id="header">
 				<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
 				<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
-				<a class="settings-button sprite-button" href="javascript:void(0)" title="Settings">&nbsp;</a>
+				<a id="editTripButton" class="edit-trip-link" href="javascript:void(0)"><img src="/images/icon-pencil.png">Edit this trip</a>
 			</header>
 
 			<section id="tripSettings" class="trip-settings">
@@ -42,16 +42,8 @@
 
 		
 			<div class="contentWrapper">
-				<section id="locations">
-					
-				</section>
-				<?php
-				if ($main->isAdmin) {
-					?>
-					<a class="add-location-link" href="javascript:void(0)">Add another location</a>
-					<?php
-				}
-				?>
+				<section id="locations"></section>
+				<a class="add-location-link edit-mode edit-off" href="javascript:void(0)">Add another location</a>
 			</div>
 		</div>
 	</div>
@@ -60,13 +52,7 @@
 
 		<div id="clsLocation" class="location">
 			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="javascript:void(0)" title="Collapse">&#150;</a></span>
-			<?php
-			if ($main->isAdmin) {
-				?>
-				<a class="x-button sprite-button" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
-				<?php
-			}
-			?>
+			<a class="x-button sprite-button edit-mode edit-off" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
 				<div class="notes-hidden"></div>
@@ -109,7 +95,7 @@
 						</div>
 						<div class="note-from"></div>
 						<div class="note-delete">
-							<a class="x-button sprite-button" href="javascript:void(0)">&nbsp;</a>
+							<a class="x-button sprite-button edit-mode edit-off" href="javascript:void(0)">&nbsp;</a>
 						</div>
 					</td>
 				</tr>
@@ -136,14 +122,6 @@
 			<a id="cancelNoteButton" class="cancel-note-link" href="javascript:void(0)">Cancel</a>
 		</div>
 
-
-	<?php
-	if ($main->isAdmin) {
-		?>
-
-		<?php
-	}
-	?>
 	</div>
 
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
@@ -154,15 +132,6 @@
     
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
-
-    <?php
-    if ($main->isAdmin) {
-    	?>
-    	
-    	<script src="/js/ListAdmin.js"></script>
-    	<?php
-    }
-    ?>
 
     <script src="/js/jquery/jquery.cookie.min.js"></script>
     <script src="/js/jquery/jquery.dd.js"></script>
@@ -177,8 +146,7 @@
 			Main.init({
 				userAgent: '<?php echo $userAgent; ?>',
 				os: '<?php echo $os; ?>',
-				a: '<?php echo $ajaxToken; ?>',
-				isAdmin: <?php if ($main->isAdmin) { echo 'true'; } else { echo 'false'; } ?>
+				a: '<?php echo $ajaxToken; ?>'
 			});
 			Trip.loadTrip({
 				lat: <?php echo $main->trip['lat']; ?>,

@@ -151,6 +151,10 @@ switch ($action) {
 		echo returnJSON($arr);
 		break;
 
+	case 'checkEditMode':
+		echo returnJSON($main->checkEditMode($_POST['email']));
+		break;
+
 	default:
 		echo returnJSON(false);
 		break;
