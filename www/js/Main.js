@@ -388,9 +388,9 @@ Location.prototype.parseNote = function(noteId, linkData) {
 			
 			$('.link-title', note.$element).attr('href', note.linkUrl).html(note.linkTitle);
 			if (htmlString == note.linkUrl) {
-				$('.note-text-wrapper', note.$element).css('display', 'none');
+				$('.note-text', note.$element).css('display', 'none');
 			} else {
-				$('.note-text-wrapper', note.$element).css('display', '');
+				$('.note-text', note.$element).css('display', '');
 			}
 			$('.note-link', note.$element).css('display', '');
 			
