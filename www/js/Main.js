@@ -784,6 +784,8 @@ var Trip = (function() {
 	var tripAuthor = '';
 	var email = '';
 
+	var isEditMode = false;
+
 	var $hiddenNoteLink = null;
 
 	function loadTrip(obj) {
@@ -902,7 +904,7 @@ var Trip = (function() {
 		$("#location_" + locationId).remove();
 		if (locations[locationId].marker) {
 			locations[locationId].marker.setMap(null);
-			google.maps.event.removeEventListener(locations[locationId].marker, 'click');
+			//google.maps.event.removeEventListener(locations[locationId].marker, 'click');
 		}
 
 		locations[locationId].destroy();
@@ -967,7 +969,13 @@ var Trip = (function() {
 	}
 
 	function setEditMode() {
-		$(".edit-mode").removeClass('edit-off');
+		Ajax.call('checkEditMode',
+								{
+									email: ''
+								},
+								function() {
+									EditMode.init();
+								});
 	}
 
 	return {
@@ -977,6 +985,238 @@ var Trip = (function() {
 		deleteLocation: deleteLocation,
 		getTripInfo: getTripInfo
 	}
+}());
+
+var EditMode = (function() {
+
+	var autocomplete = null;
+	var editTitle;
+	var editSubtitle;
+
+	function init() {
+		$(".edit-mode").removeClass('edit-off');
+		if (GLOBAL.activeNoteLocation) {
+			GLOBAL.activeNoteLocation.cancelNote();
+		}
+		$(".add-note").addClass('hidden');
+		$("header").addClass('edit-on');
+		$("#map").addClass('edit-on');
+
+		$("#addLocationButton").click(addLocation);
+		$(document).on('click', '.delete-location-button', deleteLocation);
+		$("#editDoneButton").click(dinit);
+
+		editTitle = new EditText($("#tripTitle"), function() { save({tripTitle:$("#tripTitle").html() }); });
+		editSubtitle = new EditText($("#tripSubtitle"), function() { save({tripSubtitle:$("#tripSubtitle").html() }); });
+
+		$("#editBar").slideDown();
+	}
+
+	function dinit() {
+		$(".edit-mode").addClass('edit-off');
+		$(".add-note").removeClass('hidden');
+		$("header").removeClass('edit-on');
+		$("#map").removeClass('edit-on');
+
+		$("#addLocationButton").unbind('click');
+		$(document).unbind('click');
+		$("#editDoneButton").unbind('click');
+
+		editTitle.destroy();
+		editSubtitle.destroy();
+
+		$("#editBar").slideUp();
+
+		return false;
+	}
+
+	function addLocation() {
+		$('html, body').scrollTop(0);
+		Modal.load('/views/modal/addLocation.html', function() {
+			var options = {
+			  types: ['(regions)']
+			};
+
+			autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtLocation'), options);
+
+			$('.submitLocationLink').click(submitLocation);
+		});
+
+		return false;
+	}
+
+	function submitLocation() {
+		var location = $('#txtLocation').val();
+		$('#txtLocation').prop('disabled', true);
+
+		Ajax.call('addLocation', {location: location}, 
+			function(data) {
+				autocomplete = null;
+				$('.submitLocationLink').unbind('click');
+				Modal.close();
+				Trip.addLocation(data);
+			},
+			function() {
+				$('#txtLocation').val('');
+				$('#txtLocation').prop('disabled', false);
+			});
+	}
+
+	function deleteLocation(event) {
+		var locationId = $(this).attr('data-id');
+
+		Ajax.call('deleteLocation', {locationId: locationId}, 
+			function(data) {
+				Trip.deleteLocation(locationId);
+			},
+			function() {
+				//error
+			});
+	}
+
+	function save(data) {
+
+		Ajax.call('saveTrip', data);
+
+	}
+
+	return {
+		init: init,
+		dinit: dinit
+	}
+
+}());
+
+var EditText = function($element, saveCallback) {
+
+	this.$element = $element;
+	this.saveCallback = saveCallback;
+
+	this.$divWrapper = $('<div><input type="text" disabled="disabled" class="editTextInput" /></div>');
+	this.$divWrapper.attr('class', this.$element.attr('class'));
+
+	this.$input = $('.editTextInput', this.$divWrapper).css('display', 'none');
+
+	this.$element.after(this.$divWrapper);
+	this.$divWrapper.append(this.$element);
+	this.$input.val(this.$element.html());
+
+	this.$divWrapper.click({editText: this}, this.onClickHandler);
+}
+
+EditText.prototype.onClickHandler = function(event) {
+
+	var editText = event.data.editText;
+
+	editText.$input.css('display', '').prop('disabled', false).attr('class', 'editTextInput ' + editText.$element.attr('class'));
+	editText.$element.css('display', 'none');
+
+	editText.$divWrapper.unbind('click');
+
+	editText.$input.select().blur({editText: editText}, editText.finishText).keypress({editText: editText}, editText.onKeypress);
+
+}
+
+EditText.prototype.onKeypress = function(event) {
+	var code = (event.keyCode ? event.keyCode : event.which);
+	var editText = event.data.editText;
+
+	switch (code) {
+		//enter
+		case 13:
+			editText.finishText(event);
+			break;
+
+		//escape
+		case 27:
+			editText.$input.val(editText.$element.html());
+			event.data.noSave = true;
+			editText.finishText(event);
+			break;
+
+	}
+}
+
+EditText.prototype.finishText = function(event) {
+
+	var editText = event.data.editText;
+	editText.$input.prop('disabled', true).unbind('blur').unbind('keypress').css('display', 'none');
+
+	editText.$element.css('display', '').html(editText.$input.val());
+
+	editText.$divWrapper.click({editText: editText}, editText.onClickHandler);
+
+	if (typeof event.data.noSave == "undefined") {
+		editText.saveCallback();
+	}
+}
+
+EditText.prototype.destroy = function() {
+	this.$element = null;
+	this.saveCallback = null;
+
+	this.$divWrapper.unbind('click');
+	this.$divWrapper = null;
+	this.$input = null;
+}
+
+var ListAdmin = (function() {
+
+	
+
+	function init(data) {
+		
+		var notices = data.notices;
+
+		$('.add-location-link').click(addLocation);
+		
+
+		$(".settings-button").click(Settings.toggleSettings);
+
+
+		setTimeout(function() {
+			if (typeof notices !== "undefined") {
+				for (var i=0,len=notices.length; i<len; i++) {
+					if (i < len-1) {
+						Notice.addNotice(notices[i], true);
+					} else {
+						Notice.addNotice(notices[i]);
+					}
+				}
+			}
+		}, 1000);
+		
+
+	}
+
+	
+
+	
+
+	
+
+	/*function sortNotes(event, ui) {
+		var $parent = ui.item.parent();
+
+		var notes = [];
+		$('li', $parent).each(function(index) {
+			notes.push($(this).attr('id').replace('note_', ''));
+		});
+
+		save({
+			noteOrder: {	
+				category: $parent.parent().attr('id').replace('category_', ''),
+				notes: notes
+			}
+		});
+	}*/
+
+	return {
+		init: init/*,
+		save: save,
+		sortNotes: sortNotes*/
+	}
+
 }());
 
 var Home = (function() {
@@ -1278,69 +1518,7 @@ var Home = (function() {
 
 }());
 
-var EditText = function($element, saveCallback) {
 
-	this.$element = $element;
-	this.saveCallback = saveCallback;
-
-	this.$divWrapper = $('<div><input type="text" disabled="disabled" class="editTextInput" /></div>');
-	this.$divWrapper.attr('class', this.$element.attr('class'));
-
-	this.$input = $('.editTextInput', this.$divWrapper).css('display', 'none');
-
-	this.$element.after(this.$divWrapper);
-	this.$divWrapper.append(this.$element);
-	this.$input.val(this.$element.html());
-
-	this.$divWrapper.click({editText: this}, this.onClickHandler);
-}
-
-EditText.prototype.onClickHandler = function(event) {
-
-	var editText = event.data.editText;
-
-	editText.$input.css('display', '').prop('disabled', false).attr('class', 'editTextInput ' + editText.$element.attr('class'));
-	editText.$element.css('display', 'none');
-
-	editText.$divWrapper.unbind('click');
-
-	editText.$input.select().blur({editText: editText}, editText.finishText).keypress({editText: editText}, editText.onKeypress);
-
-}
-
-EditText.prototype.onKeypress = function(event) {
-	var code = (event.keyCode ? event.keyCode : event.which);
-	var editText = event.data.editText;
-
-	switch (code) {
-		//enter
-		case 13:
-			editText.finishText(event);
-			break;
-
-		//escape
-		case 27:
-			editText.$input.val(editText.$element.html());
-			event.data.noSave = true;
-			editText.finishText(event);
-			break;
-
-	}
-}
-
-EditText.prototype.finishText = function(event) {
-
-	var editText = event.data.editText;
-	editText.$input.prop('disabled', true).unbind('blur').unbind('keypress').css('display', 'none');
-
-	editText.$element.css('display', '').html(editText.$input.val());
-
-	editText.$divWrapper.click({editText: editText}, editText.onClickHandler);
-
-	if (typeof event.data.noSave == "undefined") {
-		editText.saveCallback();
-	}
-}
 
 var Notice = (function() {
 
@@ -1471,106 +1649,7 @@ var Settings = (function() {
 }());
 
 
-var ListAdmin = (function() {
 
-	var autocomplete = null;
-
-	function init(data) {
-		
-		var notices = data.notices;
-
-		$('.add-location-link').click(addLocation);
-		$(document).on('click', '.delete-location-link', deleteLocation);
-
-		$(".settings-button").click(Settings.toggleSettings);
-
-
-		setTimeout(function() {
-			if (typeof notices !== "undefined") {
-				for (var i=0,len=notices.length; i<len; i++) {
-					if (i < len-1) {
-						Notice.addNotice(notices[i], true);
-					} else {
-						Notice.addNotice(notices[i]);
-					}
-				}
-			}
-		}, 1000);
-		
-
-	}
-
-	function addLocation() {
-		$('html, body').scrollTop(0);
-		Modal.load('/views/modal/addLocation.html', function() {
-			var options = {
-			  types: ['(regions)']
-			};
-
-			autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtLocation'), options);
-
-			$('.submitLocationLink').click(submitLocation);
-		});
-	}
-
-	function submitLocation() {
-		var location = $('#txtLocation').val();
-		$('#txtLocation').prop('disabled', true);
-
-		Ajax.call('addLocation', {location: location}, 
-			function(data) {
-				autocomplete = null;
-				$('.submitLocationLink').unbind('click');
-				Modal.close();
-				Trip.addLocation(data);
-			},
-			function() {
-				$('#txtLocation').val('');
-				$('#txtLocation').prop('disabled', false);
-			});
-	}
-
-	function deleteLocation(event) {
-		var locationId = $(this).attr('data-id');
-
-		Ajax.call('deleteLocation', {locationId: locationId}, 
-			function(data) {
-				Trip.deleteLocation(locationId);
-			},
-			function() {
-				//error
-			});
-	}
-
-	function save(data) {
-
-		Ajax.call('saveTrip', data);
-
-	}
-
-	function sortNotes(event, ui) {
-		var $parent = ui.item.parent();
-
-		var notes = [];
-		$('li', $parent).each(function(index) {
-			notes.push($(this).attr('id').replace('note_', ''));
-		});
-
-		save({
-			noteOrder: {	
-				category: $parent.parent().attr('id').replace('category_', ''),
-				notes: notes
-			}
-		});
-	}
-
-	return {
-		init: init,
-		save: save,
-		sortNotes: sortNotes
-	}
-
-}());
 
 var Main = (function() {
 

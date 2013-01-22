@@ -12,15 +12,21 @@
 			Loading...
 		</div>
 	</div>
+
 	<div id="body">
 		<div class="list-wrapper">
 			<header id="header">
-				<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
-				<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
-				<a id="editTripButton" class="edit-trip-link" href="javascript:void(0)"><img src="/images/icon-pencil.png">Edit this trip</a>
+				<div class="header-content">
+					<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
+					<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
+					<a id="editTripButton" class="edit-trip-link" href="javascript:void(0)"><img src="/images/icon-pencil.png">Edit this trip</a>
+
+					<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="">Add location</a>
+					<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="">Done editing</a>
+				</div>
 			</header>
 
-			<section id="tripSettings" class="trip-settings">
+			<!--<section id="tripSettings" class="trip-settings">
 				<div class="content">
 					<label for="txtTripName">Trip</label> <input id="txtTripName" name="txtTripName" type="text" maxlength="75" value="" />
 					<label for="txtTripAuthor">Author</label> <input id="txtTripAuthor" name="txtTripAuthor" type="text" maxlength="75" value="" />
@@ -29,7 +35,7 @@
 					<a class="done-button" href="javascript:void(0)">Done</a><br />
 				</div>
 				
-			</section>
+			</section>-->
 
 			<div id="noticeContainer" class="notice-container">
 				<div class="notice up">
@@ -52,7 +58,7 @@
 
 		<div id="clsLocation" class="location">
 			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="javascript:void(0)" title="Collapse">&#150;</a></span>
-			<a class="x-button sprite-button edit-mode edit-off" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
+			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
 				<div class="notes-hidden"></div>

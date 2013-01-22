@@ -138,7 +138,16 @@ input:focus {
 	display:none;
 }
 
+.add-location-button,
+.edit-done-button {
+	@include block-button();
 
+	background: $green;
+	
+	&:hover {
+		background: $lightGreen;
+	}
+}
 
 #map {
 	width:800px;
@@ -279,6 +288,7 @@ input:focus {
 	@include sans-serif(20px);
 	border:0;
 	padding:5px;
+	z-index: 10000000 !important;
 }
 .pac-item {
 	padding: 10px 0;
@@ -301,17 +311,35 @@ input:focus {
 	@include serif(24px);
 }
 
-.edit-off {
+.edit-mode.edit-off {
 	display: none !important;
 }
 
 .list-wrapper {
 
 	header {
-		max-width: $maxContentWidth;
-		margin:0 auto;
-		padding: 35px 0;
-		position:relative;
+
+		width:100%;
+
+		.header-content {
+			max-width: $maxContentWidth;
+			margin:0 auto;
+			padding: 35px 0;
+			position:relative;
+		}
+		
+
+		&.edit-on {
+			background: $lightOrange;
+
+			position: fixed; 
+			z-index: 1000000;
+			top:0;
+			
+			.edit-trip-link {
+				display: none;
+			}
+		}
 	}
 
 	.trip-title {
@@ -430,6 +458,10 @@ input:focus {
 	height:395px;
 	max-width: $maxWidth;
 	margin:0 auto;
+
+	&.edit-on {
+		margin-top: 146px;
+	}
 }
 
 

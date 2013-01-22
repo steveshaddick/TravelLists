@@ -478,6 +478,9 @@ class Main {
 	}
 
 	public function checkEditMode($email) {
+		$_SESSION['isEditMode'] = true;
+		return true;
+
 		$email = Encryptor::encrypt($email, SALT);
 		
 		$tripId = $_SESSION['trip_id'];
