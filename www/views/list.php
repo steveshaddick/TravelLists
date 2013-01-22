@@ -49,7 +49,6 @@
 		
 			<div class="contentWrapper">
 				<section id="locations"></section>
-				<a class="add-location-link edit-mode edit-off" href="javascript:void(0)">Add another location</a>
 			</div>
 		</div>
 	</div>

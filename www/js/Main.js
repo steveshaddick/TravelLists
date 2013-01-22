@@ -1702,7 +1702,7 @@ var Main = (function() {
 
 	function poll() {
 		
-		setTimeout(sendPoll, GLOBAL.polltime);
+		//setTimeout(sendPoll, GLOBAL.polltime);
 	}
 
 	function sendPoll() {
