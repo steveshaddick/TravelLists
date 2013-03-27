@@ -7,5 +7,5 @@ tripnotes_error_log/
 *.sublime-workspace
 *.htpasswd
 
-www.esproj/
+*.esproj/
 .DS_Store
