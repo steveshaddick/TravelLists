@@ -6,3 +6,6 @@ tripnotes_error_log/
 *.sublime-project
 *.sublime-workspace
 *.htpasswd
+
+www.esproj/
+.DS_Store
