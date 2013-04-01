@@ -22,14 +22,14 @@ $maxWidth: 1250px;
 @mixin serif($size) {
 	font-family: "chaparral-pro", georgia, serif;
 	font-size: $size;
-	line-height:$size;
+	line-height:$size *1.25;
 	letter-spacing: 1px;
 }
 
 @mixin serif-italic($size) {
 	font-family: "chaparral-pro", georgia, serif;
 	font-size: $size;
-	line-height:$size;
+	line-height:$size *1.25;
 	font-style: italic;
 	font-weight: 600;
 }

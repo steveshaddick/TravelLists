@@ -1,19 +1,5 @@
 <?php include(BASE_PATH . 'views/parts/header.php'); ?>
 
-
-	<div id="body">
-		<div class="contentWrapper">
-		
-			<header class="page-header">
-				<h1 class="site-title"><a href="/">Tripnotes</a></h1>
-				<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
-			</header>		
-			
-			
-			<section class="page-content about-page">
-
-				<p>Tripnotes is the place to capture and organize travel ideas by yourself and with others.  Planning a trip can be overwhelming, so we built Trip Notes to help people get and organize suggestions.
-
 <style type="text/css">
 
 body{
@@ -91,7 +77,7 @@ text-decoration: underline;
 		</header>		
 		
 		
-			<div id="landingPage" class="pageContent">
+			<div id="landingPage" class="page-content about-page">
 
 				<p>Trip Notes is the place to capture and organize travel ideas by yourself and with others.  Planning a trip can be overwhelming, so we built Trip Notes to help people get and organize suggestions.
 				</p>

@@ -256,7 +256,7 @@ input:focus {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 16px;
-  line-height: 16px;
+  line-height: 20px;
   font-style: italic;
   font-weight: 600;
 }
@@ -296,7 +296,7 @@ input:focus {
 .lost-link {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
 }
@@ -350,7 +350,7 @@ input:focus {
 .start-header .site-subtitle {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 23px;
-  line-height: 23px;
+  line-height: 28.75px;
   font-style: italic;
   font-weight: 600;
   color: #b8b8b8;
@@ -380,7 +380,7 @@ input:focus {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 36px;
-  line-height: 36px;
+  line-height: 45px;
   font-style: italic;
   font-weight: 600;
   margin-top: 15px;
@@ -426,7 +426,7 @@ input:focus {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   letter-spacing: 1px;
   margin: 70px auto;
 }
@@ -440,7 +440,7 @@ input:focus {
   max-width: 800px;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 30px;
   font-style: italic;
   font-weight: 600;
 }
@@ -487,7 +487,7 @@ input:focus {
   display: inline-block;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
 }
@@ -496,7 +496,7 @@ input:focus {
   color: #e6e3e1;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
   display: inline-block;
@@ -561,7 +561,7 @@ input:focus {
 .notice-container .notice .notice-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 30px;
   font-style: italic;
   font-weight: 600;
 }
@@ -657,7 +657,7 @@ input:focus {
 #locations .notes-hidden {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 30px;
   font-style: italic;
   font-weight: 600;
   text-align: center;
@@ -705,7 +705,7 @@ input:focus {
 .note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
-  line-height: 30px;
+  line-height: 37.5px;
   font-style: italic;
   font-weight: 600;
   color: #151633;
@@ -726,7 +726,7 @@ input:focus {
 .note .note-from {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
   color: #151633;
@@ -759,7 +759,7 @@ input:focus {
 .note .note-link .link-description {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
   font-weight: normal;
@@ -860,7 +860,7 @@ a.add-location-link:hover {
 .add-note label {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
   color: #799b28;
@@ -875,7 +875,7 @@ a.add-location-link:hover {
 .add-note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
-  line-height: 30px;
+  line-height: 37.5px;
   font-style: italic;
   font-weight: 600;
   color: #151633;
@@ -1067,7 +1067,7 @@ a.add-location-link:hover {
   float: left;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 21px;
-  line-height: 21px;
+  line-height: 26.25px;
   font-style: italic;
   font-weight: 600;
   padding: 10px 5px;
