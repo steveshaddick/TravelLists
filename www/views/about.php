@@ -1,6 +1,6 @@
 <?php include(BASE_PATH . 'views/parts/header.php'); ?>
 
-<<<<<<< HEAD
+
 	<div id="body">
 		<div class="contentWrapper">
 		
@@ -13,7 +13,7 @@
 			<section class="page-content about-page">
 
 				<p>Tripnotes is the place to capture and organize travel ideas by yourself and with others.  Planning a trip can be overwhelming, so we built Trip Notes to help people get and organize suggestions.
-=======
+
 <style type="text/css">
 
 body{
@@ -94,7 +94,6 @@ text-decoration: underline;
 			<div id="landingPage" class="pageContent">
 
 				<p>Trip Notes is the place to capture and organize travel ideas by yourself and with others.  Planning a trip can be overwhelming, so we built Trip Notes to help people get and organize suggestions.
->>>>>>> Updated About
 				</p>
 				
 				<p>Trip Notes is new, and we'd love your feedback on how to make it better.
@@ -110,11 +109,10 @@ text-decoration: underline;
 				
 
 
-<<<<<<< HEAD
+
 			</section>
-=======
+
 			</div>
->>>>>>> Updated About
 		</div>
 	</div>
 
