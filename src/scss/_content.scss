@@ -140,14 +140,47 @@ input:focus {
 	display:none;
 }
 
-.add-location-button,
-.edit-done-button {
-	@include block-button();
+.add-location-button{
+	
+		color: $lightGrey;
+		@include serif-italic(18px);
+		display:inline-block;
+		background:$darkGrey;
+		@include border($darkGrey);
 
-	background: $green;
+		padding: 7px 10px 6px;
+		text-align: center;
+		text-decoration: none;
+
+		position:absolute;
+		right:130px;
+		bottom:47px;
 	
 	&:hover {
-		background: $lightGreen;
+		background: $mediumGrey;
+
+	}
+}
+
+.edit-done-button {
+	
+	color: $lightGrey;
+		@include serif-italic(18px);
+		display:inline-block;
+		background:$darkGrey;
+		@include border($darkGrey);
+
+		padding: 7px 10px 6px;
+		text-align: center;
+		text-decoration: none;
+
+		position:absolute;
+		right:0;
+		bottom:47px;
+	
+	&:hover {
+		background: $mediumGrey;
+
 	}
 }
 
@@ -332,7 +365,7 @@ input:focus {
 		
 
 		&.edit-on {
-			background: $lightOrange;
+			background: $lightGrey;
 
 			position: fixed; 
 			z-index: 1000000;
@@ -462,7 +495,7 @@ input:focus {
 	margin:0 auto;
 
 	&.edit-on {
-		margin-top: 146px;
+		margin-top: 136px;
 	}
 }
 
