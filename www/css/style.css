@@ -197,7 +197,7 @@ input:focus {
   color: #e6e3e1;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
   display: inline-block;
@@ -225,7 +225,7 @@ input:focus {
   color: #e6e3e1;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
-  line-height: 18px;
+  line-height: 22.5px;
   font-style: italic;
   font-weight: 600;
   display: inline-block;
@@ -355,7 +355,7 @@ input:focus {
 
 /* line 262, ../../src/scss/_content.scss */
 .page-header,
-.start-header {
+.start-header, .about-header {
   width: 100%;
   max-width: 1250px;
   margin: 0 auto;
@@ -364,7 +364,7 @@ input:focus {
 }
 /* line 269, ../../src/scss/_content.scss */
 .page-header .site-title,
-.start-header .site-title {
+.start-header .site-title, .about-header .site-title {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
   font-size: 76px;
@@ -374,7 +374,7 @@ input:focus {
 }
 /* line 274, ../../src/scss/_content.scss */
 .page-header .site-subtitle,
-.start-header .site-subtitle {
+.start-header .site-subtitle, .about-header .site-subtitle {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 23px;
   line-height: 28.75px;
@@ -384,12 +384,12 @@ input:focus {
 }
 /* line 279, ../../src/scss/_content.scss */
 .page-header a,
-.start-header a {
+.start-header a, .about-header a {
   color: inherit;
 }
 /* line 282, ../../src/scss/_content.scss */
 .page-header a:hover,
-.start-header a:hover {
+.start-header a:hover, .about-header a:hover {
   color: #799b28;
 }
 

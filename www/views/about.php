@@ -77,7 +77,7 @@ text-decoration: underline;
 		</header>		
 		
 		
-			<div id="landingPage" class="page-content about-page">
+			<div id="landingPage" class="about-page page-content ">
 
 				<p>Trip Notes is the place to capture and organize travel ideas by yourself and with others.  Planning a trip can be overwhelming, so we built Trip Notes to help people get and organize suggestions.
 				</p>
