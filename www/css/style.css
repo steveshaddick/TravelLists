@@ -351,7 +351,8 @@ input:focus {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 23px;
   line-height: 23px;
-  letter-spacing: 1px;
+  font-style: italic;
+  font-weight: 600;
   color: #b8b8b8;
 }
 /* line 246, ../../src/scss/_content.scss */
