@@ -414,7 +414,7 @@ input:focus {
 		@include transition(top 0.5s ease-in);
 
 		.notice-text {
-			@include serif(24px);
+			@include serif-italic(24px);
 		}
 	}
 
@@ -589,7 +589,7 @@ input:focus {
 			display:inline-block;
 		}
 		.link-description {
-			@include serif(18px);
+			@include serif-italic(18px);
 			font-weight: normal;
 			display:inline-block;
 			margin-top:5px;

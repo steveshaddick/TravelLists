@@ -440,7 +440,8 @@ input:focus {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
   line-height: 24px;
-  letter-spacing: 1px;
+  font-style: italic;
+  font-weight: 600;
 }
 
 /* line 316, ../../src/scss/_content.scss */
@@ -560,7 +561,8 @@ input:focus {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
   line-height: 24px;
-  letter-spacing: 1px;
+  font-style: italic;
+  font-weight: 600;
 }
 /* line 421, ../../src/scss/_content.scss */
 .notice-container .up {
@@ -757,7 +759,8 @@ input:focus {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
   line-height: 18px;
-  letter-spacing: 1px;
+  font-style: italic;
+  font-weight: 600;
   font-weight: normal;
   display: inline-block;
   margin-top: 5px;
