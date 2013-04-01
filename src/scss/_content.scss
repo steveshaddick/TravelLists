@@ -310,7 +310,7 @@ input:focus {
 
 .about-page {
 	max-width:800px;
-	@include serif(24px);
+	@include serif-italic(24px);
 }
 
 .edit-mode.edit-off {
