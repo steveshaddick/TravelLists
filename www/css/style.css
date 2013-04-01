@@ -50,7 +50,7 @@ a:hover {
 /* line 45, ../../src/scss/_content.scss */
 .back-button {
   display: inline-block;
-  padding: 17px;
+  padding: 16px;
   min-width: 100px;
   font-size: 18px;
   text-align: center;
@@ -78,7 +78,7 @@ a:hover {
 .create-button,
 .next-button {
   display: inline-block;
-  padding: 17px;
+  padding: 16px;
   min-width: 100px;
   font-size: 18px;
   text-align: center;
@@ -196,7 +196,7 @@ input:focus {
 .add-location-button,
 .edit-done-button {
   display: inline-block;
-  padding: 17px;
+  padding: 16px;
   min-width: 100px;
   font-size: 18px;
   text-align: center;
