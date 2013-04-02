@@ -359,7 +359,7 @@ input:focus {
 		.header-content {
 			max-width: $maxContentWidth;
 			margin:0 auto;
-			padding: 35px 0;
+			padding: 35px 0 70px 0;
 			position:relative;
 		}
 
@@ -395,19 +395,17 @@ input:focus {
 	}
 
 	.collaborate-trip-link {
-		color: $lightGrey;
+		color: $darkGrey;
 		@include serif-italic(18px);
 		display:inline-block;
-		background:$darkGrey;
-		@include border($darkGrey);
-
+		background:$lightGrey;
+		@include border($lightGrey);
 		padding: 7px 10px 6px;
 		text-align: center;
 		text-decoration: none;
-
 		position:absolute;
-		right:150px;
-		bottom:47px;
+		left:150px;
+		bottom:18px;
 
 		img {
 			vertical-align: top;
@@ -421,19 +419,17 @@ input:focus {
 	}
 
 	.edit-trip-link {
-		color: $lightGrey;
+		color: $darkGrey;
 		@include serif-italic(18px);
 		display:inline-block;
-		background:$darkGrey;
-		@include border($darkGrey);
-
+		background:$lightGrey;
+		@include border($lightGrey);
 		padding: 7px 10px 6px;
 		text-align: center;
 		text-decoration: none;
-
 		position:absolute;
-		right:0;
-		bottom:47px;
+		left:0;
+		bottom:18px;
 
 		img {
 			vertical-align: top;
