@@ -580,8 +580,8 @@ input:focus {
 }
 /* line 434, ../../src/scss/_content.scss */
 .list-wrapper .edit-trip-link img {
-  vertical-align: top;
-  padding-right: 5px;
+  vertical-align: bottom;
+  padding: 2px 5px 0 0;
 }
 /* line 440, ../../src/scss/_content.scss */
 .list-wrapper .edit-trip-link:hover {
