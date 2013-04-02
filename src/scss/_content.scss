@@ -432,7 +432,7 @@ input:focus {
 		bottom:18px;
 
 		img {
-			vertical-align: bottom;
+			vertical-align: top;
 			padding:2px 5px 0 0;
 		}
 
@@ -520,12 +520,17 @@ input:focus {
 	height:395px;
 	max-width: 100%;
 	margin:0 auto;
-
+	z-index:-1;
 	&.edit-on {
 		margin-top: 136px;
 	}
 }
 
+.mapContainer {
+	-moz-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
+	-webkit-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
+	box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);	
+}
 
 #locations {
 
