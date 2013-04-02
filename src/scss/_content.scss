@@ -385,6 +385,7 @@ input:focus {
 		color: $darkGrey;
 		display: inline-block;
 		@include sans-serif(66px);
+		letter-spacing:-3px;
 	}
 
 	.trip-subtitle {
