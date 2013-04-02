@@ -491,7 +491,7 @@ input:focus {
 #map {
 	width:100%;
 	height:395px;
-	max-width: $maxWidth;
+	max-width: 100%;
 	margin:0 auto;
 
 	&.edit-on {

@@ -641,7 +641,7 @@ input:focus {
 #map {
   width: 100%;
   height: 395px;
-  max-width: 1250px;
+  max-width: 100%;
   margin: 0 auto;
 }
 /* line 497, ../../src/scss/_content.scss */
