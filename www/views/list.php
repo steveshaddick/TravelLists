@@ -20,6 +20,7 @@
 					<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
 					<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
 					<a id="editTripButton" class="edit-trip-link" href="javascript:void(0)"><img src="/images/icon-pencil.png">Edit this trip</a>
+					<a id="collaborateTripButton" class="collaborate-trip-link">Collaborate with Friends</a>
 
 					<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="">Add location</a>
 					<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="">Done editing</a>
