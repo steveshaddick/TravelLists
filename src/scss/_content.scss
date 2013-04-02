@@ -45,7 +45,7 @@ a {
 .back-button {
 	@include block-button();
 	background: $mediumGrey;
-	
+
 	&:hover {
 		background: $lightGreen;
 	}
@@ -55,7 +55,7 @@ a {
 	@include block-button();
 
 	background: $green;
-	
+
 	&:hover {
 		background: $lightGreen;
 	}
@@ -96,7 +96,7 @@ input:focus {
 
 	@include sans-serif(76px);
 
-	
+
 }
 .blockerContent {
 	position:absolute;
@@ -141,7 +141,7 @@ input:focus {
 }
 
 .add-location-button{
-	
+
 		color: $lightGrey;
 		@include serif-italic(18px);
 		display:inline-block;
@@ -155,7 +155,7 @@ input:focus {
 		position:absolute;
 		right:130px;
 		bottom:47px;
-	
+
 	&:hover {
 		background: $mediumGrey;
 
@@ -163,7 +163,7 @@ input:focus {
 }
 
 .edit-done-button {
-	
+
 	color: $lightGrey;
 		@include serif-italic(18px);
 		display:inline-block;
@@ -177,7 +177,7 @@ input:focus {
 		position:absolute;
 		right:0;
 		bottom:47px;
-	
+
 	&:hover {
 		background: $mediumGrey;
 
@@ -362,7 +362,7 @@ input:focus {
 			padding: 35px 0;
 			position:relative;
 		}
-		
+
 
 		&.edit-on {
 			background: $lightGrey;
@@ -370,8 +370,12 @@ input:focus {
 			position: fixed; 
 			z-index: 1000000;
 			top:0;
-			
+
 			.edit-trip-link {
+				display: none;
+			}
+
+			.collaborate-trip-link{
 				display: none;
 			}
 		}
@@ -387,6 +391,32 @@ input:focus {
 		color: $blue;
 		display: inline-block;
 		@include serif-italic(18px);
+	}
+
+	.collaborate-trip-link {
+		color: $lightGrey;
+		@include serif-italic(18px);
+		display:inline-block;
+		background:$darkGrey;
+		@include border($darkGrey);
+
+		padding: 7px 10px 6px;
+		text-align: center;
+		text-decoration: none;
+
+		position:absolute;
+		right:150px;
+		bottom:47px;
+
+		img {
+			vertical-align: top;
+			padding-right:5px;
+		}
+
+
+		&:hover {
+			background:$mediumGrey;
+		}
 	}
 
 	.edit-trip-link {
@@ -572,7 +602,7 @@ input:focus {
 	margin: 22px 0;
 	position:relative;
 
-	
+
 
 	.note-text-wrapper {
 		vertical-align: top;
@@ -633,7 +663,7 @@ input:focus {
 		position:absolute;
 		top:0;
 		right:0;
-		
+
 		a {
 			color:#ff0000;
 		}
@@ -642,7 +672,7 @@ input:focus {
 }
 
 a.add-location-link {
-	
+
 	@include sans-serif(14px);
 
 	display:block;
