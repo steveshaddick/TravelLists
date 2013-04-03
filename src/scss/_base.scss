@@ -55,8 +55,6 @@ $maxWidth: 1250px;
 	text-align: center;
 	color:$lightGrey;
 	position:relative;
-	top: -17px;
-	margin: 0 10px;
 	@include sans-serif(18px);
 	@include border-radius($borderRadius);
 

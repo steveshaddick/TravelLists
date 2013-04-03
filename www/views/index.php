@@ -44,7 +44,7 @@
 					<input id="txtEmail" disabled="disabled" type="email" maxlength="255" value="" /><br />
 					<label for="txtEmail">And your email address, only so we can send you a link.</label>
 
-					<div style="margin-top:85px">
+					<div style="margin-top:50px">
 						<a class="back-button hidden" href="javascript:void(0)">Back</a>
 						<a class="next-button hidden" href="javascript:void(0)">Next</a>
 					</div>
