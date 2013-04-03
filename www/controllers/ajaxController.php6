@@ -154,7 +154,10 @@ switch ($action) {
 	case 'checkEditMode':
 		echo returnJSON($main->checkEditMode($_POST['email']));
 		break;
-
+	
+	case 'closeEditMode':
+		$main->closeEditMode();
+		break;
 
 	default:
 		echo returnJSON(false);

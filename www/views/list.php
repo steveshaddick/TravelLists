@@ -8,6 +8,7 @@
 	</div>
 
 	<div id="modal">
+		<div id="modalUnder"></div>
 		<div id="modalContent">
 			Loading...
 		</div>

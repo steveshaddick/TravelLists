@@ -229,14 +229,56 @@ var Ajax = (function() {
 
 var Modal = (function() {
 
-	function load(file, callback) {
+	var loadCallback;
+	var contentClass;
+	var isModal = false;
+
+	function load(file, callback, style) {
+		loadCallback = callback;
+		isModal = true;
+		contentClass = style;
+
 		$("#modal").css('display', 'block');
-		$("#modalContent").load(file, {}, callback);
+		$("#modalContent").load(file, {}, onLoad);
 	}
 
 	function close() {
+		isModal = false;
+		contentClass = false;
+
 		$("#modalContent").html('');
 		$("#modal").css('display', 'none');
+
+		$(document).unbind('keydown', keyDownHandler);
+		$("#modalUnder").unbind('click', clickHandler);
+	}
+
+	function onLoad() {
+		if (!isModal) return;
+
+		if (typeof contentClass != "undefined") {
+			$("#modalContent").addClass(contentClass);
+		}
+
+		if (typeof loadCallback != "undefined") {
+			loadCallback();
+			loadCallback = false;
+		}
+
+		$(document).keydown(keyDownHandler);
+		$("#modalUnder").click(clickHandler);
+	}
+
+	function keyDownHandler(e) {
+		switch (e.which) {
+			case 27:
+				close();
+				break;
+		}
+	}
+
+	function clickHandler() {
+		close();
 	}
 
 	return {
@@ -907,8 +949,7 @@ var Trip = (function() {
 			//google.maps.event.removeEventListener(locations[locationId].marker, 'click');
 		}
 
-		locations[locationId].destroy();
-
+		locations[locationId].location.destroy();
 		locations.splice(locationId, 1);
 		locationCount --;
 
@@ -936,38 +977,7 @@ var Trip = (function() {
 
 	function checkAdmin() {
 
-		Modal.load('/views/modal/enterEmail.html',
-			function() {
-
-				$("#emailAdmin").click(function() {
-					var email = $("#txtEmail").val();
-
-					if (email != '') {
-						Ajax.call('checkEditMode',
-							{
-								email: email
-							},
-							function() {
-								setEditMode();
-								Modal.close();
-							},
-							function() {
-								Modal.close();
-
-							});
-					}
-				});
-			});
-	}
-
-	function setEditMode() {
-		Ajax.call('checkEditMode',
-								{
-									email: ''
-								},
-								function() {
-									EditMode.init();
-								});
+		EditModeModal.open();
 	}
 
 	return {
@@ -976,6 +986,131 @@ var Trip = (function() {
 		addNote: addNote,
 		deleteLocation: deleteLocation,
 		getTripInfo: getTripInfo
+	}
+}());
+
+var EditModeModal = (function() {
+
+	var $txtEmail;
+	var $submit;
+	var isSending = false;
+
+	function open() {
+		Modal.load('/views/modal/enterEmail.html',
+			init,
+			'email-modal'
+			);
+	}
+
+	function validateEmail(email) { 
+    	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	return re.test(email);
+	} 
+
+	function txtChange(e) {
+		var txtValid = true;
+		if ($.trim($txtEmail.val()) == '') {
+			txtValid = false;
+		}
+		if ($txtEmail.hasClass('error')) {
+			$txtEmail.removeClass('error');
+			$("#errorReturn").addClass('hidden');
+		}
+
+		if (txtValid) {
+			$submit.removeClass('hidden');
+		} else {
+			$submit.addClass('hidden');
+		}
+	}
+
+	function init() {
+
+		$submit = $("#emailAdmin");
+		$txtEmail = $("#txtEmail");
+		isSending = false;
+
+		$txtEmail.keyup(txtChange).focus();
+		$submit.click(sendEmail);
+		$("#isRemember").click(isRememberCookieClick);
+		$(document).keyup(keyUpHandler);
+		$("#oopsLink").click(close);
+
+		if ($.cookie('email')) {
+			$("#isRemember").prop('checked', true);
+			$txtEmail.val($.cookie('email'));
+		} else {
+			$submit.focus();
+		}
+
+		txtChange();
+
+	}
+
+	function sendEmail() {
+		
+		if (isSending) return;
+
+		var email = $txtEmail.val();
+
+		if (!validateEmail(email)) {
+			$txtEmail.addClass('error');
+			return;
+		}
+		isSending = true;
+
+		if ($("#isRemember").is(':checked')) {
+			$.cookie('email', email, { expires: 365, path: '/' });
+		}
+		Ajax.call('checkEditMode',
+			{
+				email: email
+			},
+			function() {
+				EditMode.init();
+				close();
+			},
+			function() {
+				$txtEmail.addClass('error');
+				$("#errorReturn").removeClass('hidden');
+				isSending = false;
+
+			});
+
+		return false;
+	}
+
+	function isRememberCookieClick() {
+		if (!$("#isRemember").is(':checked')) {
+			$.removeCookie('email', { path: '/' });
+		}
+	}
+
+	function keyUpHandler(e) {
+		switch (e.which) {
+			case 13:
+				sendEmail();
+				break;
+		}
+	}
+
+	function close() {
+
+		$txtEmail.unbind('keyup',txtChange);
+		$submit.unbind('click',sendEmail);
+		$("#isRemember").unbind('click',isRememberCookieClick);
+		$(document).unbind('keyup',keyUpHandler);
+
+		$submit = null;
+		$txtEmail = null;
+		isSending = false;
+
+		Modal.close();
+	}
+
+	return {
+		open: open,
+		close: close
 	}
 }());
 
@@ -1005,6 +1140,8 @@ var EditMode = (function() {
 	}
 
 	function dinit() {
+		Ajax.call('closeEditMode');
+
 		$(".edit-mode").addClass('edit-off');
 		$(".add-note").removeClass('hidden');
 		$("header").removeClass('edit-on');

@@ -492,8 +492,8 @@ class Main {
 	}
 
 	public function checkEditMode($email) {
-		$_SESSION['isEditMode'] = true;
-		return true;
+		
+		$_SESSION['isEditMode'] = false;
 
 		$email = Encryptor::encrypt($email, SALT);
 		
@@ -508,6 +508,12 @@ class Main {
 			return true;
 		}
 
+
+	}
+
+	public function closeEditMode() {
+
+		$_SESSION['isEditMode'] = false;
 
 	}
 }
