@@ -162,7 +162,9 @@ class Main {
 			);
 		}
 
-		$this->addLocation(false, $location);
+		$this->isEditMode = true;
+		$this->addLocation($location, $tripLocation);
+		$this->isEditMode = false;
 
 		return array('tripHash'=>$adminHash);
 
@@ -282,9 +284,11 @@ class Main {
 		if (!$this->isEditMode) {
 			return false;
 		}
+		if ($name == '') {
+			return false;
+		}
 
 		$tripId = $_SESSION['trip_id'];
-
 
 		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Locations WHERE trip_id=?");
 		$stmt->execute(array($tripId));
@@ -292,7 +296,7 @@ class Main {
 		
 		$listOrder = $row['total'] + 1;
 
-		$location = ($name !== false) ? Geocoder::getLocation($name) : $forceLocation;
+		$location = ($forceLocation == false) ? Geocoder::getLocation($name) : $forceLocation;
 		if ($location === false) {
 			$location = array('lat'=>0, 'lng'=> 0);
 		}
