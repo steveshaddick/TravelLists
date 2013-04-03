@@ -313,9 +313,19 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
+		if (empty($note)){
+			return false;
+		}
 		$tripId = $_SESSION['trip_id'];
-		
 
+		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Notes WHERE trip_id=? AND note=? AND fromName=? AND location_id=? AND category_id=?");
+		$stmt->execute(array($tripId, $note['note'], $note['fromName'], $note['locationId'], $note['categoryId']));
+		$row = $stmt->fetch();
+		if ($row['total'] != 0) {
+			//log duplicate
+			return false;
+		}
+		
 		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Notes WHERE trip_id=? AND location_id=? AND category_id=?");
 		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId']));
 		$row = $stmt->fetch();
