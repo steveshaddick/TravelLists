@@ -162,7 +162,7 @@ class Main {
 			);
 		}
 
-		$this->addLocation($location);
+		$this->addLocation(false, $location);
 
 		return array('tripHash'=>$adminHash);
 
@@ -274,7 +274,7 @@ class Main {
 	}
 
 
-	public function addLocation($name) {
+	public function addLocation($name, $forceLocation  = false) {
 		
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
@@ -292,7 +292,7 @@ class Main {
 		
 		$listOrder = $row['total'] + 1;
 
-		$location = Geocoder::getLocation($name);
+		$location = ($name !== false) ? Geocoder::getLocation($name) : $forceLocation;
 		if ($location === false) {
 			$location = array('lat'=>0, 'lng'=> 0);
 		}
