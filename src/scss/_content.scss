@@ -259,6 +259,19 @@ input[type="email"]
 
 }
 
+input.editTextInput {
+	
+	border: 0;
+	background: transparent url('/images/dot.png') repeat-x bottom;
+	text-align: left;
+	@include sans-serif(36px);
+	height: 36px;
+	width: 460px;
+	color:$darkGrey;
+	padding:27px;
+
+}
+
 .page-header,
 .start-header,.about-header {
 	width:100%;
@@ -366,9 +379,8 @@ input[type="email"]
 
 
 		&.edit-on {
-			background: $darkGrey;
+			background: $lightOrange;
 
-			position: fixed; 
 			z-index: 1000000;
 			top:0;
 
@@ -523,7 +535,7 @@ input[type="email"]
 	margin:0 auto;
 	z-index:-1;
 	&.edit-on {
-		margin-top: 136px;
+		margin-top: 0px;
 	}
 }
 

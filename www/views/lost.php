@@ -33,8 +33,10 @@
 				</header>
 
 				<div class="page-content">
-					<p>An email has been sent.</p>
+					<p>An email has been sent, go check!</p>
+
 				</div>
+
 			</section>
 			
 		</div>

@@ -357,7 +357,26 @@ input[type="email"]:focus {
   border: none;
 }
 
+<<<<<<< HEAD
 /* line 263, ../../src/scss/_content.scss */
+=======
+/* line 260, ../../src/scss/_content.scss */
+input.editTextInput {
+  border: 0;
+  background: transparent url("/images/dot.png") repeat-x bottom;
+  text-align: left;
+  font-family: "pragmatica-web", helvetica, arial, sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 36px;
+  height: 36px;
+  width: 460px;
+  color: #5f5c66;
+  padding: 27px;
+}
+
+/* line 274, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-header,
 .start-header, .about-header {
   width: 100%;
@@ -366,7 +385,11 @@ input[type="email"]:focus {
   text-align: center;
   margin-top: 132px;
 }
+<<<<<<< HEAD
 /* line 270, ../../src/scss/_content.scss */
+=======
+/* line 281, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-header .site-title,
 .start-header .site-title, .about-header .site-title {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -376,7 +399,11 @@ input[type="email"]:focus {
   color: #5f5c66;
   margin-bottom: 12px;
 }
+<<<<<<< HEAD
 /* line 275, ../../src/scss/_content.scss */
+=======
+/* line 286, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-header .site-subtitle,
 .start-header .site-subtitle, .about-header .site-subtitle {
   font-family: "chaparral-pro", georgia, serif;
@@ -386,27 +413,47 @@ input[type="email"]:focus {
   font-weight: 600;
   color: #b8b8b8;
 }
+<<<<<<< HEAD
 /* line 280, ../../src/scss/_content.scss */
+=======
+/* line 291, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-header a,
 .start-header a, .about-header a {
   color: inherit;
 }
+<<<<<<< HEAD
 /* line 283, ../../src/scss/_content.scss */
+=======
+/* line 294, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-header a:hover,
 .start-header a:hover, .about-header a:hover {
   color: #799b28;
 }
 
+<<<<<<< HEAD
 /* line 290, ../../src/scss/_content.scss */
+=======
+/* line 301, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-header {
   margin-top: 50px;
 }
 
+<<<<<<< HEAD
 /* line 294, ../../src/scss/_content.scss */
 .home-form {
   text-align: center;
 }
 /* line 298, ../../src/scss/_content.scss */
+=======
+/* line 305, ../../src/scss/_content.scss */
+.home-form {
+  text-align: center;
+}
+/* line 309, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .home-form label {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
@@ -417,6 +464,7 @@ input[type="email"]:focus {
   margin-top: 15px;
   display: inline-block;
 }
+<<<<<<< HEAD
 /* line 305, ../../src/scss/_content.scss */
 .home-form #txtTripName {
   width: 550px;
@@ -426,17 +474,36 @@ input[type="email"]:focus {
   width: 550px;
 }
 /* line 313, ../../src/scss/_content.scss */
+=======
+/* line 316, ../../src/scss/_content.scss */
+.home-form #txtTripName {
+  width: 550px;
+}
+/* line 320, ../../src/scss/_content.scss */
+.home-form #txtEmail {
+  width: 550px;
+}
+/* line 324, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .home-form #txtLocation {
   width: 700px;
 }
 
+<<<<<<< HEAD
 /* line 318, ../../src/scss/_content.scss */
+=======
+/* line 329, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .content {
   max-width: 960px;
   margin: 0 auto;
 }
 
+<<<<<<< HEAD
 /* line 323, ../../src/scss/_content.scss */
+=======
+/* line 334, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .pac-container {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -447,12 +514,20 @@ input[type="email"]:focus {
   z-index: 10000000 !important;
 }
 
+<<<<<<< HEAD
 /* line 329, ../../src/scss/_content.scss */
+=======
+/* line 340, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .pac-item {
   padding: 10px 0;
 }
 
+<<<<<<< HEAD
 /* line 335, ../../src/scss/_content.scss */
+=======
+/* line 346, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-content {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
@@ -461,12 +536,20 @@ input[type="email"]:focus {
   letter-spacing: 1px;
   margin: 70px auto;
 }
+<<<<<<< HEAD
 /* line 340, ../../src/scss/_content.scss */
+=======
+/* line 351, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .page-content h2 {
   margin-top: 34px;
 }
 
+<<<<<<< HEAD
 /* line 345, ../../src/scss/_content.scss */
+=======
+/* line 356, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .about-page {
   max-width: 800px;
   font-family: "chaparral-pro", georgia, serif;
@@ -476,29 +559,45 @@ input[type="email"]:focus {
   font-weight: 600;
 }
 
+<<<<<<< HEAD
 /* line 350, ../../src/scss/_content.scss */
+=======
+/* line 361, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .edit-mode.edit-off {
   display: none !important;
 }
 
+<<<<<<< HEAD
 /* line 356, ../../src/scss/_content.scss */
 .list-wrapper header {
   width: 100%;
 }
 /* line 360, ../../src/scss/_content.scss */
+=======
+/* line 367, ../../src/scss/_content.scss */
+.list-wrapper header {
+  width: 100%;
+}
+/* line 371, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper header .header-content {
   max-width: 960px;
   margin: 0 auto;
   padding: 35px 0 70px 0;
   position: relative;
 }
+<<<<<<< HEAD
 /* line 368, ../../src/scss/_content.scss */
+=======
+/* line 379, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper header.edit-on {
-  background: #5f5c66;
-  position: fixed;
+  background: #f0a959;
   z-index: 1000000;
   top: 0;
 }
+<<<<<<< HEAD
 /* line 375, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on .edit-trip-link {
   display: none;
@@ -508,6 +607,17 @@ input[type="email"]:focus {
   display: none;
 }
 /* line 385, ../../src/scss/_content.scss */
+=======
+/* line 385, ../../src/scss/_content.scss */
+.list-wrapper header.edit-on .edit-trip-link {
+  display: none;
+}
+/* line 389, ../../src/scss/_content.scss */
+.list-wrapper header.edit-on .collaborate-trip-link {
+  display: none;
+}
+/* line 395, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .trip-title {
   color: #5f5c66;
   display: inline-block;
@@ -517,7 +627,11 @@ input[type="email"]:focus {
   line-height: 66px;
   letter-spacing: -3px;
 }
+<<<<<<< HEAD
 /* line 392, ../../src/scss/_content.scss */
+=======
+/* line 402, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .trip-subtitle {
   color: #151633;
   display: inline-block;
@@ -527,7 +641,11 @@ input[type="email"]:focus {
   font-style: italic;
   font-weight: 600;
 }
+<<<<<<< HEAD
 /* line 398, ../../src/scss/_content.scss */
+=======
+/* line 408, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .collaborate-trip-link {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
@@ -550,16 +668,28 @@ input[type="email"]:focus {
   left: 150px;
   bottom: 18px;
 }
+<<<<<<< HEAD
 /* line 411, ../../src/scss/_content.scss */
+=======
+/* line 421, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .collaborate-trip-link img {
   vertical-align: top;
   padding-right: 5px;
 }
+<<<<<<< HEAD
 /* line 417, ../../src/scss/_content.scss */
 .list-wrapper .collaborate-trip-link:hover {
   background: #b8b8b8;
 }
 /* line 422, ../../src/scss/_content.scss */
+=======
+/* line 427, ../../src/scss/_content.scss */
+.list-wrapper .collaborate-trip-link:hover {
+  background: #b8b8b8;
+}
+/* line 432, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .edit-trip-link {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
@@ -582,28 +712,48 @@ input[type="email"]:focus {
   left: 0;
   bottom: 18px;
 }
+<<<<<<< HEAD
 /* line 435, ../../src/scss/_content.scss */
+=======
+/* line 445, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .edit-trip-link img {
   vertical-align: top;
   padding: 2px 5px 0 0;
 }
+<<<<<<< HEAD
 /* line 441, ../../src/scss/_content.scss */
+=======
+/* line 451, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .list-wrapper .edit-trip-link:hover {
   background: #b8b8b8;
 }
 
+<<<<<<< HEAD
 /* line 448, ../../src/scss/_content.scss */
+=======
+/* line 458, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .trip-settings {
   display: hidden;
   background: #e6e3e1 url("/images/top-inner-shadow.png") repeat-x top;
   height: 0;
 }
+<<<<<<< HEAD
 /* line 453, ../../src/scss/_content.scss */
+=======
+/* line 463, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .trip-settings .settings-button {
   background-image: url("/images/gear-button.png");
 }
 
+<<<<<<< HEAD
 /* line 459, ../../src/scss/_content.scss */
+=======
+/* line 469, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .notice-container {
   width: 100%;
   position: absolute;
@@ -612,7 +762,11 @@ input[type="email"]:focus {
   display: none;
   z-index: 100;
 }
+<<<<<<< HEAD
 /* line 467, ../../src/scss/_content.scss */
+=======
+/* line 477, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .notice-container .notice {
   background: #fff;
   position: relative;
@@ -625,7 +779,11 @@ input[type="email"]:focus {
   -o-transition: top 0.5s ease-in;
   transition: top 0.5s ease-in;
 }
+<<<<<<< HEAD
 /* line 477, ../../src/scss/_content.scss */
+=======
+/* line 487, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .notice-container .notice .notice-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
@@ -633,7 +791,11 @@ input[type="email"]:focus {
   font-style: italic;
   font-weight: 600;
 }
+<<<<<<< HEAD
 /* line 482, ../../src/scss/_content.scss */
+=======
+/* line 492, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .notice-container .up {
   top: -50px;
   -webkit-transition: none;
@@ -641,7 +803,11 @@ input[type="email"]:focus {
   -o-transition: none;
   transition: none;
 }
+<<<<<<< HEAD
 /* line 487, ../../src/scss/_content.scss */
+=======
+/* line 497, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .notice-container .down {
   top: 50px;
   -webkit-transition: top 0.25s ease-in;
@@ -650,22 +816,38 @@ input[type="email"]:focus {
   transition: top 0.25s ease-in;
 }
 
+<<<<<<< HEAD
 /* line 495, ../../src/scss/_content.scss */
+=======
+/* line 505, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .fixed {
   position: fixed;
   top: 0;
 }
 
+<<<<<<< HEAD
 /* line 500, ../../src/scss/_content.scss */
 .sprite-button {
   background-position: left;
 }
 /* line 502, ../../src/scss/_content.scss */
+=======
+/* line 510, ../../src/scss/_content.scss */
+.sprite-button {
+  background-position: left;
+}
+/* line 512, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .sprite-button:hover {
   background-position: right;
 }
 
+<<<<<<< HEAD
 /* line 507, ../../src/scss/_content.scss */
+=======
+/* line 517, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .x-button {
   color: #FF0000;
   cursor: pointer;
@@ -678,7 +860,11 @@ input[type="email"]:focus {
   background-image: url("/images/x-button.png");
 }
 
+<<<<<<< HEAD
 /* line 519, ../../src/scss/_content.scss */
+=======
+/* line 529, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #map {
   width: 100%;
   height: 395px;
@@ -686,26 +872,42 @@ input[type="email"]:focus {
   margin: 0 auto;
   z-index: -1;
 }
+<<<<<<< HEAD
 /* line 525, ../../src/scss/_content.scss */
+=======
+/* line 535, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #map.edit-on {
-  margin-top: 136px;
+  margin-top: 0px;
 }
 
+<<<<<<< HEAD
 /* line 530, ../../src/scss/_content.scss */
+=======
+/* line 540, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .mapContainer {
   -moz-box-shadow: inset 0px 2px 2px 0px rgba(95, 92, 102, 0.4);
   -webkit-box-shadow: inset 0px 2px 2px 0px rgba(95, 92, 102, 0.4);
   box-shadow: inset 0px 2px 2px 0px rgba(95, 92, 102, 0.4);
 }
 
+<<<<<<< HEAD
 /* line 538, ../../src/scss/_content.scss */
+=======
+/* line 548, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #locations .location {
   padding-bottom: 33px;
   margin-top: 25px;
   border-bottom: 1px solid #b8b8b8;
   position: relative;
 }
+<<<<<<< HEAD
 /* line 544, ../../src/scss/_content.scss */
+=======
+/* line 554, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #locations .location .location-name {
   color: #5f5c66;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -713,23 +915,39 @@ input[type="email"]:focus {
   font-size: 36px;
   line-height: 36px;
 }
+<<<<<<< HEAD
 /* line 549, ../../src/scss/_content.scss */
 #locations .location .location-notes {
   min-height: 20px;
 }
 /* line 553, ../../src/scss/_content.scss */
+=======
+/* line 559, ../../src/scss/_content.scss */
+#locations .location .location-notes {
+  min-height: 20px;
+}
+/* line 563, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #locations .location .delete-location-link {
   color: #ff0000;
   position: absolute;
   top: 15px;
   right: 0;
 }
+<<<<<<< HEAD
 /* line 564, ../../src/scss/_content.scss */
+=======
+/* line 574, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #locations .notes-wrapper {
   margin: 0;
   /*min-height:44px;*/
 }
+<<<<<<< HEAD
 /* line 569, ../../src/scss/_content.scss */
+=======
+/* line 579, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 #locations .notes-hidden {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
@@ -742,7 +960,11 @@ input[type="email"]:focus {
   padding: 20px 0;
 }
 
+<<<<<<< HEAD
 /* line 579, ../../src/scss/_content.scss */
+=======
+/* line 589, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note-category {
   width: 25px;
   background-image: url("/images/category-icons.png");
@@ -753,6 +975,7 @@ input[type="email"]:focus {
   display: block;
   height: 28px;
 }
+<<<<<<< HEAD
 /* line 589, ../../src/scss/_content.scss */
 .note-category.poi {
   background-position: 0;
@@ -762,22 +985,45 @@ input[type="email"]:focus {
   background-position: -25px;
 }
 /* line 597, ../../src/scss/_content.scss */
+=======
+/* line 599, ../../src/scss/_content.scss */
+.note-category.poi {
+  background-position: 0;
+}
+/* line 603, ../../src/scss/_content.scss */
+.note-category.food {
+  background-position: -25px;
+}
+/* line 607, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note-category.stay {
   background-position: -50px;
 }
 
+<<<<<<< HEAD
 /* line 602, ../../src/scss/_content.scss */
+=======
+/* line 612, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note {
   font-size: 30px;
   margin: 22px 0;
   position: relative;
 }
+<<<<<<< HEAD
 /* line 610, ../../src/scss/_content.scss */
+=======
+/* line 620, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-text-wrapper {
   vertical-align: top;
   padding-left: 8px;
 }
+<<<<<<< HEAD
 /* line 615, ../../src/scss/_content.scss */
+=======
+/* line 625, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
@@ -786,7 +1032,11 @@ input[type="email"]:focus {
   font-weight: 600;
   color: #151633;
 }
+<<<<<<< HEAD
 /* line 619, ../../src/scss/_content.scss */
+=======
+/* line 629, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-text a {
   font-size: inherit;
   color: inherit;
@@ -794,11 +1044,19 @@ input[type="email"]:focus {
   font-size: inherit;
   line-height: inherit;
 }
+<<<<<<< HEAD
 /* line 626, ../../src/scss/_content.scss */
 .note .note-text a:hover {
   color: #5f5c66;
 }
 /* line 632, ../../src/scss/_content.scss */
+=======
+/* line 636, ../../src/scss/_content.scss */
+.note .note-text a:hover {
+  color: #5f5c66;
+}
+/* line 642, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-from {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -807,13 +1065,18 @@ input[type="email"]:focus {
   font-weight: 600;
   color: #151633;
 }
+<<<<<<< HEAD
 /* line 637, ../../src/scss/_content.scss */
+=======
+/* line 647, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-link {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
   font-size: 18px;
   line-height: 18px;
 }
+<<<<<<< HEAD
 /* line 641, ../../src/scss/_content.scss */
 .note .note-link td {
   vertical-align: middle;
@@ -823,15 +1086,34 @@ input[type="email"]:focus {
   padding-left: 16px;
 }
 /* line 649, ../../src/scss/_content.scss */
+=======
+/* line 651, ../../src/scss/_content.scss */
+.note .note-link td {
+  vertical-align: middle;
+}
+/* line 655, ../../src/scss/_content.scss */
+.note .note-link .link-info {
+  padding-left: 16px;
+}
+/* line 659, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-link .link-image {
   border: 1px solid #151633;
   max-width: 170px;
 }
+<<<<<<< HEAD
 /* line 654, ../../src/scss/_content.scss */
 .note .note-link .link-title {
   display: inline-block;
 }
 /* line 657, ../../src/scss/_content.scss */
+=======
+/* line 664, ../../src/scss/_content.scss */
+.note .note-link .link-title {
+  display: inline-block;
+}
+/* line 667, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-link .link-description {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -842,18 +1124,30 @@ input[type="email"]:focus {
   display: inline-block;
   margin-top: 5px;
 }
+<<<<<<< HEAD
 /* line 665, ../../src/scss/_content.scss */
+=======
+/* line 675, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-delete {
   position: absolute;
   top: 0;
   right: 0;
 }
+<<<<<<< HEAD
 /* line 670, ../../src/scss/_content.scss */
+=======
+/* line 680, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .note .note-delete a {
   color: #ff0000;
 }
 
+<<<<<<< HEAD
 /* line 677, ../../src/scss/_content.scss */
+=======
+/* line 687, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 a.add-location-link {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -874,12 +1168,17 @@ a.add-location-link {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
+<<<<<<< HEAD
 /* line 692, ../../src/scss/_content.scss */
+=======
+/* line 702, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 a.add-location-link:hover {
   color: #b8b8b8;
   text-decoration: none;
 }
 
+<<<<<<< HEAD
 /* line 698, ../../src/scss/_content.scss */
 .add-note {
   padding: 0 40px;
@@ -893,6 +1192,21 @@ a.add-location-link:hover {
   text-align: center;
 }
 /* line 710, ../../src/scss/_content.scss */
+=======
+/* line 708, ../../src/scss/_content.scss */
+.add-note {
+  padding: 0 40px;
+}
+/* line 712, ../../src/scss/_content.scss */
+.add-note .note-editor {
+  position: relative;
+}
+/* line 716, ../../src/scss/_content.scss */
+.add-note .note-text-wrapper {
+  text-align: center;
+}
+/* line 720, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .txtNoteText {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -902,6 +1216,7 @@ a.add-location-link:hover {
   padding: 0 10px;
   color: #e6e3e1;
 }
+<<<<<<< HEAD
 /* line 716, ../../src/scss/_content.scss */
 .add-note .txtNoteText:focus {
   color: #000;
@@ -911,13 +1226,28 @@ a.add-location-link:hover {
   color: #000;
 }
 /* line 726, ../../src/scss/_content.scss */
+=======
+/* line 726, ../../src/scss/_content.scss */
+.add-note .txtNoteText:focus {
+  color: #000;
+}
+/* line 730, ../../src/scss/_content.scss */
+.add-note .txtNoteText.editing {
+  color: #000;
+}
+/* line 736, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .note-from-wrapper {
   width: 250px;
   display: inline-block;
   margin-right: 24px;
   text-align: center;
 }
+<<<<<<< HEAD
 /* line 733, ../../src/scss/_content.scss */
+=======
+/* line 743, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .txtFromName {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -925,14 +1255,22 @@ a.add-location-link:hover {
   line-height: 20px;
   width: auto;
 }
+<<<<<<< HEAD
 /* line 738, ../../src/scss/_content.scss */
+=======
+/* line 748, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .note-submit-wrapper {
   display: inline-block;
   vertical-align: top;
   position: relative;
   top: -2px;
 }
+<<<<<<< HEAD
 /* line 746, ../../src/scss/_content.scss */
+=======
+/* line 756, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note label {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -943,11 +1281,19 @@ a.add-location-link:hover {
   margin: 12px 0 24px;
   display: block;
 }
+<<<<<<< HEAD
 /* line 752, ../../src/scss/_content.scss */
 .add-note label strong {
   font-weight: 600;
 }
 /* line 757, ../../src/scss/_content.scss */
+=======
+/* line 762, ../../src/scss/_content.scss */
+.add-note label strong {
+  font-weight: 600;
+}
+/* line 767, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
@@ -956,7 +1302,11 @@ a.add-location-link:hover {
   font-weight: 600;
   color: #151633;
 }
+<<<<<<< HEAD
 /* line 763, ../../src/scss/_content.scss */
+=======
+/* line 773, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .submit-note-link {
   display: inline-block;
   background: #799b28;
@@ -977,11 +1327,19 @@ a.add-location-link:hover {
   color: #e6e3e1;
   letter-spacing: 1px;
 }
+<<<<<<< HEAD
 /* line 775, ../../src/scss/_content.scss */
 .add-note .submit-note-link:hover {
   background: #a5bb77;
 }
 /* line 780, ../../src/scss/_content.scss */
+=======
+/* line 785, ../../src/scss/_content.scss */
+.add-note .submit-note-link:hover {
+  background: #a5bb77;
+}
+/* line 790, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .cancel-note-link {
   color: #f53d12;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -992,22 +1350,38 @@ a.add-location-link:hover {
   padding-left: 20px;
   letter-spacing: 1px;
 }
+<<<<<<< HEAD
 /* line 787, ../../src/scss/_content.scss */
 .add-note .cancel-note-link:hover {
   color: #f0a959;
 }
 /* line 792, ../../src/scss/_content.scss */
+=======
+/* line 797, ../../src/scss/_content.scss */
+.add-note .cancel-note-link:hover {
+  color: #f0a959;
+}
+/* line 802, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .note-editor-bottom {
   position: relative;
   margin-top: 24px;
 }
+<<<<<<< HEAD
 /* line 799, ../../src/scss/_content.scss */
+=======
+/* line 809, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .category-selector {
   position: absolute;
   left: -105px;
   top: -5px;
 }
+<<<<<<< HEAD
 /* line 805, ../../src/scss/_content.scss */
+=======
+/* line 815, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .add-note .category-label {
   font-size: 18px;
   font-weight: bold;
@@ -1016,7 +1390,11 @@ a.add-location-link:hover {
   top: -22px;
 }
 
+<<<<<<< HEAD
 /* line 814, ../../src/scss/_content.scss */
+=======
+/* line 824, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .footer {
   text-align: center;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -1024,7 +1402,11 @@ a.add-location-link:hover {
   font-size: 14px;
   line-height: 14px;
 }
+<<<<<<< HEAD
 /* line 818, ../../src/scss/_content.scss */
+=======
+/* line 828, ../../src/scss/_content.scss */
+>>>>>>> Updated header so that the map doesn't shift on edit
 .footer .spacer {
   display: inline-block;
   width: 85px;
