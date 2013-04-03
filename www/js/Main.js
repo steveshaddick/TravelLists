@@ -935,37 +935,29 @@ var Trip = (function() {
 	}
 
 	function checkAdmin() {
-		if ($.cookie('admin')) {
-			//set admin
-		} else {
 
-			setEditMode();
-			return;
+		Modal.load('/views/modal/enterEmail.html',
+			function() {
 
-			Modal.load('/views/modal/enterEmail.html',
-				function() {
+				$("#emailAdmin").click(function() {
+					var email = $("#txtEmail").val();
 
-					$("#emailAdmin").click(function() {
-						var email = $("#txtEmail").val();
+					if (email != '') {
+						Ajax.call('checkEditMode',
+							{
+								email: email
+							},
+							function() {
+								setEditMode();
+								Modal.close();
+							},
+							function() {
+								Modal.close();
 
-						if (email != '') {
-							Ajax.call('checkEditMode',
-								{
-									email: email
-								},
-								function() {
-									setEditMode();
-									Modal.close();
-								},
-								function() {
-									Modal.close();
-
-								}
-							);
-						}
-					});
+							});
+					}
 				});
-		}
+			});
 	}
 
 	function setEditMode() {
