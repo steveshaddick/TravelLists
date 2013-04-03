@@ -586,6 +586,8 @@ Location.prototype.submitNote = function() {
 		},
 		function() {
 			//error
+			me.cancelNote();
+			$(".blocker", this.$element).addClass('hidden');
 		});
 
 }
@@ -714,9 +716,7 @@ var NoteEditor = (function() {
 			function(data) {
 				
 				resetEditor();
-
 				data.categoryId = categoryId;
-
 				currentLocation.addNote(data);
 			},
 			function() {
