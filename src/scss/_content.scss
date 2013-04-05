@@ -202,7 +202,6 @@ input[type="email"]
 	margin: 0 auto;
 	width: 850px;
 	height: 650px;
-	padding-bottom:50px;
 
 	.trip-title {
 		color: $darkGrey;
@@ -823,9 +822,24 @@ a.add-location-link {
 	}
 }
 
+
+.bottomnewnotes {
+	text-align: center;
+	padding-top: 50px;
+
+	color: #5f5c66;
+	font-family: "chaparral-pro", georgia, serif;
+	font-size: 18px;
+	line-height: 22.5px;
+	font-style: italic;
+	font-weight: 600;
+
+}
+
 .footer {
 	text-align: center;
 	@include sans-serif(14px);
+	padding: 50px 0 50px 0;
 
 	.spacer {
 		display: inline-block;
