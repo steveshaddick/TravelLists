@@ -501,6 +501,8 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 		function() {
 			//error
 		});
+
+	return false;
 };
 Location.prototype.showHide = function(event) {
 	var location = event.data.location;
@@ -516,6 +518,8 @@ Location.prototype.showHide = function(event) {
 		location.isOpen = true;
 		location.$showHideButton.html('&#150;').attr('title', 'Collapse');
 	}
+
+	return false;
 }
 Location.prototype.noteTextFocus = function(event) {
 	var location = event.data.location;
@@ -576,8 +580,8 @@ Location.prototype.editNote = function() {
 		}
 	);
 
-	$("#submitNoteButton").click(function() { me.submitNote(); });
-	$("#cancelNoteButton").click(function() { me.cancelNote(); });
+	$("#submitNoteButton").click(function() { me.submitNote(); return false;});
+	$("#cancelNoteButton").click(function() { me.cancelNote(); return false;});
 
 }
 Location.prototype.cancelNote = function() {
@@ -764,10 +768,13 @@ var NoteEditor = (function() {
 			function() {
 				//error
 			});
+
+		return false;
 	}
 
 	function cancelNoteClickHandler(event) {
 		resetEditor();
+		return false;
 	}
 
 	function resetEditor() {
@@ -978,6 +985,7 @@ var Trip = (function() {
 	function checkAdmin() {
 
 		EditModeModal.open();
+		return false;
 	}
 
 	return {
