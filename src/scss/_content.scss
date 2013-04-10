@@ -356,7 +356,7 @@ input.editTextInput {
 
 .about-page {
 	max-width:800px;
-	@include serif-italic(24px);
+	@include serif(18x);
 }
 
 .edit-mode.edit-off {
