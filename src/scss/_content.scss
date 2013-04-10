@@ -142,47 +142,6 @@ input[type="email"]
 	display:none;
 }
 
-.add-location-button{
-
-		color: $darkGrey;
-		@include serif-italic(18px);
-		display:inline-block;
-		background:$lightGrey;
-		@include border($lightGrey);
-		padding: 7px 10px 6px;
-		text-align: center;
-		text-decoration: none;
-		position:absolute;
-		left:130px;
-		bottom:18px;
-
-	&:hover {
-		background: $mediumGrey;
-
-	}
-}
-
-.edit-done-button {
-
-	color: $lightGrey;
-
-		color: $darkGrey;
-		@include serif-italic(18px);
-		display:inline-block;
-		background:$lightGrey;
-		@include border($lightGrey);
-		padding: 7px 10px 6px;
-		text-align: center;
-		text-decoration: none;
-		position:absolute;
-		left:0px;
-		bottom:18px;
-
-	&:hover {
-		background: $mediumGrey;
-
-	}
-}
 
 #map {
 	width:800px;
@@ -372,23 +331,42 @@ input.editTextInput {
 		.header-content {
 			max-width: $maxContentWidth;
 			margin:0 auto;
-			padding: 35px 0 70px 0;
+			padding: 35px 0 17px;
 			position:relative;
 		}
 
 
+		.header-titles {
+			width:630px;
+			float:left;
+		}
+		.header-tools {
+			width:300px;
+			float:left;
+			padding-top:23px;
+		}
+
+		.stripe {
+			background: url('/images/stripe.png') repeat-x;
+			height:11px;
+			display:block;
+		}
+
 		&.edit-on {
-			background: $lightOrange;
+			background: $darkGrey;
 
 			z-index: 1000000;
 			top:0;
 
-			.edit-trip-link {
+			.edit-trip-link,
+			.collaborate-trip-link,
+			.spacer1 {
 				display: none;
 			}
 
-			.collaborate-trip-link{
-				display: none;
+			.trip-title,
+			.trip-subtitle {
+				color:$bgGrey;
 			}
 		}
 	}
@@ -397,13 +375,16 @@ input.editTextInput {
 		color: $darkGrey;
 		display: inline-block;
 		@include sans-serif(66px);
-		letter-spacing:-3px;
+		letter-spacing:-3px;    
+		padding-right: 3px;
+
 	}
 
 	.trip-subtitle {
 		color: $blue;
 		display: inline-block;
 		@include serif-italic(18px);
+
 	}
 
 	.collaborate-trip-link {
@@ -415,9 +396,6 @@ input.editTextInput {
 		padding: 7px 10px 6px;
 		text-align: center;
 		text-decoration: none;
-		position:absolute;
-		left:150px;
-		bottom:18px;
 
 		img {
 			vertical-align: top;
@@ -439,9 +417,6 @@ input.editTextInput {
 		padding: 7px 10px 6px;
 		text-align: center;
 		text-decoration: none;
-		position:absolute;
-		left:0;
-		bottom:18px;
 
 		img {
 			vertical-align: top;
@@ -451,6 +426,20 @@ input.editTextInput {
 
 		&:hover {
 			background:$mediumGrey;
+		}
+	}
+
+
+	.add-location-button,
+	.edit-done-button{
+
+			
+		@include thin-button();
+		background:$green;
+
+		&:hover {
+			background: $lightGreen;
+
 		}
 	}
 

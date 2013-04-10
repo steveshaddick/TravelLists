@@ -18,14 +18,21 @@
 		<div class="list-wrapper">
 			<header id="header">
 				<div class="header-content">
-					<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
-					<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
-					<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a>
-					<a id="collaborateTripButton" class="collaborate-trip-link" href="#">Collaborate with Friends</a>
+					<div class="header-titles">
+						<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
+						<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
+					</div>
+					<div class="header-tools">	
+						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a><span class="spacer1" style="inline-block; width:5px;"></span>
+						<a id="collaborateTripButton" class="collaborate-trip-link" href="#">Share with friends</a>
 						
-					<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a>
-					<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="#">Done editing</a>
+						<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a><span class="edit-mode edit-off" style="inline-block; width:5px;">&nbsp;</span>
+						<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="#">Done editing</a>
+					</div>
+					<br class="clear">
 				</div>
+
+				<span class="stripe edit-mode edit-off"></span>
 			</header>
 
 			<!--<section id="tripSettings" class="trip-settings">
