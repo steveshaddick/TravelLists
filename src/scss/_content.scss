@@ -498,7 +498,9 @@ input.editTextInput {
 }
 
 .sprite-button {
+	cursor:pointer;
 	background-position:left;
+	display:inline-block;
 	&:hover {
     	background-position:right;
     }
@@ -506,7 +508,6 @@ input.editTextInput {
 
 .x-button {
 	color: #FF0000;
-	cursor:pointer;
     position: absolute;
     right: 5px;
     top: 15px;
@@ -558,8 +559,28 @@ input.editTextInput {
 		}
 	}
 
+	.reorder-location {
 
+		width:16px;
+		position:absolute;
+		top:4px;
+		left:-25px;
+    	line-height: 0;
 
+		.location-down,
+		.location-up {
+			height:8px;
+			width:16px;
+		}
+		.location-up {
+			background-image: url('/images/order-up-arrow.png');
+			margin-bottom:10px;
+		}
+		.location-down{
+			background-image: url('/images/order-down-arrow.png');
+		}
+
+	}
 
 	.notes-wrapper {
 		margin: 0;

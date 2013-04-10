@@ -131,6 +131,8 @@ var Home = (function() {
 		}
 		$currentPage.removeClass('page-left').addClass('page-current');
 		TransitionController.transitionEnd($currentPage, initFunc);
+
+		return false;
 	}
 
 	function nextPage() {
@@ -187,6 +189,8 @@ var Home = (function() {
 		}
 		$currentPage.removeClass('page-right').addClass('page-current');
 		TransitionController.transitionEnd($currentPage, initFunc);
+
+		return false;
 	}
 
 

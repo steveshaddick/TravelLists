@@ -413,6 +413,28 @@ class Main {
 		return true;
 	}
 
+	public function reorderLocation($data) {
+		if (!isset($_SESSION['trip_id'])) {
+			return false;
+		}
+		if (!$this->isEditMode) {
+			return false;
+		}
+		$tripId = $_SESSION['trip_id'];
+
+		$currentLocation = $data['currentLocation'];
+		$swapLocation = $data['swapLocation'];
+		$newOrder = $data['newOrder'];
+		$swapOrder = $data['swapOrder'];
+
+		$stmt = $this->db->prepare("UPDATE Locations SET listOrder=? WHERE _id=?");
+		$stmt->execute(array($newOrder, $currentLocation));
+		$stmt = $this->db->prepare("UPDATE Locations SET listOrder=? WHERE _id=?");
+		$stmt->execute(array($swapOrder, $swapLocation));
+
+		return true;
+	}
+
 	public function saveTrip($arr) {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;

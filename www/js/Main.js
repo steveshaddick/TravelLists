@@ -971,6 +971,39 @@ var Trip = (function() {
 		}
 	}
 
+	function reorderLocation(locationId, isUp) {
+
+		var $currentLocation = $("#location_" + locationId);
+		var currentOrder = parseInt($currentLocation.attr("data-order"));
+		var newOrder = (isUp) ? currentOrder - 1 : currentOrder + 1;
+
+		if (newOrder < 1) return;
+		if (newOrder > locationCount) return;
+
+		var $swapLocation = $(".location").filter(function() { return $.attr(this, "data-order") == newOrder; });
+
+		Ajax.call('reorderLocation', 
+			{
+				currentLocation: locationId,
+				swapLocation: $swapLocation.attr('id').replace("location_", ""),
+				newOrder: newOrder,
+				swapOrder: currentOrder
+			}, 
+			function(data) {
+				$swapLocation.attr("data-order", currentOrder);
+				$currentLocation.attr("data-order", newOrder);
+
+				if (isUp) {
+					$swapLocation.before($currentLocation);
+				} else {
+					$swapLocation.after($currentLocation);
+				}
+			},
+			function() {
+				//error
+			});
+	}
+
 	function markerClickHandler(event) {
 		console.log(event);
 	}
@@ -993,6 +1026,7 @@ var Trip = (function() {
 		addLocation: addLocation,
 		addNote: addNote,
 		deleteLocation: deleteLocation,
+		reorderLocation: reorderLocation,
 		getTripInfo: getTripInfo
 	}
 }());
@@ -1138,7 +1172,7 @@ var EditMode = (function() {
 		$("#map").addClass('edit-on');
 
 		$("#addLocationButton").click(addLocation);
-		$(document).on('click', '.delete-location-button', deleteLocation);
+		$(document).on('click', '.delete-location-button', deleteLocation).on('click', '.location-up', reorderLocation).on('click', '.location-down', reorderLocation);
 		$("#editDoneButton").click(dinit);
 
 		editTitle = new EditText($("#tripTitle"), function() { save({tripTitle:$("#tripTitle").html() }); });
@@ -1209,6 +1243,16 @@ var EditMode = (function() {
 			function() {
 				//error
 			});
+
+		return false;
+	}
+
+	function reorderLocation(event) {
+		var locationId = $(this).attr('data-id');
+
+		Trip.reorderLocation(locationId, $(event.target).hasClass('location-up') ? true : false);
+
+		return false;
 	}
 
 	function save(data) {

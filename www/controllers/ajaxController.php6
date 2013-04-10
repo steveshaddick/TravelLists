@@ -110,6 +110,12 @@ switch ($action) {
 		echo returnJSON($arr);
 		break;
 
+	case 'reorderLocation':
+		$arr = $main->reorderLocation($_POST);
+
+		echo returnJSON($arr);
+		break;
+
 	case 'saveTrip':
 
 		$arr = $main->saveTrip($_POST);

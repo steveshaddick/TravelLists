@@ -35,17 +35,6 @@
 				<span class="stripe edit-mode edit-off"></span>
 			</header>
 
-			<!--<section id="tripSettings" class="trip-settings">
-				<div class="content">
-					<label for="txtTripName">Trip</label> <input id="txtTripName" name="txtTripName" type="text" maxlength="75" value="" />
-					<label for="txtTripAuthor">Author</label> <input id="txtTripAuthor" name="txtTripAuthor" type="text" maxlength="75" value="" />
-					<label for="txtEmail">Email</label> <input id="txtEmail" name="txtEmail" type="text" maxlength="255" value="" />
-					
-					<a class="done-button" href="javascript:void(0)">Done</a><br />
-				</div>
-				
-			</section>-->
-
 			<div id="noticeContainer" class="notice-container">
 				<div class="notice up">
 					<span class="notice-text"></span>
@@ -67,8 +56,12 @@
 	<div id="cls">
 
 		<div id="clsLocation" class="location">
+			<div class="reorder-location edit-mode edit-off">
+				<a class="sprite-button location-up edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
+				<a class="sprite-button location-down edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
+			</div>
 			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="#" title="Collapse">&#150;</a></span>
-			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
+			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
 				<div class="notes-hidden"></div>
