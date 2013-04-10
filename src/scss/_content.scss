@@ -315,7 +315,7 @@ input.editTextInput {
 
 .about-page {
 	max-width:800px;
-	@include serif-italic(24px);
+	@include serif(18x);
 }
 
 .edit-mode.edit-off {
@@ -843,7 +843,6 @@ a.add-location-link {
 	line-height: 22.5px;
 	font-style: italic;
 	font-weight: 600;
-
 }
 
 .footer {
