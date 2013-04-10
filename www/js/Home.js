@@ -3,7 +3,6 @@ var Home = (function() {
 	var $txtTripName = null;
 	var $nextButton = null;
 
-	var $startPage = null;
 	var $infoPage = null;
 	var $locationPage = null;
 	var $lostTripPage = null;
@@ -29,11 +28,10 @@ var Home = (function() {
 				break;
 
 			default:
-				$startPage = $("#startPage");
 				$infoPage = $("#infoPage");
 				$locationPage = $("#locationPage");
-				$currentPage = $startPage;
-				initStartPage();
+				$currentPage = $locationPage;
+				initLocationPage();
 				break;
 		}
 
@@ -44,9 +42,7 @@ var Home = (function() {
 					break;
 			}
 		});
-
-		
-		
+	
 	}
 
 	function validateEmail(email) { 
@@ -72,20 +68,6 @@ var Home = (function() {
 		}
 	}
 
-
-	function initStartPage() {
-		isTransition = false;
-		$txts = [$("#txtTripName")];
-		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$nextButton = $('.next-button', $startPage);
-		txtChange();
-	}
-	function dinitStartPage() {
-		$txts[0].val($.trim($txts[0].val()));
-		$txts[0].prop('disabled', true).unbind('keyup');
-		$nextButton.addClass('hidden');
-	}
-
 	function initInfoPage() {
 		isTransition = false;
 		$txts = [$("#txtName"), $("#txtEmail")];
@@ -108,8 +90,7 @@ var Home = (function() {
 		isTransition = false;
 		$txts = [$("#txtLocation")];
 		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$nextButton = $('.create-button', $locationPage);
-		$('.back-button', $locationPage).removeClass('hidden');
+		$nextButton = $('.next-button', $locationPage);
 		txtChange();
 
 		var options = {
@@ -120,7 +101,6 @@ var Home = (function() {
 	function dinitLocationPage() {
 		$txts[0].prop('disabled', true).unbind('keyup');
 		$nextButton.addClass('hidden');
-		$('.back-button', $locationPage).addClass('hidden');
 	}
 
 	function initLostTripPage() {
@@ -144,15 +124,10 @@ var Home = (function() {
 
 			case $infoPage:
 				dinitInfoPage();
-				$currentPage = $startPage;
-				initFunc = initStartPage;
+				$currentPage = $locationPage;
+				initFunc = initLocationPage;
 				break;
 
-			case $locationPage:
-				dinitLocationPage();
-				$currentPage = $infoPage;
-				initFunc = initInfoPage;
-				break;
 		}
 		$currentPage.removeClass('page-left').addClass('page-current');
 		TransitionController.transitionEnd($currentPage, initFunc);
@@ -176,15 +151,6 @@ var Home = (function() {
 		
 		switch($currentPage) {
 			
-			case $startPage:
-				isTransition = true;
-				$currentPage.removeClass('page-current').addClass('page-left');
-				dinitStartPage();
-
-				$('.trip-title').html($txts[0].val());
-				$currentPage = $infoPage;
-				initFunc = initInfoPage;
-				break;
 
 			case $infoPage:
 				
@@ -197,12 +163,18 @@ var Home = (function() {
 				dinitInfoPage();
 				$('.trip-subtitle').html("by " + $txts[0].val());
 				$('.email').html($txts[1].val());
-				$currentPage = $locationPage;
-				initFunc = initLocationPage;
+
+				createTrip();
 				break;
 
 			case $locationPage:
-				createTrip();
+				isTransition = true;
+				$currentPage.removeClass('page-current').addClass('page-left');
+				dinitLocationPage();
+
+				$('.trip-title').html($txts[0].val());
+				$currentPage = $infoPage;
+				initFunc = initInfoPage;
 				break;
 
 			case $lostTripPage:
@@ -217,11 +189,6 @@ var Home = (function() {
 		TransitionController.transitionEnd($currentPage, initFunc);
 	}
 
-	function showLocation() {
-		$("#infoPage").addClass('hidden');
-		$("#locationPage").removeClass('hidden');
-		
-	}
 
 	function createTrip() {
 

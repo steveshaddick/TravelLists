@@ -57,14 +57,14 @@ switch ($action) {
 
 	case 'createTrip':
 
-		if ((ENVIRONMENT === 'development') && ($_POST['tripName'] == 'error')) {
+		if ((ENVIRONMENT === 'development') && ($_POST['location'] == 'error')) {
 
 			echo returnJSON(false);
 
 		} else {
 
 			$arr = $main->createTrip(array(
-				'tripName'=>$_POST['tripName'],
+				'tripName'=>'My Trip',
 				'userName'=>$_POST['name'],
 				'email'=>$_POST['email'],
 				'location'=>$_POST['location']
