@@ -62,7 +62,7 @@ $maxWidth: 1250px;
 
 @mixin thin-button() {
 	display: inline-block;
-	padding: 4px 23px 4px;
+	padding: 7px 10px 7px;
 	min-width: 100px;
 	font-size:18px;
 	text-align: center;
@@ -70,5 +70,15 @@ $maxWidth: 1250px;
 	position:relative;
 	@include serif-italic(18px);
 	@include border-radius($borderRadius);
+}
 
+@mixin regular-button() {
+	color: $darkGrey;
+	@include serif-italic(18px);
+	display:inline-block;
+	background:$lightGrey;
+	@include border($lightGrey);
+	padding: 7px 10px 6px;
+	text-align: center;
+	text-decoration: none;
 }

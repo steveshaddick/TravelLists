@@ -341,15 +341,8 @@ input.editTextInput {
 			float:left;
 		}
 		.header-tools {
-			width:300px;
 			float:left;
 			padding-top:23px;
-		}
-
-		.stripe {
-			background: url('/images/stripe.png') repeat-x;
-			height:11px;
-			display:block;
 		}
 
 		&.edit-on {
@@ -396,6 +389,7 @@ input.editTextInput {
 		padding: 7px 10px 6px;
 		text-align: center;
 		text-decoration: none;
+		float:right;
 
 		img {
 			vertical-align: top;
@@ -409,14 +403,9 @@ input.editTextInput {
 	}
 
 	.edit-trip-link {
-		color: $darkGrey;
-		@include serif-italic(18px);
-		display:inline-block;
-		background:$lightGrey;
-		@include border($lightGrey);
-		padding: 7px 10px 6px;
-		text-align: center;
-		text-decoration: none;
+
+		@include regular-button();
+		float:right;
 
 		img {
 			vertical-align: top;
@@ -433,7 +422,8 @@ input.editTextInput {
 	.add-location-button,
 	.edit-done-button{
 
-			
+		float:right;
+
 		@include thin-button();
 		background:$green;
 
@@ -532,6 +522,15 @@ input.editTextInput {
 	-moz-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
 	-webkit-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
 	box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);	
+
+		.stripe {
+			background: url('/images/stripe.png') repeat-x;
+			height:11px;
+			width:100%;
+			display:block;
+			z-index: 99;
+			position:absolute;
+		}
 }
 
 #locations {
