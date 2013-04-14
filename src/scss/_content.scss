@@ -67,7 +67,7 @@ a {
 .outline-button {
 	@include block-button();
 	background: none;
-	border:2px solid $lightgrey;
+	border:1px solid $lightGrey;
 }
 
 ul, li {
