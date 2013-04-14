@@ -1,3 +1,3 @@
 <footer class="bottomnewnotes">
-	<a href="/" >Going on another adventure?  Make a new Tripnotes.</a></span>
+	<a class="outline-button" href="/" >Make a new Tripnote.</a></span>
 </footer>
