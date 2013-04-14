@@ -1544,6 +1544,8 @@ var Main = (function() {
 		
 		Ajax.init(obj.a);
 		GLOBAL.isAdmin = obj.isAdmin;
+
+		
 	}
 
 	function loadBlock() {
@@ -1623,6 +1625,11 @@ var Main = (function() {
 			}
 		}
 		poll();
+	}
+
+	function openShareModal() {
+		Modal.load('/views/modal/addLocation.html');
+
 	}
 	
 	return {

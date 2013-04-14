@@ -23,16 +23,18 @@
 						<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
 					</div>
 					<div class="header-tools">	
-						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a><span class="spacer1" style="inline-block; width:5px;">&nbsp;</span>
+						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a>
+						<span class="spacer1" style="inline-block; width:5px;">&nbsp;</span>
 						<a id="shareTripButton" class="share-trip-link" href="#">Share with friends</a>
 						
-						<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a><span class="edit-mode edit-off" style="inline-block; width:5px;">&nbsp;</span>
 						<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="#">Done editing</a>
+						<span class="edit-mode edit-off" style="inline-block; width:5px; float:right;">&nbsp;</span>
+						<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a>
+
 					</div>
 					<br class="clear">
 				</div>
 
-				<span class="stripe edit-mode edit-off"></span>
 			</header>
 
 			<div id="noticeContainer" class="notice-container">
@@ -42,6 +44,7 @@
 				</div>
 			</div>
 			<div class="mapContainer">
+				<span class="stripe edit-mode edit-off"></span>
 				<div id="map"></div>
 			</div>
 
