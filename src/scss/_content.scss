@@ -601,6 +601,23 @@ input.editTextInput {
 
 }
 
+.sticky-location {
+	@include transition(top 0.5s ease-in);
+	position: fixed;
+	z-index: 1000;
+	background: $bgGrey;
+	display:block;
+	width:100%;
+	max-width: 960px;
+	padding:10px 0;
+	top: -100px;
+
+	border-bottom:1px solid $lightGrey;
+
+	color:$darkGrey;
+	@include sans-serif(36px);
+}
+
 .note-category {
 	width:25px;
 	background-image: url('/images/category-icons.png');
@@ -930,6 +947,7 @@ a.add-location-link {
 			width:500px;
 			display:block;
 			margin: 0 auto 40px;
+			font-size: 22px;
 		}
 
 		.stripe {

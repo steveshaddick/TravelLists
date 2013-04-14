@@ -51,7 +51,9 @@
 
 		
 			<div class="contentWrapper">
-				<section id="locations"></section>
+				<section id="locations">
+					<a id="stickyLocation" class="sticky-location location-name" href="#"></a>
+				</section>
 			</div>
 		</div>
 	</div>
@@ -59,6 +61,7 @@
 	<div id="cls">
 
 		<div id="clsLocation" class="location">
+			<a class="anchor" id=""></a>
 			<div class="reorder-location edit-mode edit-off">
 				<a class="sprite-button location-up edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 				<a class="sprite-button location-down edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>

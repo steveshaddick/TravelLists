@@ -306,6 +306,9 @@ function Location(data, isLast) {
 	this.isOpen = true;
 	this.totalNotes = 0;
 
+	this.topOffset = this.bottomOffset = 0;
+	this.hash = '';
+
 	this.text = [];
 	this.text['suggestCTA'] = '';
 	this.text['noteTextPlaceholder'] = '';
@@ -322,6 +325,9 @@ function Location(data, isLast) {
 	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
 	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
 	this.$element.attr('data-order', this.listOrder);
+
+	this.hash = (this.name.indexOf(',') > -1) ? this.name.substring(0, this.name.indexOf(',')) : this.name;
+	$('.anchor', this.$element).attr('id', this.hash);
 
 	this.$noteText = $(".txtNoteText", this.$element);
 	this.text['suggestCTA'] = $(".note-text-label", this.$element).html();
@@ -864,6 +870,11 @@ var Trip = (function() {
 
 	var $hiddenNoteLink = null;
 
+	var wait = false;
+	var $doc;
+	var lastLocationName = '';
+	var $stickyLocation;
+
 	function loadTrip(obj) {
 
 		$("body select").msDropDown();
@@ -913,6 +924,42 @@ var Trip = (function() {
 			$("#txtFromName").val($.cookie('from'));
 		}
 
+		$stickyLocation = $("#stickyLocation");
+		$doc = $(document);
+		$(window).scroll(checkScroll);
+
+	}
+
+	function checkScroll() {
+
+		if (wait) {
+			return;
+		}
+
+		var scrollTop = $doc.scrollTop();
+
+		var locationName = '';
+		for (var location in locations) {
+			if ((scrollTop > locations[location].location.$element.offset().top + 50)  && (scrollTop < locations[location].location.$element.offset().top + locations[location].location.$element.height() - 200)){
+				locationName = locations[location].location.name;
+				break;
+			} else {
+				locationName = '';
+			}
+		}
+
+		if (locationName != lastLocationName) {
+			lastLocationName = locationName;
+			if (locationName != '') {
+				$stickyLocation.html(locationName).css('top', 0).attr('href', "#" + locations[location].location.hash);
+			} else {
+				$stickyLocation.html(locationName).css('top', '-100px').attr('href', '#');
+			}
+		}
+
+
+		wait = true;
+		setTimeout(function(){ wait = false; }, 50);
 	}
 
 	function addLocation(locationData, loopOverride) {
@@ -1660,7 +1707,8 @@ var Main = (function() {
 		Modal.load(
 			'/views/modal/shareTrip.html',
 			function() {
-				$('.text-box', $('#modalContent')).html(window.location.href.replace("#", ""));
+				$('.text-box', $('#modalContent')).val("http://" + window.location.hostname + window.location.pathname).select();
+				
 				$('#doneButton').click(function() {
 					$('#doneButton').unbind('click');
 					Modal.close()
