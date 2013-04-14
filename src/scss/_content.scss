@@ -68,12 +68,16 @@ a {
 	@include block-button();
 	background: none;
 	border:1px solid $lightGrey;
-	color: #5f5c66;
+	color: $mediumGrey;
 	font-family: "chaparral-pro", georgia, serif;
 	font-size: 18px;
 	line-height: 22.5px;
 	font-style: italic;
 	font-weight: 600;
+}
+
+.outline-button:hover {
+	border-color:$green;
 }
 
 ul, li {
