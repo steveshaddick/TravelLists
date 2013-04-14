@@ -901,6 +901,7 @@ var Trip = (function() {
 				}
 
 				Main.poll();
+				checkScroll();
 			},
 			function() {
 				//error
@@ -953,7 +954,7 @@ var Trip = (function() {
 			if (locationName != '') {
 				$stickyLocation.html(locationName).css('top', 0).attr('href', "#" + locations[location].location.hash);
 			} else {
-				$stickyLocation.html(locationName).css('top', '-100px').attr('href', '#');
+				$stickyLocation.css('top', '');
 			}
 		}
 
