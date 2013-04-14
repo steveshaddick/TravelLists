@@ -68,6 +68,12 @@ a {
 	@include block-button();
 	background: none;
 	border:1px solid $lightGrey;
+	color: #5f5c66;
+	font-family: "chaparral-pro", georgia, serif;
+	font-size: 18px;
+	line-height: 22.5px;
+	font-style: italic;
+	font-weight: 600;
 }
 
 ul, li {
@@ -860,21 +866,15 @@ a.add-location-link {
 }
 
 
-/*.bottomnewnotes {
+.bottomnewnotes {
 	text-align: center;
 	padding-top: 50px;
-	color: #5f5c66;
-	font-family: "chaparral-pro", georgia, serif;
-	font-size: 18px;
-	line-height: 22.5px;
-	font-style: italic;
-	font-weight: 600;
-}*/
+}
 
 .footer {
 	text-align: center;
 	@include sans-serif(14px);
-	padding: 50px 0 50px 0;
+	padding: 20px 0 20px 0;
 
 	.spacer {
 		display: inline-block;
