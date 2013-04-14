@@ -742,7 +742,7 @@ input.editTextInput {
 #locations .location {
   padding-bottom: 33px;
   margin-top: 25px;
-  border-bottom: 1px solid #b8b8b8;
+  /*border-bottom: 1px solid $mediumGrey;*/
   position: relative;
 }
 /* line 561, ../../src/scss/_content.scss */
