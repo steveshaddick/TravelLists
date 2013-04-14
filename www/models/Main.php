@@ -27,6 +27,10 @@ class Main {
 			$this->isEditMode = $_SESSION['isEditMode'];
 		}
 
+		if (!isset($_SESSION['noteCookie'])) {
+			$_SESSION['noteCookie'] = '';
+		}
+
 	}
 
 	public function init() {
@@ -126,10 +130,6 @@ class Main {
 		$stmt->execute(array($adminHash, $publicHash, $tripName, $subtitle, $userName, $email, $tripLocation['lat'], $tripLocation['lng']));
 
 		$_SESSION['trip_id'] = $this->db->lastInsertId();
-
-		if (!isset($_SESSION['addedNotes'])) {
-			$_SESSION['addedNotes'] = array();
-		}
 
 		$sendgrid = new SendGrid(SENDGRID_USER, SENDGRID_PASS);
 		$mail = new SendGrid\Mail();
@@ -246,11 +246,11 @@ class Main {
 				'listOrder'=>$row['listOrder']
 				);
 
-
 			if ($this->isEditMode) {
 				$note['canDelete'] = true;
-			} else {
-				$note['canDelete'] = (isset($_SESSION['addedNotes'][$row['_id']])) ? true : false;
+			} else if ((!empty($row['cookie'])) && ($_SESSION['noteCookie'] == $row['cookie'])) {
+
+				$note['canDelete'] = true;
 			}
 			if (isset($locationsById[$row['location_id']])) {
 				$locationsById[$row['location_id']]['notes'] []= $note;
@@ -361,32 +361,32 @@ class Main {
 			}
 		}
 
+		$_SESSION['noteCookie'] = $note['noteCookie'];
 
-		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, fromName=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?");
-		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['fromName'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder));
+		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, fromName=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?, cookie=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['fromName'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder, $note['noteCookie']));
 
 		$noteId = $this->db->lastInsertId();
 
-		$_SESSION['addedNotes'][$noteId] = true;
-		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'fromName'=>$note['fromName'], 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
+		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'fromName'=>$note['fromName'], 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true, 'noteCookie'=>$_SESSION['noteCookie']);
 
 	}
 
-	public function deleteNote($noteId) {
+	public function deleteNote($noteId, $noteCookie) {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
 		$tripId = $_SESSION['trip_id'];
-		
-		$noteId = intval($noteId);
 		if (!$this->isEditMode) {
-			if ($_SESSION['addedNotes'][$noteId] !== true) {
+			if ($_SESSION['noteCookie'] != $noteCookie) {
 				return false;
 			}
-		}	
+		}
+		
+		$noteId = intval($noteId);	
 
-		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND _id=?");
-		if ($stmt->execute(array($tripId, $noteId))) {
+		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND _id=? AND cookie=?");
+		if ($stmt->execute(array($tripId, $noteId, $noteCookie))) {
 			return true;
 		} else {
 			return false;

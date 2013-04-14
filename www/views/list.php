@@ -159,7 +159,8 @@
 			Main.init({
 				userAgent: '<?php echo $userAgent; ?>',
 				os: '<?php echo $os; ?>',
-				a: '<?php echo $ajaxToken; ?>'
+				a: '<?php echo $ajaxToken; ?>',
+				noteCookie: '<?php echo $_SESSION["noteCookie"]; ?>'
 			});
 			Trip.loadTrip({
 				lat: <?php echo $main->trip['lat']; ?>,

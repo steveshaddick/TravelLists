@@ -10,7 +10,8 @@ var GLOBAL = {
 	lastLocation: 0,
 	lastNote: 0,
 	lastNotice: 0,
-	activeNoteLocation: null
+	activeNoteLocation: null,
+	noteCookie: false
 };
 
 var TransitionController = (function() {
@@ -386,7 +387,7 @@ Location.prototype.addNote = function(note, animate) {
 	animate = (typeof animate == "undefined") ? false : animate;
 	
 	if (note.canDelete){
-		$('.note-delete', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+		$('.note-delete a', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	}
 
 	note.$element = $note;
@@ -490,7 +491,8 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 
 	Ajax.call('deleteNote', 
 		{ 
-			noteId: note.id
+			noteId: note.id,
+			noteCookie: GLOBAL.noteCookie
 
 		},
 		function() {
@@ -617,6 +619,14 @@ Location.prototype.submitNote = function() {
 	}
 
 	$.cookie('from', fromName, { expires: 365, path: '/' });
+	if (!GLOBAL.noteCookie) {
+		GLOBAL.noteCookie = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for( var i=0; i < 10; i++ )
+			GLOBAL.noteCookie += possible.charAt(Math.floor(Math.random() * possible.length));
+		GLOBAL.noteCookie += new Date().valueOf();
+	}
 
 	//TODO form error checking, loading
 	
@@ -628,7 +638,8 @@ Location.prototype.submitNote = function() {
 			noteText: noteText,
 			fromName: fromName,
 			categoryId: categoryId,
-			locationId: this.id
+			locationId: this.id,
+			noteCookie: GLOBAL.noteCookie
 		},
 		function(data) {
 			
@@ -653,6 +664,7 @@ var NoteEditor = (function() {
 	var linkTimeout;
 	var isInit = false;
 	var isEditing = false;
+	var noteCookie = false;
 
 	var $hiddenElement = false;
 	
@@ -676,7 +688,6 @@ var NoteEditor = (function() {
 		if ($.cookie('from')) {
 			$("#txtFromName").val($.cookie('from'));
 		}
-		
 		isInit = true;
 
 	}
@@ -742,10 +753,10 @@ var NoteEditor = (function() {
 	}
 
 	function submitNoteClickHandler(event) {
-		var noteText = $.trim($("#txtNoteText").val());
+		
+		/*var noteText = $.trim($("#txtNoteText").val());
 		var categoryId = $('#selCategory').val();
 		var fromName = $.trim($('#txtFromName').val());
-
 
 		if (fromName == '') {
 			fromName = 'Anonymous';
@@ -754,6 +765,15 @@ var NoteEditor = (function() {
 		var location = event.data.currentLocation;
 
 		$.cookie('from', fromName, { expires: 365, path: '/' });
+		if (!noteCookie) {
+			noteCookie = "";
+			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+			for( var i=0; i < 10; i++ )
+				noteCookie += possible.charAt(Math.floor(Math.random() * possible.length));
+			noteCookie += new Date().valueOf();
+			$.cookie('noteCookie', noteCookie);
+		}
 
 		//TODO form error checking, loading
 		
@@ -764,10 +784,11 @@ var NoteEditor = (function() {
 				noteText: noteText,
 				fromName: fromName,
 				categoryId: categoryId,
-				locationId: currentLocation.id
+				locationId: currentLocation.id,
+				noteCookie: noteCookie
 			},
 			function(data) {
-				
+
 				resetEditor();
 				data.categoryId = categoryId;
 				currentLocation.addNote(data);
@@ -776,7 +797,7 @@ var NoteEditor = (function() {
 				//error
 			});
 
-		return false;
+		return false;*/
 	}
 
 	function cancelNoteClickHandler(event) {
@@ -816,7 +837,6 @@ var NoteEditor = (function() {
 
 		currentLocation = location;
 		
-
 		$element.append($noteEditor);
 		setHandlers(currentLocation);
 
@@ -933,7 +953,7 @@ var Trip = (function() {
 			}
 		}
 
-		$('.add-note-link', location.$element).click({location: location}, addNoteClickHandler);
+		//$('.add-note-link', location.$element).click({location: location}, addNoteClickHandler);
 	}
 
 	function addNote(note, animate) {
@@ -942,18 +962,18 @@ var Trip = (function() {
 		}
 	}
 
-	function addNoteClickHandler(event) {
+	/*function addNoteClickHandler(event) {
 
 		var location = event.data.location;
 
-		NoteEditor.newNote($(this).parent(), location);
+		//NoteEditor.newNote($(this).parent(), location);
 
-	}
+	}*/
 
-	function submitNoteClickHandler(event) {
+	/*function submitNoteClickHandler(event) {
 		
 		
-	}
+	}*/
 
 	function deleteLocation(locationId) {
 		//TODO delete listeners?
@@ -1551,6 +1571,7 @@ var Main = (function() {
 		
 		Ajax.init(obj.a);
 		GLOBAL.isAdmin = obj.isAdmin;
+		GLOBAL.noteCookie = obj.noteCookie;
 
 		$("#shareTripButton").click(openShareModal);
 		

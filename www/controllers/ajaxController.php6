@@ -91,7 +91,8 @@ switch ($action) {
 			'note'=>$_POST['noteText'],
 			'fromName'=>$_POST['fromName'],
 			'categoryId'=>$_POST['categoryId'],
-			'locationId'=>$_POST['locationId']
+			'locationId'=>$_POST['locationId'],
+			'noteCookie'=>$_POST['noteCookie']
 			));
 
 		echo returnJSON($arr);
@@ -99,7 +100,7 @@ switch ($action) {
 
 
 	case 'deleteNote':
-		$arr = $main->deleteNote($_POST['noteId']);
+		$arr = $main->deleteNote($_POST['noteId'], $_POST['noteCookie']);
 
 		echo returnJSON($arr);
 		break;
