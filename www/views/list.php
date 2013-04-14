@@ -24,7 +24,7 @@
 					</div>
 					<div class="header-tools">	
 						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a><span class="spacer1" style="inline-block; width:5px;">&nbsp;</span>
-						<a id="collaborateTripButton" class="collaborate-trip-link" href="#">Share with friends</a>
+						<a id="shareTripButton" class="share-trip-link" href="#">Share with friends</a>
 						
 						<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a><span class="edit-mode edit-off" style="inline-block; width:5px;">&nbsp;</span>
 						<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="#">Done editing</a>
