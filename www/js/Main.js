@@ -243,6 +243,11 @@ var Modal = (function() {
 	}
 
 	function close() {
+		
+		if (typeof contentClass != "undefined") {
+			$("#modalContent").removeClass(contentClass);
+		}
+
 		isModal = false;
 		contentClass = false;
 
@@ -251,6 +256,7 @@ var Modal = (function() {
 
 		$(document).unbind('keydown', keyDownHandler);
 		$("#modalUnder").unbind('click', clickHandler);
+
 	}
 
 	function onLoad() {
@@ -279,6 +285,7 @@ var Modal = (function() {
 
 	function clickHandler() {
 		close();
+		return false;
 	}
 
 	return {
@@ -1545,6 +1552,7 @@ var Main = (function() {
 		Ajax.init(obj.a);
 		GLOBAL.isAdmin = obj.isAdmin;
 
+		$("#shareTripButton").click(openShareModal);
 		
 	}
 
@@ -1628,7 +1636,19 @@ var Main = (function() {
 	}
 
 	function openShareModal() {
-		Modal.load('/views/modal/addLocation.html');
+		Modal.load(
+			'/views/modal/shareTrip.html',
+			function() {
+				$('.text-box', $('#modalContent')).html(window.location.href.replace("#", ""));
+				$('#doneButton').click(function() {
+					$('#doneButton').unbind('click');
+					Modal.close()
+				});
+			},
+			'share-modal'
+			);
+
+		return false;
 
 	}
 	

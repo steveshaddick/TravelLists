@@ -32,6 +32,9 @@ h1 {
 		color:inherit;
 	}
 }
+.spacer {
+	display: inline-block;
+}
 
 a {
 	text-decoration: none;
@@ -352,7 +355,7 @@ input.editTextInput {
 			top:0;
 
 			.edit-trip-link,
-			.collaborate-trip-link,
+			.share-trip-link,
 			.spacer1 {
 				display: none;
 			}
@@ -380,7 +383,7 @@ input.editTextInput {
 
 	}
 
-	.collaborate-trip-link {
+	.share-trip-link {
 		color: $darkGrey;
 		@include serif-italic(18px);
 		display:inline-block;
@@ -523,16 +526,18 @@ input.editTextInput {
 	-webkit-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
 	box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);	
 
-		.stripe {
-			background: url('/images/stripe.png') repeat-x;
-			height:11px;
-			width:100%;
-			display:block;
-			z-index: 99;
-			position:absolute;
-		}
+	.stripe {
+		position:absolute;
+	}
+		
 }
-
+.stripe {
+	background: url('/images/stripe.png') repeat-x;
+	height:11px;
+	width:100%;
+	display:block;
+	z-index: 99;
+}
 #locations {
 
 	.location {
@@ -908,6 +913,27 @@ a.add-location-link {
 		    font-size: 24px;
 		    letter-spacing: -0.5px;
 
+		}
+	}
+
+	&.share-modal {
+		text-align:center; 
+		width:620px; 
+		min-height:335px;
+		margin-top: -167px;
+		margin-left: -310px;
+
+		.text-box {
+			color:#000;
+			background:$lightGrey;
+			border: 1px solid $mediumGrey;
+			width:500px;
+			display:block;
+			margin: 0 auto 40px;
+		}
+
+		.stripe {
+			
 		}
 	}
 }
