@@ -27,6 +27,10 @@ class Main {
 			$this->isEditMode = $_SESSION['isEditMode'];
 		}
 
+		if (!isset($_SESSION['noteCookie'])) {
+			$_SESSION['noteCookie'] = '';
+		}
+
 	}
 
 	public function init() {
@@ -127,10 +131,6 @@ class Main {
 
 		$_SESSION['trip_id'] = $this->db->lastInsertId();
 
-		if (!isset($_SESSION['addedNotes'])) {
-			$_SESSION['addedNotes'] = array();
-		}
-
 		$sendgrid = new SendGrid(SENDGRID_USER, SENDGRID_PASS);
 		$mail = new SendGrid\Mail();
 
@@ -162,7 +162,9 @@ class Main {
 			);
 		}
 
-		$this->addLocation($location);
+		$this->isEditMode = true;
+		$this->addLocation($location, $tripLocation);
+		$this->isEditMode = false;
 
 		return array('tripHash'=>$adminHash);
 
@@ -244,11 +246,11 @@ class Main {
 				'listOrder'=>$row['listOrder']
 				);
 
-
 			if ($this->isEditMode) {
 				$note['canDelete'] = true;
-			} else {
-				$note['canDelete'] = (isset($_SESSION['addedNotes'][$row['_id']])) ? true : false;
+			} else if ((!empty($row['cookie'])) && ($_SESSION['noteCookie'] == $row['cookie'])) {
+
+				$note['canDelete'] = true;
 			}
 			if (isset($locationsById[$row['location_id']])) {
 				$locationsById[$row['location_id']]['notes'] []= $note;
@@ -274,7 +276,7 @@ class Main {
 	}
 
 
-	public function addLocation($name) {
+	public function addLocation($name, $forceLocation  = false) {
 		
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
@@ -282,9 +284,11 @@ class Main {
 		if (!$this->isEditMode) {
 			return false;
 		}
+		if ($name == '') {
+			return false;
+		}
 
 		$tripId = $_SESSION['trip_id'];
-
 
 		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Locations WHERE trip_id=?");
 		$stmt->execute(array($tripId));
@@ -292,7 +296,7 @@ class Main {
 		
 		$listOrder = $row['total'] + 1;
 
-		$location = Geocoder::getLocation($name);
+		$location = ($forceLocation == false) ? Geocoder::getLocation($name) : $forceLocation;
 		if ($location === false) {
 			$location = array('lat'=>0, 'lng'=> 0);
 		}
@@ -309,9 +313,19 @@ class Main {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
+		if (empty($note)){
+			return false;
+		}
 		$tripId = $_SESSION['trip_id'];
-		
 
+		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Notes WHERE trip_id=? AND note=? AND fromName=? AND location_id=? AND category_id=?");
+		$stmt->execute(array($tripId, $note['note'], $note['fromName'], $note['locationId'], $note['categoryId']));
+		$row = $stmt->fetch();
+		if ($row['total'] != 0) {
+			//log duplicate
+			return false;
+		}
+		
 		$stmt = $this->db->prepare("SELECT COUNT(*) as total FROM Notes WHERE trip_id=? AND location_id=? AND category_id=?");
 		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId']));
 		$row = $stmt->fetch();
@@ -347,32 +361,32 @@ class Main {
 			}
 		}
 
+		$_SESSION['noteCookie'] = $note['noteCookie'];
 
-		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, fromName=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?");
-		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['fromName'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder));
+		$stmt = $this->db->prepare("INSERT INTO Notes SET trip_id=?, location_id=?, category_id=?, fromName=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?, cookie=?");
+		$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['fromName'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder, $note['noteCookie']));
 
 		$noteId = $this->db->lastInsertId();
 
-		$_SESSION['addedNotes'][$noteId] = true;
-		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'fromName'=>$note['fromName'], 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true);
+		return array('id'=>$noteId, 'listOrder'=>$listOrder, 'fromName'=>$note['fromName'], 'note'=>$note['note'], 'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 'canDelete'=>true, 'noteCookie'=>$_SESSION['noteCookie']);
 
 	}
 
-	public function deleteNote($noteId) {
+	public function deleteNote($noteId, $noteCookie) {
 		if (!isset($_SESSION['trip_id'])) {
 			return false;
 		}
 		$tripId = $_SESSION['trip_id'];
-		
-		$noteId = intval($noteId);
 		if (!$this->isEditMode) {
-			if ($_SESSION['addedNotes'][$noteId] !== true) {
+			if ($_SESSION['noteCookie'] != $noteCookie) {
 				return false;
 			}
-		}	
+		}
+		
+		$noteId = intval($noteId);	
 
-		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND _id=?");
-		if ($stmt->execute(array($tripId, $noteId))) {
+		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND _id=? AND cookie=?");
+		if ($stmt->execute(array($tripId, $noteId, $noteCookie))) {
 			return true;
 		} else {
 			return false;
@@ -395,6 +409,28 @@ class Main {
 
 		$stmt = $this->db->prepare("DELETE FROM Locations WHERE trip_id=? AND _id=?");
 		$stmt->execute(array($tripId, $locationId));
+
+		return true;
+	}
+
+	public function reorderLocation($data) {
+		if (!isset($_SESSION['trip_id'])) {
+			return false;
+		}
+		if (!$this->isEditMode) {
+			return false;
+		}
+		$tripId = $_SESSION['trip_id'];
+
+		$currentLocation = $data['currentLocation'];
+		$swapLocation = $data['swapLocation'];
+		$newOrder = $data['newOrder'];
+		$swapOrder = $data['swapOrder'];
+
+		$stmt = $this->db->prepare("UPDATE Locations SET listOrder=? WHERE _id=?");
+		$stmt->execute(array($newOrder, $currentLocation));
+		$stmt = $this->db->prepare("UPDATE Locations SET listOrder=? WHERE _id=?");
+		$stmt->execute(array($swapOrder, $swapLocation));
 
 		return true;
 	}
@@ -478,8 +514,8 @@ class Main {
 	}
 
 	public function checkEditMode($email) {
-		$_SESSION['isEditMode'] = true;
-		return true;
+		
+		$_SESSION['isEditMode'] = false;
 
 		$email = Encryptor::encrypt($email, SALT);
 		
@@ -494,6 +530,12 @@ class Main {
 			return true;
 		}
 
+
+	}
+
+	public function closeEditMode() {
+
+		$_SESSION['isEditMode'] = false;
 
 	}
 }

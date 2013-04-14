@@ -24,7 +24,7 @@
 				<p>We understand that the data you send to Trip Notes is confidential and we treat it as such. Access will be restricted to the collaborators you invite, and to certain Trip Notes staff in order to provide support and develop the service.</p>
 
 				<h2>Data Storage</h2>
-				<p>Trip Notes uses third party vendors and hosting partners to provide the necessary hardware, software, networking, storage, and related technology required to run our services. Although Easel owns the code, databases, and all rights to the Easel applications, you retain all rights to your data.</p>
+				<p>Trip Notes uses third party vendors and hosting partners to provide the necessary hardware, software, networking, storage, and related technology required to run our services. Although Trip Notes owns the code, databases, and all rights to the Trip Notes applications, you retain all rights to your data.</p>
 
 				<h2>Cookies</h2>
 				<p>A cookie is a small amount of data that is sent to your browser from our servers and stored on your computer's hard drive. We use cookies to access information when you sign in, store your preferences, to keep you logged in, and to store a limited amount of behavioral data. You can configure your browser to accept or reject these cookies with the drawback that certain features on the Trip Notes website may not function properly without the aid of cookies.</p>
@@ -43,10 +43,10 @@
 				<p>From time to time, Trip Notes may release non-personally-identifying information in the aggregate, e.g., by publishing a report on trends in the usage of its website.</p>
 
 				<h2>Disclosure</h2>
-				<p>Easel may disclose personally identifiable information under special circumstances, such as to comply with subpoenas or when your actions violate the Terms of Service of our application.</p>
+				<p>Trip Notes may disclose personally identifiable information under special circumstances, such as to comply with subpoenas or when your actions violate the Terms of Service of our application.</p>
 
 				<h2>Business Transfers</h2>
-				<p>If Trip Notes, or substantially all of its assets were acquired, or in the unlikely event that Easel goes out of business or enters bankruptcy, user information would be one of the assets that is transferred or acquired by a third party. You acknowledge that such transfers may occur, and that any acquiror of Trip Notes may continue to use your personal information as set forth in this policy.</p>
+				<p>If Trip Notes, or substantially all of its assets were acquired, or in the unlikely event that Trip Notes goes out of business or enters bankruptcy, user information would be one of the assets that is transferred or acquired by a third party. You acknowledge that such transfers may occur, and that any acquiror of Trip Notes may continue to use your personal information as set forth in this policy.</p>
 
 				<h2>Changes to this privacy policy</h2>
 				<p>We'll let you know about any significant changes by posting e-mailing a notice to any users who have created a Trip Notes page 30 days before they become effective.</p>

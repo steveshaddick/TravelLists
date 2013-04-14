@@ -1,7 +1,13 @@
-<div style="text-align:center; width:620px; height:335px;">
-	<h2>Enter Email</h2>
-	<div>
-		<input id="txtEmail" name="txtEmail" type="text" /><br /><br />
-		<a id="emailAdmin" class="next-button" href="javascript:void(0)">Submit</a>
+<div>
+	<span class="stripe"></span>
+	<p>Hey, is this your trip?<br>
+	Enter your email and edit away.</p>
+	
+	<input id="txtEmail" name="txtEmail" type="email" maxlength="255"><br />
+	<input id="isRemember" type="checkbox" name="isRemember" value="yes"><label for="isRemember">Remember my email</label>
+	<p id="errorReturn" class="hidden">Sorry, that email does not match this trip.</p>
+	<div style="margin: 30px auto 0; position: relative; width: 470px; height:90px;">
+		<a id="oopsLink" href="#">Oops! This isn't mine.</a>
+		<a id="emailAdmin" class="next-button hidden" href="#">Open Edit Mode</a>
 	</div>
 </div>

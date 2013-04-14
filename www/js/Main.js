@@ -10,7 +10,8 @@ var GLOBAL = {
 	lastLocation: 0,
 	lastNote: 0,
 	lastNotice: 0,
-	activeNoteLocation: null
+	activeNoteLocation: null,
+	noteCookie: false
 };
 
 var TransitionController = (function() {
@@ -229,14 +230,63 @@ var Ajax = (function() {
 
 var Modal = (function() {
 
-	function load(file, callback) {
+	var loadCallback;
+	var contentClass;
+	var isModal = false;
+
+	function load(file, callback, style) {
+		loadCallback = callback;
+		isModal = true;
+		contentClass = style;
+
 		$("#modal").css('display', 'block');
-		$("#modalContent").load(file, {}, callback);
+		$("#modalContent").load(file, {}, onLoad);
 	}
 
 	function close() {
+		
+		if (typeof contentClass != "undefined") {
+			$("#modalContent").removeClass(contentClass);
+		}
+
+		isModal = false;
+		contentClass = false;
+
 		$("#modalContent").html('');
 		$("#modal").css('display', 'none');
+
+		$(document).unbind('keydown', keyDownHandler);
+		$("#modalUnder").unbind('click', clickHandler);
+
+	}
+
+	function onLoad() {
+		if (!isModal) return;
+
+		if (typeof contentClass != "undefined") {
+			$("#modalContent").addClass(contentClass);
+		}
+
+		if (typeof loadCallback != "undefined") {
+			loadCallback();
+			loadCallback = false;
+		}
+
+		$(document).keydown(keyDownHandler);
+		$("#modalUnder").click(clickHandler);
+	}
+
+	function keyDownHandler(e) {
+		switch (e.which) {
+			case 27:
+				close();
+				break;
+		}
+	}
+
+	function clickHandler() {
+		close();
+		return false;
 	}
 
 	return {
@@ -256,6 +306,9 @@ function Location(data, isLast) {
 	this.isOpen = true;
 	this.totalNotes = 0;
 
+	this.topOffset = this.bottomOffset = 0;
+	this.hash = '';
+
 	this.text = [];
 	this.text['suggestCTA'] = '';
 	this.text['noteTextPlaceholder'] = '';
@@ -272,6 +325,9 @@ function Location(data, isLast) {
 	this.$element = $("#clsLocation").clone(true).attr('id', 'location_' + this.id);
 	this.$element.html(this.$element.html().replace(/\$LOCATION\$/g, this.name).replace(/\$LOCATION_ID\$/g, this.id));
 	this.$element.attr('data-order', this.listOrder);
+
+	this.hash = (this.name.indexOf(',') > -1) ? this.name.substring(0, this.name.indexOf(',')) : this.name;
+	$('.anchor', this.$element).attr('id', this.hash);
 
 	this.$noteText = $(".txtNoteText", this.$element);
 	this.text['suggestCTA'] = $(".note-text-label", this.$element).html();
@@ -337,7 +393,7 @@ Location.prototype.addNote = function(note, animate) {
 	animate = (typeof animate == "undefined") ? false : animate;
 	
 	if (note.canDelete){
-		$('.note-delete', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+		$('.note-delete a', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	}
 
 	note.$element = $note;
@@ -441,7 +497,8 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 
 	Ajax.call('deleteNote', 
 		{ 
-			noteId: note.id
+			noteId: note.id,
+			noteCookie: GLOBAL.noteCookie
 
 		},
 		function() {
@@ -459,6 +516,8 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 		function() {
 			//error
 		});
+
+	return false;
 };
 Location.prototype.showHide = function(event) {
 	var location = event.data.location;
@@ -474,6 +533,8 @@ Location.prototype.showHide = function(event) {
 		location.isOpen = true;
 		location.$showHideButton.html('&#150;').attr('title', 'Collapse');
 	}
+
+	return false;
 }
 Location.prototype.noteTextFocus = function(event) {
 	var location = event.data.location;
@@ -534,8 +595,8 @@ Location.prototype.editNote = function() {
 		}
 	);
 
-	$("#submitNoteButton").click(function() { me.submitNote(); });
-	$("#cancelNoteButton").click(function() { me.cancelNote(); });
+	$("#submitNoteButton").click(function() { me.submitNote(); return false;});
+	$("#cancelNoteButton").click(function() { me.cancelNote(); return false;});
 
 }
 Location.prototype.cancelNote = function() {
@@ -564,6 +625,14 @@ Location.prototype.submitNote = function() {
 	}
 
 	$.cookie('from', fromName, { expires: 365, path: '/' });
+	if (!GLOBAL.noteCookie) {
+		GLOBAL.noteCookie = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for( var i=0; i < 10; i++ )
+			GLOBAL.noteCookie += possible.charAt(Math.floor(Math.random() * possible.length));
+		GLOBAL.noteCookie += new Date().valueOf();
+	}
 
 	//TODO form error checking, loading
 	
@@ -575,7 +644,8 @@ Location.prototype.submitNote = function() {
 			noteText: noteText,
 			fromName: fromName,
 			categoryId: categoryId,
-			locationId: this.id
+			locationId: this.id,
+			noteCookie: GLOBAL.noteCookie
 		},
 		function(data) {
 			
@@ -586,6 +656,8 @@ Location.prototype.submitNote = function() {
 		},
 		function() {
 			//error
+			me.cancelNote();
+			$(".blocker", this.$element).addClass('hidden');
 		});
 
 }
@@ -598,6 +670,7 @@ var NoteEditor = (function() {
 	var linkTimeout;
 	var isInit = false;
 	var isEditing = false;
+	var noteCookie = false;
 
 	var $hiddenElement = false;
 	
@@ -621,7 +694,6 @@ var NoteEditor = (function() {
 		if ($.cookie('from')) {
 			$("#txtFromName").val($.cookie('from'));
 		}
-		
 		isInit = true;
 
 	}
@@ -687,10 +759,10 @@ var NoteEditor = (function() {
 	}
 
 	function submitNoteClickHandler(event) {
-		var noteText = $.trim($("#txtNoteText").val());
+		
+		/*var noteText = $.trim($("#txtNoteText").val());
 		var categoryId = $('#selCategory').val();
 		var fromName = $.trim($('#txtFromName').val());
-
 
 		if (fromName == '') {
 			fromName = 'Anonymous';
@@ -699,6 +771,15 @@ var NoteEditor = (function() {
 		var location = event.data.currentLocation;
 
 		$.cookie('from', fromName, { expires: 365, path: '/' });
+		if (!noteCookie) {
+			noteCookie = "";
+			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+			for( var i=0; i < 10; i++ )
+				noteCookie += possible.charAt(Math.floor(Math.random() * possible.length));
+			noteCookie += new Date().valueOf();
+			$.cookie('noteCookie', noteCookie);
+		}
 
 		//TODO form error checking, loading
 		
@@ -709,23 +790,25 @@ var NoteEditor = (function() {
 				noteText: noteText,
 				fromName: fromName,
 				categoryId: categoryId,
-				locationId: currentLocation.id
+				locationId: currentLocation.id,
+				noteCookie: noteCookie
 			},
 			function(data) {
-				
+
 				resetEditor();
-
 				data.categoryId = categoryId;
-
 				currentLocation.addNote(data);
 			},
 			function() {
 				//error
 			});
+
+		return false;*/
 	}
 
 	function cancelNoteClickHandler(event) {
 		resetEditor();
+		return false;
 	}
 
 	function resetEditor() {
@@ -760,7 +843,6 @@ var NoteEditor = (function() {
 
 		currentLocation = location;
 		
-
 		$element.append($noteEditor);
 		setHandlers(currentLocation);
 
@@ -788,6 +870,11 @@ var Trip = (function() {
 
 	var $hiddenNoteLink = null;
 
+	var wait = false;
+	var $doc;
+	var lastLocationName = '';
+	var $stickyLocation;
+
 	function loadTrip(obj) {
 
 		$("body select").msDropDown();
@@ -814,6 +901,7 @@ var Trip = (function() {
 				}
 
 				Main.poll();
+				checkScroll();
 			},
 			function() {
 				//error
@@ -837,6 +925,42 @@ var Trip = (function() {
 			$("#txtFromName").val($.cookie('from'));
 		}
 
+		$stickyLocation = $("#stickyLocation");
+		$doc = $(document);
+		$(window).scroll(checkScroll);
+
+	}
+
+	function checkScroll() {
+
+		if (wait) {
+			return;
+		}
+
+		var scrollTop = $doc.scrollTop();
+
+		var locationName = '';
+		for (var location in locations) {
+			if ((scrollTop > locations[location].location.$element.offset().top + 50)  && (scrollTop < locations[location].location.$element.offset().top + locations[location].location.$element.height() - 200)){
+				locationName = locations[location].location.name;
+				break;
+			} else {
+				locationName = '';
+			}
+		}
+
+		if (locationName != lastLocationName) {
+			lastLocationName = locationName;
+			if (locationName != '') {
+				$stickyLocation.html(locationName).css('top', 0).attr('href', "#" + locations[location].location.hash);
+			} else {
+				$stickyLocation.css('top', '');
+			}
+		}
+
+
+		wait = true;
+		setTimeout(function(){ wait = false; }, 50);
 	}
 
 	function addLocation(locationData, loopOverride) {
@@ -877,7 +1001,7 @@ var Trip = (function() {
 			}
 		}
 
-		$('.add-note-link', location.$element).click({location: location}, addNoteClickHandler);
+		//$('.add-note-link', location.$element).click({location: location}, addNoteClickHandler);
 	}
 
 	function addNote(note, animate) {
@@ -886,18 +1010,18 @@ var Trip = (function() {
 		}
 	}
 
-	function addNoteClickHandler(event) {
+	/*function addNoteClickHandler(event) {
 
 		var location = event.data.location;
 
-		NoteEditor.newNote($(this).parent(), location);
+		//NoteEditor.newNote($(this).parent(), location);
 
-	}
+	}*/
 
-	function submitNoteClickHandler(event) {
+	/*function submitNoteClickHandler(event) {
 		
 		
-	}
+	}*/
 
 	function deleteLocation(locationId) {
 		//TODO delete listeners?
@@ -907,8 +1031,7 @@ var Trip = (function() {
 			//google.maps.event.removeEventListener(locations[locationId].marker, 'click');
 		}
 
-		locations[locationId].destroy();
-
+		locations[locationId].location.destroy();
 		locations.splice(locationId, 1);
 		locationCount --;
 
@@ -923,6 +1046,39 @@ var Trip = (function() {
 		}
 	}
 
+	function reorderLocation(locationId, isUp) {
+
+		var $currentLocation = $("#location_" + locationId);
+		var currentOrder = parseInt($currentLocation.attr("data-order"));
+		var newOrder = (isUp) ? currentOrder - 1 : currentOrder + 1;
+
+		if (newOrder < 1) return;
+		if (newOrder > locationCount) return;
+
+		var $swapLocation = $(".location").filter(function() { return $.attr(this, "data-order") == newOrder; });
+
+		Ajax.call('reorderLocation', 
+			{
+				currentLocation: locationId,
+				swapLocation: $swapLocation.attr('id').replace("location_", ""),
+				newOrder: newOrder,
+				swapOrder: currentOrder
+			}, 
+			function(data) {
+				$swapLocation.attr("data-order", currentOrder);
+				$currentLocation.attr("data-order", newOrder);
+
+				if (isUp) {
+					$swapLocation.before($currentLocation);
+				} else {
+					$swapLocation.after($currentLocation);
+				}
+			},
+			function() {
+				//error
+			});
+	}
+
 	function markerClickHandler(event) {
 		console.log(event);
 	}
@@ -935,47 +1091,9 @@ var Trip = (function() {
 	}
 
 	function checkAdmin() {
-		if ($.cookie('admin')) {
-			//set admin
-		} else {
 
-			setEditMode();
-			return;
-
-			Modal.load('/views/modal/enterEmail.html',
-				function() {
-
-					$("#emailAdmin").click(function() {
-						var email = $("#txtEmail").val();
-
-						if (email != '') {
-							Ajax.call('checkEditMode',
-								{
-									email: email
-								},
-								function() {
-									setEditMode();
-									Modal.close();
-								},
-								function() {
-									Modal.close();
-
-								}
-							);
-						}
-					});
-				});
-		}
-	}
-
-	function setEditMode() {
-		Ajax.call('checkEditMode',
-								{
-									email: ''
-								},
-								function() {
-									EditMode.init();
-								});
+		EditModeModal.open();
+		return false;
 	}
 
 	return {
@@ -983,7 +1101,133 @@ var Trip = (function() {
 		addLocation: addLocation,
 		addNote: addNote,
 		deleteLocation: deleteLocation,
+		reorderLocation: reorderLocation,
 		getTripInfo: getTripInfo
+	}
+}());
+
+var EditModeModal = (function() {
+
+	var $txtEmail;
+	var $submit;
+	var isSending = false;
+
+	function open() {
+		Modal.load('/views/modal/enterEmail.html',
+			init,
+			'email-modal'
+			);
+	}
+
+	function validateEmail(email) { 
+    	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	return re.test(email);
+	} 
+
+	function txtChange(e) {
+		var txtValid = true;
+		if ($.trim($txtEmail.val()) == '') {
+			txtValid = false;
+		}
+		if ($txtEmail.hasClass('error')) {
+			$txtEmail.removeClass('error');
+			$("#errorReturn").addClass('hidden');
+		}
+
+		if (txtValid) {
+			$submit.removeClass('hidden');
+		} else {
+			$submit.addClass('hidden');
+		}
+	}
+
+	function init() {
+
+		$submit = $("#emailAdmin");
+		$txtEmail = $("#txtEmail");
+		isSending = false;
+
+		$txtEmail.keyup(txtChange).focus();
+		$submit.click(sendEmail);
+		$("#isRemember").click(isRememberCookieClick);
+		$(document).keyup(keyUpHandler);
+		$("#oopsLink").click(close);
+
+		if ($.cookie('email')) {
+			$("#isRemember").prop('checked', true);
+			$txtEmail.val($.cookie('email'));
+		} else {
+			$submit.focus();
+		}
+
+		txtChange();
+
+	}
+
+	function sendEmail() {
+		
+		if (isSending) return;
+
+		var email = $txtEmail.val();
+
+		if (!validateEmail(email)) {
+			$txtEmail.addClass('error');
+			return;
+		}
+		isSending = true;
+
+		if ($("#isRemember").is(':checked')) {
+			$.cookie('email', email, { expires: 365, path: '/' });
+		}
+		Ajax.call('checkEditMode',
+			{
+				email: email
+			},
+			function() {
+				EditMode.init();
+				close();
+			},
+			function() {
+				$txtEmail.addClass('error');
+				$("#errorReturn").removeClass('hidden');
+				isSending = false;
+
+			});
+
+		return false;
+	}
+
+	function isRememberCookieClick() {
+		if (!$("#isRemember").is(':checked')) {
+			$.removeCookie('email', { path: '/' });
+		}
+	}
+
+	function keyUpHandler(e) {
+		switch (e.which) {
+			case 13:
+				sendEmail();
+				break;
+		}
+	}
+
+	function close() {
+
+		$txtEmail.unbind('keyup',txtChange);
+		$submit.unbind('click',sendEmail);
+		$("#isRemember").unbind('click',isRememberCookieClick);
+		$(document).unbind('keyup',keyUpHandler);
+
+		$submit = null;
+		$txtEmail = null;
+		isSending = false;
+
+		Modal.close();
+	}
+
+	return {
+		open: open,
+		close: close
 	}
 }());
 
@@ -1003,7 +1247,7 @@ var EditMode = (function() {
 		$("#map").addClass('edit-on');
 
 		$("#addLocationButton").click(addLocation);
-		$(document).on('click', '.delete-location-button', deleteLocation);
+		$(document).on('click', '.delete-location-button', deleteLocation).on('click', '.location-up', reorderLocation).on('click', '.location-down', reorderLocation);
 		$("#editDoneButton").click(dinit);
 
 		editTitle = new EditText($("#tripTitle"), function() { save({tripTitle:$("#tripTitle").html() }); });
@@ -1013,6 +1257,8 @@ var EditMode = (function() {
 	}
 
 	function dinit() {
+		Ajax.call('closeEditMode');
+
 		$(".edit-mode").addClass('edit-off');
 		$(".add-note").removeClass('hidden');
 		$("header").removeClass('edit-on');
@@ -1072,6 +1318,16 @@ var EditMode = (function() {
 			function() {
 				//error
 			});
+
+		return false;
+	}
+
+	function reorderLocation(event) {
+		var locationId = $(this).attr('data-id');
+
+		Trip.reorderLocation(locationId, $(event.target).hasClass('location-up') ? true : false);
+
+		return false;
 	}
 
 	function save(data) {
@@ -1219,304 +1475,7 @@ var ListAdmin = (function() {
 
 }());
 
-var Home = (function() {
 
-	var $txtTripName = null;
-	var $nextButton = null;
-
-	var $startPage = null;
-	var $infoPage = null;
-	var $locationPage = null;
-	var $lostTripPage = null;
-	var $sentEmailPage = null;
-
-	var $currentPage = null;
-
-	var $txts = [];
-	var isTransition = false;
-
-	function init(page) {
-		
-		$('.next-button').click(nextPage);
-		$('.back-button').click(backPage);
-		$('.create-button').click(nextPage);
-		
-		switch (page) {
-			case 'lost':
-				$lostTripPage = $("#lostTripPage");
-				$sentEmailPage = $("#sentEmailPage");
-				$currentPage = $lostTripPage;
-				initLostTripPage();
-				break;
-
-			default:
-				$startPage = $("#startPage");
-				$infoPage = $("#infoPage");
-				$locationPage = $("#locationPage");
-				$currentPage = $startPage;
-				initStartPage();
-				break;
-		}
-
-		$(document).keydown(function(e) {
-			switch (e.which) {
-				case 13:
-					nextPage();
-					break;
-			}
-		});
-
-		
-		
-	}
-
-	function validateEmail(email) { 
-    	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return re.test(email);
-	} 
-
-	function txtChange(e) {
-		var txtValid = true;
-		for (var i=0, len=$txts.length; i<len; i++) {
-			if ($.trim($txts[i].val()) == '') {
-				txtValid = false;
-			}
-			if ($txts[i].hasClass('error')) {
-				$txts[i].removeClass('error');
-			}
-		}
-
-		if (txtValid) {
-			$nextButton.removeClass('hidden');
-		} else {
-			$nextButton.addClass('hidden');
-		}
-	}
-
-
-	function initStartPage() {
-		isTransition = false;
-		$txts = [$("#txtTripName")];
-		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$nextButton = $('.next-button', $startPage);
-		txtChange();
-	}
-	function dinitStartPage() {
-		$txts[0].val($.trim($txts[0].val()));
-		$txts[0].prop('disabled', true).unbind('keyup');
-		$nextButton.addClass('hidden');
-	}
-
-	function initInfoPage() {
-		isTransition = false;
-		$txts = [$("#txtName"), $("#txtEmail")];
-		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$txts[1].prop('disabled', false).keyup(txtChange);
-		$nextButton = $('.next-button', $infoPage);
-		$('.back-button', $infoPage).removeClass('hidden');
-		txtChange();
-	}
-	function dinitInfoPage() {
-		$txts[0].prop('disabled', true).unbind('keyup');
-		$txts[1].prop('disabled', true).unbind('keyup');
-		$txts[0].val($.trim($txts[0].val()));
-		$txts[1].val($.trim($txts[1].val()));
-		$nextButton.addClass('hidden');
-		$('.back-button', $infoPage).addClass('hidden');
-	}
-
-	function initLocationPage() {
-		isTransition = false;
-		$txts = [$("#txtLocation")];
-		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$nextButton = $('.create-button', $locationPage);
-		$('.back-button', $locationPage).removeClass('hidden');
-		txtChange();
-
-		var options = {
-		  types: ['(regions)']
-		};
-		var autocomplete = new google.maps.places.Autocomplete($txts[0][0], options);
-	}
-	function dinitLocationPage() {
-		$txts[0].prop('disabled', true).unbind('keyup');
-		$nextButton.addClass('hidden');
-		$('.back-button', $locationPage).addClass('hidden');
-	}
-
-	function initLostTripPage() {
-		isTransition = false;
-		$txts = [$("#txtEmail")];
-		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$nextButton = $('.next-button', $startPage);
-	}
-	function dinitLostTripPage() {
-		$txts[0].val($.trim($txts[0].val()));
-		$txts[0].prop('disabled', true).unbind('keyup');
-	}
-
-	function backPage() {
-		if (isTransition) return;
-		isTransition = true;
-
-		var initFunc;
-		$currentPage.removeClass('page-current').addClass('page-right');
-		switch($currentPage) {
-
-			case $infoPage:
-				dinitInfoPage();
-				$currentPage = $startPage;
-				initFunc = initStartPage;
-				break;
-
-			case $locationPage:
-				dinitLocationPage();
-				$currentPage = $infoPage;
-				initFunc = initInfoPage;
-				break;
-		}
-		$currentPage.removeClass('page-left').addClass('page-current');
-		TransitionController.transitionEnd($currentPage, initFunc);
-	}
-
-	function nextPage() {
-		if (isTransition) return;
-		if ($nextButton.hasClass('hidden')) {
-			if (($txts) && ($txts.length > 1)) {
-				for (var i=0, len = $txts.length - 1; i<len; i++) {
-					if ($txts[i].is(":focus")) {
-						$txts[i + 1].focus();
-						break;
-					}
-				}
-			}
-			return;
-		}
-		
-		var initFunc;
-		
-		switch($currentPage) {
-			
-			case $startPage:
-				isTransition = true;
-				$currentPage.removeClass('page-current').addClass('page-left');
-				dinitStartPage();
-
-				$('.trip-title').html($txts[0].val());
-				$currentPage = $infoPage;
-				initFunc = initInfoPage;
-				break;
-
-			case $infoPage:
-				
-				if (!validateEmail($txts[1].val())) {
-					$txts[1].addClass('error');
-					return;
-				}
-				isTransition = true;
-				$currentPage.removeClass('page-current').addClass('page-left');
-				dinitInfoPage();
-				$('.trip-subtitle').html("by " + $txts[0].val());
-				$('.email').html($txts[1].val());
-				$currentPage = $locationPage;
-				initFunc = initLocationPage;
-				break;
-
-			case $locationPage:
-				createTrip();
-				break;
-
-			case $lostTripPage:
-				if (!validateEmail($txts[0].val())) {
-					$txts[0].addClass('error');
-					return;
-				}
-				sendEmail();
-				break;
-		}
-		$currentPage.removeClass('page-right').addClass('page-current');
-		TransitionController.transitionEnd($currentPage, initFunc);
-	}
-
-	function showLocation() {
-		$("#infoPage").addClass('hidden');
-		$("#locationPage").removeClass('hidden');
-		
-	}
-
-	function createTrip() {
-
-		//validate
-
-		var name = $("#txtName").val();
-		var email = $("#txtEmail").val();
-		var tripName = $("#txtTripName").val();
-		var location = $("#txtLocation").val();
-
-		Main.loadBlock();
-		Ajax.call('createTrip',
-			{
-				name: name,
-				email: email,
-				tripName: tripName,
-				location: location
-			},
-			createTripReturn
-		);
-	}
-
-	function sendEmail() {
-		
-		var adminEmail = $("#txtEmail").val();
-
-		if (!validateEmail(adminEmail)) {
-			$("#txtEmail").addClass('error');
-			return;
-		}
-
-		Main.loadBlock();
-		Ajax.call('sendEmail',
-			{
-				adminEmail: adminEmail
-			},
-			sendEmailReturn
-		);
-	}
-
-	function createTripReturn(data) {
-
-		if (data.success) {
-			window.location = '/' + data.tripHash;
-
-		} else {
-			alert("ERROR!");
-		}
-		//check for success
-
-	}
-
-	function sendEmailReturn(data) {
-		Main.loadRelease();
-
-		if (data.message == 'no trips') {
-			alert('No trips were found.');
-			return;
-		}
-		
-		isTransition = true;
-		$currentPage.removeClass('page-current').addClass('page-left');
-		dinitLostTripPage();
-
-		$currentPage = $sentEmailPage;
-		$currentPage.removeClass('page-right').addClass('page-current');
-
-	}
-
-	return {
-		init: init
-	};
-
-}());
 
 
 
@@ -1660,6 +1619,10 @@ var Main = (function() {
 		
 		Ajax.init(obj.a);
 		GLOBAL.isAdmin = obj.isAdmin;
+		GLOBAL.noteCookie = obj.noteCookie;
+
+		$("#shareTripButton").click(openShareModal);
+		
 	}
 
 	function loadBlock() {
@@ -1702,7 +1665,7 @@ var Main = (function() {
 
 	function poll() {
 		
-		//setTimeout(sendPoll, GLOBAL.polltime);
+		setTimeout(sendPoll, GLOBAL.polltime);
 	}
 
 	function sendPoll() {
@@ -1739,6 +1702,24 @@ var Main = (function() {
 			}
 		}
 		poll();
+	}
+
+	function openShareModal() {
+		Modal.load(
+			'/views/modal/shareTrip.html',
+			function() {
+				$('.text-box', $('#modalContent')).val("http://" + window.location.hostname + window.location.pathname).select();
+				
+				$('#doneButton').click(function() {
+					$('#doneButton').unbind('click');
+					Modal.close()
+				});
+			},
+			'share-modal'
+			);
+
+		return false;
+
 	}
 	
 	return {

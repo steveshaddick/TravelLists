@@ -57,14 +57,14 @@ switch ($action) {
 
 	case 'createTrip':
 
-		if ((ENVIRONMENT === 'development') && ($_POST['tripName'] == 'error')) {
+		if ((ENVIRONMENT === 'development') && ($_POST['location'] == 'error')) {
 
 			echo returnJSON(false);
 
 		} else {
 
 			$arr = $main->createTrip(array(
-				'tripName'=>$_POST['tripName'],
+				'tripName'=>'My Trip',
 				'userName'=>$_POST['name'],
 				'email'=>$_POST['email'],
 				'location'=>$_POST['location']
@@ -91,7 +91,8 @@ switch ($action) {
 			'note'=>$_POST['noteText'],
 			'fromName'=>$_POST['fromName'],
 			'categoryId'=>$_POST['categoryId'],
-			'locationId'=>$_POST['locationId']
+			'locationId'=>$_POST['locationId'],
+			'noteCookie'=>$_POST['noteCookie']
 			));
 
 		echo returnJSON($arr);
@@ -99,13 +100,19 @@ switch ($action) {
 
 
 	case 'deleteNote':
-		$arr = $main->deleteNote($_POST['noteId']);
+		$arr = $main->deleteNote($_POST['noteId'], $_POST['noteCookie']);
 
 		echo returnJSON($arr);
 		break;
 
 	case 'deleteLocation':
 		$arr = $main->deleteLocation($_POST['locationId']);
+
+		echo returnJSON($arr);
+		break;
+
+	case 'reorderLocation':
+		$arr = $main->reorderLocation($_POST);
 
 		echo returnJSON($arr);
 		break;
@@ -154,7 +161,10 @@ switch ($action) {
 	case 'checkEditMode':
 		echo returnJSON($main->checkEditMode($_POST['email']));
 		break;
-
+	
+	case 'closeEditMode':
+		$main->closeEditMode();
+		break;
 
 	default:
 		echo returnJSON(false);

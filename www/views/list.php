@@ -8,6 +8,7 @@
 	</div>
 
 	<div id="modal">
+		<div id="modalUnder"></div>
 		<div id="modalContent">
 			Loading...
 		</div>
@@ -17,26 +18,24 @@
 		<div class="list-wrapper">
 			<header id="header">
 				<div class="header-content">
-					<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
-					<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
-					<a id="editTripButton" class="edit-trip-link" href="javascript:void(0)"><img src="/images/icon-pencil.png">Edit this trip</a>
-					<a id="collaborateTripButton" class="collaborate-trip-link">Collaborate with Friends</a>
+					<div class="header-titles">
+						<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
+						<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
+					</div>
+					<div class="header-tools">	
+						<a id="shareTripButton" class="share-trip-link" href="#">Share with friends</a>
+						<span class="spacer spacer1" style="float:right; width:5px;">&nbsp;</span>
+						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a>
 						
-					<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="">Add location</a>
-					<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="">Done editing</a>
-				</div>
-			</header>
+						<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="#">Done editing</a>
+						<span class="edit-mode edit-off" style="inline-block; width:5px; float:right;">&nbsp;</span>
+						<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a>
 
-			<!--<section id="tripSettings" class="trip-settings">
-				<div class="content">
-					<label for="txtTripName">Trip</label> <input id="txtTripName" name="txtTripName" type="text" maxlength="75" value="" />
-					<label for="txtTripAuthor">Author</label> <input id="txtTripAuthor" name="txtTripAuthor" type="text" maxlength="75" value="" />
-					<label for="txtEmail">Email</label> <input id="txtEmail" name="txtEmail" type="text" maxlength="255" value="" />
-					
-					<a class="done-button" href="javascript:void(0)">Done</a><br />
+					</div>
+					<br class="clear">
 				</div>
-				
-			</section>-->
+
+			</header>
 
 			<div id="noticeContainer" class="notice-container">
 				<div class="notice up">
@@ -45,13 +44,16 @@
 				</div>
 			</div>
 			<div class="mapContainer">
+				<span class="stripe edit-mode edit-off"></span>
 				<div id="map"></div>
 			</div>
 
 
 		
 			<div class="contentWrapper">
-				<section id="locations"></section>
+				<section id="locations">
+					<a id="stickyLocation" class="sticky-location location-name" href="#"></a>
+				</section>
 			</div>
 		</div>
 	</div>
@@ -59,8 +61,13 @@
 	<div id="cls">
 
 		<div id="clsLocation" class="location">
-			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="javascript:void(0)" title="Collapse">&#150;</a></span>
-			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="javascript:void(0);">&nbsp;</a>
+			<a class="anchor" id=""></a>
+			<div class="reorder-location edit-mode edit-off">
+				<a class="sprite-button location-up edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
+				<a class="sprite-button location-down edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
+			</div>
+			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="#" title="Collapse">&#150;</a></span>
+			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
 				<div class="notes-hidden"></div>
@@ -103,7 +110,7 @@
 						</div>
 						<div class="note-from"></div>
 						<div class="note-delete">
-							<a class="x-button sprite-button edit-mode edit-off" href="javascript:void(0)">&nbsp;</a>
+							<a class="x-button sprite-button edit-mode edit-off" href="#">&nbsp;</a>
 						</div>
 					</td>
 				</tr>
@@ -126,11 +133,14 @@
 		</div>
 
 		<div id="clsSubmitNote" class="note-submit-wrapper">
-			<a id="submitNoteButton" class="submit-note-link" href="javascript:void(0)">Finished</a>
-			<a id="cancelNoteButton" class="cancel-note-link" href="javascript:void(0)">Cancel</a>
+			<a id="submitNoteButton" class="submit-note-link" href="#">Finished</a>
+			<a id="cancelNoteButton" class="cancel-note-link" href="#">Cancel</a>
 		</div>
 
 	</div>
+
+	<?php include(BASE_PATH . 'views/parts/bottomnewnotes.php'); ?>
+	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>
@@ -152,7 +162,8 @@
 			Main.init({
 				userAgent: '<?php echo $userAgent; ?>',
 				os: '<?php echo $os; ?>',
-				a: '<?php echo $ajaxToken; ?>'
+				a: '<?php echo $ajaxToken; ?>',
+				noteCookie: '<?php echo $_SESSION["noteCookie"]; ?>'
 			});
 			Trip.loadTrip({
 				lat: <?php echo $main->trip['lat']; ?>,

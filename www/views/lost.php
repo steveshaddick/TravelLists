@@ -21,7 +21,7 @@
 
 				<div class="home-form" style="margin:175px 0;">
 					<input id="txtEmail" name="txtEmail" type="text" autofocus="autofocus" maxlength="255" value="" />
-					<div style="display:inline-block; position:absolute;"><a class="next-button hidden"  href="javascript:void(0)">Submit</a></div>
+					<div style="display:inline-block; position:absolute; right: 0px;"><a class="next-button hidden"  href="javascript:void(0)">Submit</a></div>
 					<label for="txtEmail">Enter your email address to receive your tripnotes.</label>
 				</div>
 			</section>
@@ -33,8 +33,10 @@
 				</header>
 
 				<div class="page-content">
-					<p>An email has been sent.</p>
+					<p>An email has been sent, go check!</p>
+
 				</div>
+
 			</section>
 			
 		</div>

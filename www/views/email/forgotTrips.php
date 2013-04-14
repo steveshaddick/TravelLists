@@ -8,7 +8,7 @@ ob_start();
 // The Email subject
 ?>
 
-This is the subject
+Your Tripnotes
 
 <?php
 // ********** END EDIT **************/
@@ -23,7 +23,10 @@ ob_start();
 // the message before the list of Trips
 ?>
 
-<p>You have the following Trips:</p>
+<p>
+Hello traveller,<br><br>
+You've made the following Tripnotes:
+</p>
 
 <?php
 // ********** END EDIT **************/
@@ -42,7 +45,7 @@ ob_start();
 ?>
 
 <p><strong>$TRIP_NAME$</strong><br />
-Public Link: <a href="$TRIP_LINK$">$TRIP_LINK$</a>
+<a href="$TRIP_LINK$">$TRIP_LINK$</a>
 </p>
 
 <?php
@@ -60,9 +63,10 @@ ob_start();
 ?>
 
 <p>
-Thanks,<br />
-The TripNote Team<br />
-info@maketripnotes.com
+Collaborate on Tripnotes together with friends.  All you need to do is send them the Tripnotes link.
+<br><br>
+Thank you for using Tripnotes,<br/>
+If you need any help, please e-mail info@maketripnotes.com
 </p>
 
 <?php

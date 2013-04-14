@@ -32,6 +32,9 @@ h1 {
 		color:inherit;
 	}
 }
+.spacer {
+	display: inline-block;
+}
 
 a {
 	text-decoration: none;
@@ -73,7 +76,9 @@ ul, li {
 	list-style-type: none;
 }
 
-input {
+input[type="text"],
+input[type="email"]
+ {
 	border: 0;
 	background: transparent url('/images/dot.png') repeat-x bottom;
 	text-align: center;
@@ -81,14 +86,14 @@ input {
 	height: 36px;
 	width: 460px;
 	color:$darkGrey;
-	padding:6px;
-}
+	padding:7px;
 
-input:focus {
-	color:#000;
-	outline:none;
-}
+	&:focus {
+		color:#000;
+		outline:none;
 
+	}
+}
 
 #loadBlocker {
 	display:none;
@@ -129,7 +134,6 @@ input:focus {
 	position:fixed;
 	top:0;
 	left:0;
-	background:url('/images/f5f5f0_70.png');
 	z-index:10000000;
 	text-align: center;
 
@@ -139,54 +143,14 @@ input:focus {
 	background: #f5f5f0;
 	box-shadow: 0 1px 1px 0px #999;
 	display: inline-block;
-
+	color: $darkGrey;
+	@include serif-italic(28px);
 }
 
 #cls {
 	display:none;
 }
 
-.add-location-button{
-
-		color: $darkGrey;
-		@include serif-italic(18px);
-		display:inline-block;
-		background:$lightGrey;
-		@include border($lightGrey);
-		padding: 7px 10px 6px;
-		text-align: center;
-		text-decoration: none;
-		position:absolute;
-		left:130px;
-		bottom:18px;
-
-	&:hover {
-		background: $mediumGrey;
-
-	}
-}
-
-.edit-done-button {
-
-	color: $lightGrey;
-
-		color: $darkGrey;
-		@include serif-italic(18px);
-		display:inline-block;
-		background:$lightGrey;
-		@include border($lightGrey);
-		padding: 7px 10px 6px;
-		text-align: center;
-		text-decoration: none;
-		position:absolute;
-		left:0px;
-		bottom:18px;
-
-	&:hover {
-		background: $mediumGrey;
-
-	}
-}
 
 #map {
 	width:800px;
@@ -244,7 +208,7 @@ input:focus {
 }
 
 .error {
-	border: 1px solid #ff0000;
+	border: 1px solid #ff0000 !important;
 }
 
 .page-left {
@@ -259,6 +223,19 @@ input:focus {
 
 .editTextInput {
 	border:none;
+
+}
+
+input.editTextInput {
+	
+	border: 0;
+	background: transparent url('/images/dot.png') repeat-x bottom;
+	text-align: left;
+	@include sans-serif(36px);
+	height: 36px;
+	width: 460px;
+	color:$darkGrey;
+	padding:27px;
 
 }
 
@@ -314,7 +291,7 @@ input:focus {
 	}
 
 	#txtLocation {
-		width:700px;
+		width:550px;
 	}
 }
 
@@ -347,7 +324,7 @@ input:focus {
 
 .about-page {
 	max-width:800px;
-	@include serif-italic(24px);
+	@include serif(18x);
 }
 
 .edit-mode.edit-off {
@@ -363,24 +340,35 @@ input:focus {
 		.header-content {
 			max-width: $maxContentWidth;
 			margin:0 auto;
-			padding: 35px 0 70px 0;
+			padding: 35px 0 17px;
 			position:relative;
 		}
 
 
+		.header-titles {
+			width:630px;
+			float:left;
+		}
+		.header-tools {
+			float:left;
+			padding-top:23px;
+		}
+
 		&.edit-on {
 			background: $darkGrey;
 
-			position: fixed; 
 			z-index: 1000000;
 			top:0;
 
-			.edit-trip-link {
+			.edit-trip-link,
+			.share-trip-link,
+			.spacer1 {
 				display: none;
 			}
 
-			.collaborate-trip-link{
-				display: none;
+			.trip-title,
+			.trip-subtitle {
+				color:$bgGrey;
 			}
 		}
 	}
@@ -389,16 +377,19 @@ input:focus {
 		color: $darkGrey;
 		display: inline-block;
 		@include sans-serif(66px);
-		letter-spacing:-3px;
+		letter-spacing:-3px;    
+		padding-right: 3px;
+
 	}
 
 	.trip-subtitle {
 		color: $blue;
 		display: inline-block;
 		@include serif-italic(18px);
+
 	}
 
-	.collaborate-trip-link {
+	.share-trip-link {
 		color: $darkGrey;
 		@include serif-italic(18px);
 		display:inline-block;
@@ -407,9 +398,7 @@ input:focus {
 		padding: 7px 10px 6px;
 		text-align: center;
 		text-decoration: none;
-		position:absolute;
-		left:150px;
-		bottom:18px;
+		float:right;
 
 		img {
 			vertical-align: top;
@@ -423,17 +412,9 @@ input:focus {
 	}
 
 	.edit-trip-link {
-		color: $darkGrey;
-		@include serif-italic(18px);
-		display:inline-block;
-		background:$lightGrey;
-		@include border($lightGrey);
-		padding: 7px 10px 6px;
-		text-align: center;
-		text-decoration: none;
-		position:absolute;
-		left:0;
-		bottom:18px;
+
+		@include regular-button();
+		float:right;
 
 		img {
 			vertical-align: top;
@@ -443,6 +424,21 @@ input:focus {
 
 		&:hover {
 			background:$mediumGrey;
+		}
+	}
+
+
+	.add-location-button,
+	.edit-done-button{
+
+		float:right;
+
+		@include thin-button();
+		background:$green;
+
+		&:hover {
+			background: $lightGreen;
+
 		}
 	}
 
@@ -501,7 +497,9 @@ input:focus {
 }
 
 .sprite-button {
+	cursor:pointer;
 	background-position:left;
+	display:inline-block;
 	&:hover {
     	background-position:right;
     }
@@ -509,7 +507,6 @@ input:focus {
 
 .x-button {
 	color: #FF0000;
-	cursor:pointer;
     position: absolute;
     right: 5px;
     top: 15px;
@@ -526,7 +523,7 @@ input:focus {
 	margin:0 auto;
 	z-index:-1;
 	&.edit-on {
-		margin-top: 136px;
+		margin-top: 0px;
 	}
 }
 
@@ -534,8 +531,19 @@ input:focus {
 	-moz-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
 	-webkit-box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);
 	box-shadow:inset 0px 2px 2px 0px rgba(95, 92, 102, 0.40);	
-}
 
+	.stripe {
+		position:absolute;
+	}
+		
+}
+.stripe {
+	background: url('/images/stripe.png') repeat-x;
+	height:11px;
+	width:100%;
+	display:block;
+	z-index: 99;
+}
 #locations {
 
 	.location {
@@ -561,8 +569,28 @@ input:focus {
 		}
 	}
 
+	.reorder-location {
 
+		width:16px;
+		position:absolute;
+		top:4px;
+		left:-25px;
+    	line-height: 0;
 
+		.location-down,
+		.location-up {
+			height:8px;
+			width:16px;
+		}
+		.location-up {
+			background-image: url('/images/order-up-arrow.png');
+			margin-bottom:10px;
+		}
+		.location-down{
+			background-image: url('/images/order-down-arrow.png');
+		}
+
+	}
 
 	.notes-wrapper {
 		margin: 0;
@@ -577,6 +605,23 @@ input:focus {
 		padding:20px 0;
 	}
 
+}
+
+.sticky-location {
+	@include transition(top 0.5s ease-in);
+	position: fixed;
+	z-index: 1000;
+	background: $bgGrey;
+	display:block;
+	width:100%;
+	max-width: 960px;
+	padding:10px 0;
+	top: -100px;
+
+	border-bottom:1px solid $lightGrey;
+
+	color:$darkGrey;
+	@include sans-serif(36px);
 }
 
 .note-category {
@@ -814,12 +859,105 @@ a.add-location-link {
 	}
 }
 
+
+.bottomnewnotes {
+	text-align: center;
+	padding-top: 50px;
+
+	color: #5f5c66;
+	font-family: "chaparral-pro", georgia, serif;
+	font-size: 18px;
+	line-height: 22.5px;
+	font-style: italic;
+	font-weight: 600;
+}
+
 .footer {
 	text-align: center;
 	@include sans-serif(14px);
+	padding: 50px 0 50px 0;
 
 	.spacer {
 		display: inline-block;
 		width:85px;
+	}
+}
+
+#modalUnder {
+	position:absolute;
+	background:url('/images/f5f5f0_70.png');
+	height: 100%;
+	width:100%;
+	top:0;
+	left:0;
+	z-index:0;
+}
+
+#modalContent {
+
+	top:50%;
+	left:50%;
+	position:absolute;
+	z-index:1;
+
+	&.email-modal {
+		text-align:center; 
+		width:620px; 
+		min-height:335px;
+		margin-top: -167px;
+		margin-left: -310px;
+
+		label {
+			font-size: 18px;
+		}
+
+		input[type="checkbox"]{
+
+		}
+
+		#oopsLink {
+			color:$orange;
+			font-size:18px;
+			line-height: 55px;
+
+			left: 0;
+    		position: absolute;
+
+			&:hover {
+				color:$orange;
+				text-decoration: underline;
+			}
+		}
+
+		#emailAdmin {
+			font-style: normal;
+		    position: absolute;
+		    right: 0;
+		    font-size: 24px;
+		    letter-spacing: -0.5px;
+
+		}
+	}
+
+	&.share-modal {
+		text-align:center; 
+		width:620px; 
+		min-height:335px;
+		margin-top: -167px;
+		margin-left: -310px;
+
+		.text-box {
+			color:#000;
+			background:$lightGrey;
+			border: 1px solid $mediumGrey;
+			width:500px;
+			display:block;
+			margin: 0 auto 40px;
+			font-size: 22px;
+		}
+
+		.stripe {
+			
+		}
 	}
 }
