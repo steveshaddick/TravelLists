@@ -46,7 +46,8 @@
 	
 	<?php include(BASE_PATH . 'views/parts/bottom-scripts.php'); ?>
 
-	<script type="text/javascript">
+	<script src="/js/Home.js"></script>
+	<script>
 	
 	$(document).ready(
 		function() {

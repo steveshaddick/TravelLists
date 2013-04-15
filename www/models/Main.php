@@ -213,7 +213,7 @@ class Main {
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			
 			$location = array(
-				'id'=>$row['_id'],
+				'id'=>intval($row['_id']),
 				'name'=>stripslashes($row['name']),
 				'lat'=>$row['lat'],
 				'lng'=>$row['lng'],

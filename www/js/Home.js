@@ -107,7 +107,7 @@ var Home = (function() {
 		isTransition = false;
 		$txts = [$("#txtEmail")];
 		$txts[0].prop('disabled', false).keyup(txtChange).focus();
-		$nextButton = $('.next-button', $startPage);
+		$nextButton = $('.next-button', $lostTripPage);
 	}
 	function dinitLostTripPage() {
 		$txts[0].val($.trim($txts[0].val()));
