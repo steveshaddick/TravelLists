@@ -19,8 +19,8 @@
 			<header id="header">
 				<div class="header-content">
 					<div class="header-titles">
-						<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
 						<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
+						<h1 id="tripTitle" class="trip-title"><?php echo $main->trip['tripName']; ?></h1>
 					</div>
 					<div class="header-tools">	
 						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a>

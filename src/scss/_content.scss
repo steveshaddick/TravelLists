@@ -350,7 +350,7 @@ input.editTextInput {
 		.header-content {
 			max-width: $maxContentWidth;
 			margin:0 auto;
-			padding: 35px 0 17px;
+			padding: 25px 0 17px;
 			position:relative;
 		}
 
@@ -358,10 +358,11 @@ input.editTextInput {
 		.header-titles {
 			width:660px;
 			float:left;
+			position:relative;
 		}
 		
 		.header-tools {
-			padding-top:23px;
+			padding-top:41px;
 		}
 
 		&.edit-on {
@@ -389,12 +390,11 @@ input.editTextInput {
 		@include sans-serif(66px);
 		letter-spacing:-3px;    
 		padding-right: 3px;
-
 	}
 
 	.trip-subtitle {
 		color: $blue;
-		display: inline-block;
+		display: block;
 		@include serif-italic(18px);
 
 	}
@@ -896,7 +896,7 @@ a.add-location-link {
 }
 
 .bottom-pad {
-	height:100px;
+	height:50px;
 }
 
 .footer {

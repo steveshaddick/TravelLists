@@ -124,7 +124,7 @@ class Main {
 			$tripLocation = array('lat'=>0, 'lng'=> 0);
 		}
 
-		$subtitle = 'by '.$userName;
+		$subtitle = $userName . "'s";
 		
 		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, subtitle=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
 		$stmt->execute(array($adminHash, $publicHash, $tripName, $subtitle, $userName, $email, $tripLocation['lat'], $tripLocation['lng']));

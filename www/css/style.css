@@ -483,36 +483,37 @@ input.editTextInput {
 .list-wrapper header .header-content {
   max-width: 960px;
   margin: 0 auto;
-  padding: 35px 0 17px;
+  padding: 25px 0 17px;
   position: relative;
 }
 /* line 358, ../../src/scss/_content.scss */
 .list-wrapper header .header-titles {
   width: 660px;
   float: left;
+  position: relative;
 }
-/* line 363, ../../src/scss/_content.scss */
+/* line 364, ../../src/scss/_content.scss */
 .list-wrapper header .header-tools {
-  padding-top: 23px;
+  padding-top: 41px;
 }
-/* line 367, ../../src/scss/_content.scss */
+/* line 368, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on {
   background: #5f5c66;
   z-index: 1000000;
   top: 0;
 }
-/* line 375, ../../src/scss/_content.scss */
+/* line 376, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on .edit-trip-link,
 .list-wrapper header.edit-on .share-trip-link,
 .list-wrapper header.edit-on .spacer1 {
   display: none;
 }
-/* line 380, ../../src/scss/_content.scss */
+/* line 381, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on .trip-title,
 .list-wrapper header.edit-on .trip-subtitle {
   color: #f1f1ec;
 }
-/* line 386, ../../src/scss/_content.scss */
+/* line 387, ../../src/scss/_content.scss */
 .list-wrapper .trip-title {
   color: #5f5c66;
   display: inline-block;
@@ -526,7 +527,7 @@ input.editTextInput {
 /* line 395, ../../src/scss/_content.scss */
 .list-wrapper .trip-subtitle {
   color: #151633;
-  display: inline-block;
+  display: block;
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
   line-height: 22.5px;
@@ -1148,7 +1149,7 @@ a.add-location-link:hover {
 
 /* line 898, ../../src/scss/_content.scss */
 .bottom-pad {
-  height: 100px;
+  height: 50px;
 }
 
 /* line 902, ../../src/scss/_content.scss */
