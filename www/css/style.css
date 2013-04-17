@@ -1124,10 +1124,14 @@ a.add-location-link:hover {
 /* line 884, ../../src/scss/_content.scss */
 .footer .spacer {
   display: inline-block;
-  width: 85px;
+  width: 55px;
+}
+/* line 888, ../../src/scss/_content.scss */
+.footer .aboutlink {
+  margin-left: 50px;
 }
 
-/* line 890, ../../src/scss/_content.scss */
+/* line 893, ../../src/scss/_content.scss */
 #modalUnder {
   position: absolute;
   background: url("/images/f5f5f0_70.png");
@@ -1138,14 +1142,14 @@ a.add-location-link:hover {
   z-index: 0;
 }
 
-/* line 900, ../../src/scss/_content.scss */
+/* line 903, ../../src/scss/_content.scss */
 #modalContent {
   top: 50%;
   left: 50%;
   position: absolute;
   z-index: 1;
 }
-/* line 907, ../../src/scss/_content.scss */
+/* line 910, ../../src/scss/_content.scss */
 #modalContent.email-modal {
   text-align: center;
   width: 620px;
@@ -1153,11 +1157,11 @@ a.add-location-link:hover {
   margin-top: -167px;
   margin-left: -310px;
 }
-/* line 914, ../../src/scss/_content.scss */
+/* line 917, ../../src/scss/_content.scss */
 #modalContent.email-modal label {
   font-size: 18px;
 }
-/* line 922, ../../src/scss/_content.scss */
+/* line 925, ../../src/scss/_content.scss */
 #modalContent.email-modal #oopsLink {
   color: #f53d12;
   font-size: 18px;
@@ -1165,12 +1169,12 @@ a.add-location-link:hover {
   left: 0;
   position: absolute;
 }
-/* line 930, ../../src/scss/_content.scss */
+/* line 933, ../../src/scss/_content.scss */
 #modalContent.email-modal #oopsLink:hover {
   color: #f53d12;
   text-decoration: underline;
 }
-/* line 936, ../../src/scss/_content.scss */
+/* line 939, ../../src/scss/_content.scss */
 #modalContent.email-modal #emailAdmin {
   font-style: normal;
   position: absolute;
@@ -1178,7 +1182,7 @@ a.add-location-link:hover {
   font-size: 24px;
   letter-spacing: -0.5px;
 }
-/* line 946, ../../src/scss/_content.scss */
+/* line 949, ../../src/scss/_content.scss */
 #modalContent.share-modal {
   text-align: center;
   width: 620px;
@@ -1186,7 +1190,7 @@ a.add-location-link:hover {
   margin-top: -167px;
   margin-left: -310px;
 }
-/* line 953, ../../src/scss/_content.scss */
+/* line 956, ../../src/scss/_content.scss */
 #modalContent.share-modal .text-box {
   color: #000;
   background: #e6e3e1;
