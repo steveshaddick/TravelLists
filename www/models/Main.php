@@ -124,7 +124,7 @@ class Main {
 		if ($tripLocation === false) {
 			$tripLocation = array('lat'=>0, 'lng'=> 0);
 		}
-		$shortLocation = (strpos($location, ',') !== false) ? substr($location, 0, strpos($location, ',')) : $location;
+		$tripName = $shortLocation = (strpos($location, ',') !== false) ? substr($location, 0, strpos($location, ',')) : $location;
 
 		$subtitle = $userName . "'s";
 		

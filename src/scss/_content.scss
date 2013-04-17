@@ -69,11 +69,7 @@ a {
 	background: none;
 	border:1px solid $lightGrey;
 	color: $mediumGrey;
-	font-family: "chaparral-pro", georgia, serif;
-	font-size: 18px;
-	line-height: 22.5px;
-	font-style: italic;
-	font-weight: 600;
+	@include serif-italic(18px);
 }
 
 .outline-button:hover {
@@ -650,7 +646,7 @@ input.editTextInput {
 	background-repeat: no-repeat;
 	overflow:hidden;
 	vertical-align: top;
-	
+
 	display:block;
 	height:28px;
 
