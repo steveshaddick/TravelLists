@@ -8,7 +8,7 @@ ob_start();
 // The Email subject
 ?>
 
-Your Tripnotes
+Your lost Tripnotes
 
 <?php
 // ********** END EDIT **************/
@@ -25,7 +25,8 @@ ob_start();
 
 <p>
 Hello traveller,<br><br>
-You've made the following Tripnotes:
+
+Here's all your Tripnotes:
 </p>
 
 <?php
@@ -63,10 +64,9 @@ ob_start();
 ?>
 
 <p>
-Collaborate on Tripnotes together with friends.  All you need to do is send them the Tripnotes link.
-<br><br>
-Thank you for using Tripnotes,<br/>
-If you need any help, please e-mail info@maketripnotes.com
+Thanks for using Tripnotes, the easiest way to get &amp; organize trip suggestions.<br><br>
+Happy travels from Steve, Nathan, and Charles<br/>
+hello@maketripnotes.com
 </p>
 
 <?php

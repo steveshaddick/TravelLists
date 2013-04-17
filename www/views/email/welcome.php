@@ -25,13 +25,17 @@ ob_start();
 // $TRIP_LINK$ = the url for the trip
 ?>
 
-<p>Thanks for making a new list. Here it is:</p>
-<p>Public Link: <a href="$TRIP_LINK$">$TRIP_LINK$</a></p>
+<p>Hi [Name],</p>
+<p>Your new Tripnotes to [Place] has been created.<p>
+<p>Use the web address below to access your Tripnotes.  You can also share the link with your friends to receive their travel suggestions.</p>
+<p><a href="$TRIP_LINK$">$TRIP_LINK$</a></p>
+<p>If you have any questions, reply to this email or tweet us at <a href="http://www.twitter.com/maketripnotes">@maketripnotes</a></p>
+
 
 <p>
-Thanks,<br />
-The TripNote Team<br />
-info@maketripnotes.com
+Thanks for using Tripnotes, the easiest way to get &amp; organize trip suggestions.<br><br>
+Happy travels from Steve, Nathan, and Charles<br/>
+hello@maketripnotes.com
 </p>
 
 <?php
