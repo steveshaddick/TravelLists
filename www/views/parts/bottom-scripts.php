@@ -9,6 +9,7 @@
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-40205616-1']);
+  _gaq.push(['_setDomainName', 'maketripnotes.com']);
   _gaq.push(['_trackPageview']);
 
   (function() {
