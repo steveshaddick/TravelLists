@@ -525,6 +525,7 @@ Location.prototype.showHide = function(event) {
 	var location = event.data.location;
 
 	if (location.isOpen) {
+		location.cancelNote();
 		$('.notes-wrapper', location.$element).slideUp();
 		$('.notes-hidden', location.$element).show();
 		location.isOpen = false;
@@ -540,6 +541,8 @@ Location.prototype.showHide = function(event) {
 }
 Location.prototype.noteTextFocus = function(event) {
 	var location = event.data.location;
+
+	if (GLOBAL.activeNoteLocation === location) return;
 	if (GLOBAL.activeNoteLocation) {
 		GLOBAL.activeNoteLocation.cancelNote();
 	}
@@ -600,7 +603,7 @@ Location.prototype.editNote = function() {
 
 }
 Location.prototype.cancelNote = function() {
-	console.log("CANCEL");
+
 	GLOBAL.activeNoteLocation = null;
 	this.$noteEditor.off('focusout');
 
@@ -609,6 +612,7 @@ Location.prototype.cancelNote = function() {
 
 	$('#cls').append($('#clsCategorySelector')).append($('#clsNoteFrom')).append($('#clsSubmitNote'));
 
+	$("#txtFromName").unbind('keyup');
 	$("#submitNoteButton").unbind('click');
 	$("#cancelNoteButton").unbind('click');
 

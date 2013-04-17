@@ -139,7 +139,10 @@
 
 	</div>
 
-	<?php include(BASE_PATH . 'views/parts/bottomnewnotes.php'); ?>
+	<div class="bottomnewnotes">
+		<a class="outline-button" href="/" >Make a new Tripnote</a></span>
+	</div>
+	
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
