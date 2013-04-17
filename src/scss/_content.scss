@@ -215,6 +215,7 @@ input[type="email"]
 
 .lost-link {
 	@include serif-italic(18px);
+	padding-top:40px;
 }
 
 .error {
@@ -917,7 +918,10 @@ a.add-location-link {
 
 	.spacer {
 		display: inline-block;
-		width:85px;
+		width:55px;
+	}
+	.aboutlink{
+		margin-left:50px;
 	}
 }
 
