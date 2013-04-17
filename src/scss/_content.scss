@@ -64,6 +64,22 @@ a {
 	}
 }
 
+.outline-button {
+	@include block-button();
+	background: none;
+	border:1px solid $lightGrey;
+	color: $mediumGrey;
+	font-family: "chaparral-pro", georgia, serif;
+	font-size: 18px;
+	line-height: 22.5px;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.outline-button:hover {
+	border-color:$green;
+}
+
 ul, li {
 	margin:0;
 	padding:0;
@@ -543,7 +559,7 @@ input.editTextInput {
 	.location {
 		padding-bottom:33px;
 		margin-top: 25px;
-		border-bottom: 1px solid $mediumGrey;
+		/*border-bottom: 1px solid $mediumGrey;*/
 		position:relative;
 
 		.location-name {
@@ -857,19 +873,12 @@ a.add-location-link {
 .bottomnewnotes {
 	text-align: center;
 	padding-top: 50px;
-
-	color: #5f5c66;
-	font-family: "chaparral-pro", georgia, serif;
-	font-size: 18px;
-	line-height: 22.5px;
-	font-style: italic;
-	font-weight: 600;
 }
 
 .footer {
 	text-align: center;
 	@include sans-serif(14px);
-	padding: 50px 0 50px 0;
+	padding: 20px 0 20px 0;
 
 	.spacer {
 		display: inline-block;

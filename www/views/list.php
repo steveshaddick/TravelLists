@@ -120,7 +120,7 @@
 
 		<div id="clsCategorySelector" class="category-selector">
 			<select name="category" id="selCategory" class="droptrip" style="width:100px;">
-				<option value="0" selected>None</option>
+				<option value="0" selected>Note</option>
 				<option value="2" data-image="/images/icon-food.png">Eat</option>
 				<option value="1" data-image="/images/icon-stay.png">Stay</option>
 				<option value="3" data-image="/images/icon-poi.png">Do</option>
@@ -133,7 +133,7 @@
 		</div>
 
 		<div id="clsSubmitNote" class="note-submit-wrapper">
-			<a id="submitNoteButton" class="submit-note-link" href="#">Finished</a>
+			<a id="submitNoteButton" class="submit-note-link" href="#">Add Note</a>
 			<a id="cancelNoteButton" class="cancel-note-link" href="#">Cancel</a>
 		</div>
 
