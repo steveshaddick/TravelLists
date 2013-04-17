@@ -317,6 +317,7 @@ function Location(data, isLast) {
 	this.$notesElement = null;
 	this.$showHideButton = null;
 	this.$noteText = null;
+	this.$noteEditor = null;
 
 	this.notes = [];
 
@@ -330,6 +331,7 @@ function Location(data, isLast) {
 	$('.anchor', this.$element).attr('id', this.hash);
 
 	this.$noteText = $(".txtNoteText", this.$element);
+	this.$noteEditor = $(".note-editor", this.$element);
 	this.text['suggestCTA'] = $(".note-text-label", this.$element).html();
 
 	var rnd = Math.floor(Math.random() * 10);
@@ -546,12 +548,12 @@ Location.prototype.noteTextFocus = function(event) {
 }
 Location.prototype.noteTextBlur = function(event) {
 
-	var location = event.data.location;
+	/*var location = event.data.location;
 
 	if ($.trim(location.$noteText.val()) == '') {
 		location.cancelNote();
 		return;
-	}
+	}*/
 
 	
 }
@@ -559,8 +561,6 @@ Location.prototype.editNote = function() {
 	
 	var me = this;
 	GLOBAL.activeNoteLocation = this;
-
-	this.$noteText.blur({ location: this }, this.noteTextBlur);
 
 	$('.note-text-label', this.$element).addClass('hidden');
 	this.$noteText.attr('placeholder', '').addClass('editing');
@@ -600,14 +600,17 @@ Location.prototype.editNote = function() {
 
 }
 Location.prototype.cancelNote = function() {
+	console.log("CANCEL");
 	GLOBAL.activeNoteLocation = null;
+	this.$noteEditor.off('focusout');
 
 	$('.note-text-label', this.$element).removeClass('hidden');
-	this.$noteText.attr('placeholder', this.text['noteTextPlaceholder']).removeClass('editing');
-	this.$noteText.unbind('keyup').unbind('blur');
-	this.$noteText.val('').blur();
+	this.$noteText.attr('placeholder', this.text['noteTextPlaceholder']).removeClass('editing').unbind('keyup').val('').blur();
 
-	$('#cls').append($('#clsCategorySelector')).append($('#clsNoteFrom')).append($('#clsSubmitNote')); 
+	$('#cls').append($('#clsCategorySelector')).append($('#clsNoteFrom')).append($('#clsSubmitNote'));
+
+	$("#submitNoteButton").unbind('click');
+	$("#cancelNoteButton").unbind('click');
 
 }
 Location.prototype.submitNote = function() {
@@ -662,7 +665,7 @@ Location.prototype.submitNote = function() {
 
 }
 
-var NoteEditor = (function() {
+/*var NoteEditor = (function() {
 
 	var $noteEditor;
 	var $txtNoteText;
@@ -760,7 +763,7 @@ var NoteEditor = (function() {
 
 	function submitNoteClickHandler(event) {
 		
-		/*var noteText = $.trim($("#txtNoteText").val());
+		var noteText = $.trim($("#txtNoteText").val());
 		var categoryId = $('#selCategory').val();
 		var fromName = $.trim($('#txtFromName').val());
 
@@ -803,7 +806,7 @@ var NoteEditor = (function() {
 				//error
 			});
 
-		return false;*/
+		return false;
 	}
 
 	function cancelNoteClickHandler(event) {
@@ -853,7 +856,7 @@ var NoteEditor = (function() {
 		newNote: newNote
 	}
 
-}());
+}());*/
 
 var Trip = (function() {
 
