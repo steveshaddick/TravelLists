@@ -9,7 +9,7 @@ ob_start();
 // $TRIP_NAME$ = the trip name
 ?>
 
-New Tripnote: $TRIP_NAME$
+$TRIP_LOCATION$ Tripnotes created
 
 <?php
 // ********** END EDIT **************/
@@ -25,8 +25,8 @@ ob_start();
 // $TRIP_LINK$ = the url for the trip
 ?>
 
-<p>Hi [Name],</p>
-<p>Your new Tripnotes to [Place] has been created.<p>
+<p>Hi $NAME$,</p>
+<p>Your new Tripnotes to $TRIP_LOCATION$ has been created.<p>
 <p>Use the web address below to access your Tripnotes.  You can also share the link with your friends to receive their travel suggestions.</p>
 <p><a href="$TRIP_LINK$">$TRIP_LINK$</a></p>
 <p>If you have any questions, reply to this email or tweet us at <a href="http://www.twitter.com/maketripnotes">@maketripnotes</a></p>
