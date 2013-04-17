@@ -79,7 +79,7 @@
 					<div class="note-text-wrapper">
 						<div style="padding: 0 22px 0 0;">
 							<input type="text" id="txtNoteText_$LOCATION_ID$" class="txtNoteText" placeholder="" />
-							<label for="txtNoteText_$LOCATION_ID$" class="note-text-label">Suggest something in $LOCATION$.</label>
+							<label for="txtNoteText_$LOCATION_ID$" class="note-text-label">Add something in $LOCATION$.</label>
 						</div>
 
 					</div>
