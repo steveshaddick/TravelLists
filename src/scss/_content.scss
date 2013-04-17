@@ -632,7 +632,6 @@ input.editTextInput {
 	width:100%;
 	padding:10px 0;
 	top: -100px;
-
 	border-bottom:1px solid $lightGrey;
 	-webkit-transform: translateZ(0);
 	.location-name {
@@ -651,6 +650,7 @@ input.editTextInput {
 	background-repeat: no-repeat;
 	overflow:hidden;
 	vertical-align: top;
+	
 	display:block;
 	height:28px;
 
