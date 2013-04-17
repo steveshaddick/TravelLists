@@ -361,7 +361,6 @@ input.editTextInput {
 		}
 		
 		.header-tools {
-			float:left;
 			padding-top:23px;
 		}
 
@@ -438,8 +437,6 @@ input.editTextInput {
 		}
 	}
 
-
-	.add-location-button,
 	.edit-done-button{
 
 		float:right;
@@ -874,6 +871,32 @@ a.add-location-link {
 .bottomnewnotes {
 	text-align: center;
 	padding-top: 50px;
+}
+
+.location-footer {
+	position:fixed;
+	bottom:0;
+	z-index:1000;
+	left:0;
+	text-align: center;
+	width:100%;
+	background:#ccc;
+	padding:10px 0;
+
+	.add-location-button{
+
+		@include thin-button();
+		background:$green;
+
+		&:hover {
+			background: $lightGreen;
+
+		}
+	}
+}
+
+.bottom-pad {
+	height:100px;
 }
 
 .footer {

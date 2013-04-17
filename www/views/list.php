@@ -23,13 +23,11 @@
 						<span id="tripSubtitle" class="trip-subtitle"><?php echo $main->trip['subtitle']; ?></span>
 					</div>
 					<div class="header-tools">	
-						<a id="shareTripButton" class="share-trip-link" href="#">Share with friends</a>
-						<span class="spacer spacer1" style="float:right; width:5px;">&nbsp;</span>
 						<a id="editTripButton" class="edit-trip-link" href="#"><img src="/images/icon-pencil.png">Edit this trip</a>
+						<span class="spacer spacer1" style="float:right; width:5px;">&nbsp;</span>
+						<a id="shareTripButton" class="share-trip-link" href="#">Share with friends</a>						
 						
 						<a id="editDoneButton" class="edit-done-button edit-mode edit-off" href="#">Done editing</a>
-						<span class="edit-mode edit-off" style="inline-block; width:5px; float:right;">&nbsp;</span>
-						<a id="addLocationButton" class="add-location-button edit-mode edit-off" href="#">Add location</a>
 
 					</div>
 					<br class="clear">
@@ -57,6 +55,20 @@
 			</div>
 		</div>
 	</div>
+
+	
+
+	<div class="bottomnewnotes">
+		<a class="outline-button" href="/" >Make a new Tripnotes</a></span>
+	</div>
+
+
+	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
+
+	<div class="location-footer edit-mode edit-off">
+		<a id="addLocationButton" class="add-location-button" href="#">Add Location</a>
+	</div>
+	<div class="bottom-pad edit-mode edit-off"></div>
 
 	<div id="cls">
 
@@ -138,12 +150,6 @@
 		</div>
 
 	</div>
-
-	<div class="bottomnewnotes">
-		<a class="outline-button" href="/" >Make a new Tripnote</a></span>
-	</div>
-	
-	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery/jquery-1.8.1.min.js"><\/script>')</script>
