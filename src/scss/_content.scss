@@ -607,10 +607,17 @@ input.editTextInput {
 
 	.notes-hidden {
 		@include serif-italic(24px);
-		text-align:center;
 		color:$darkGrey;
 		display:none;
-		padding:20px 0;
+		position: relative;
+		top:-3px;
+		padding-left:5px;
+
+		.icon {
+			padding-left: 10px;
+			position: relative;
+			top: -5px;
+		}
 	}
 
 }
@@ -622,14 +629,18 @@ input.editTextInput {
 	background: $bgGrey;
 	display:block;
 	width:100%;
-	max-width: 960px;
 	padding:10px 0;
 	top: -100px;
 
 	border-bottom:1px solid $lightGrey;
-
-	color:$darkGrey;
-	@include sans-serif(36px);
+	-webkit-transform: translateZ(0);
+	.location-name {
+		color:$darkGrey;
+		@include sans-serif(36px);
+		display:block;
+		width:960px;
+		margin: 0 auto;
+	}
 }
 
 .note-category {

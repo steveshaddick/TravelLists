@@ -14,7 +14,10 @@
 		</div>
 	</div>
 
+	<div id="stickyLocation" class="sticky-location"><a class="location-name" href="#">&nbsp;</a></div>
+	
 	<div id="body">
+	
 		<div class="list-wrapper">
 			<header id="header">
 				<div class="header-content">
@@ -50,7 +53,7 @@
 		
 			<div class="contentWrapper">
 				<section id="locations">
-					<a id="stickyLocation" class="sticky-location location-name" href="#"></a>
+					
 				</section>
 			</div>
 		</div>
@@ -78,11 +81,10 @@
 				<a class="sprite-button location-up edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 				<a class="sprite-button location-down edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 			</div>
-			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="#" title="Collapse">&#150;</a></span>
+			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="#" title="Collapse">&#150;</a> <span class="notes-hidden"><span class="number"></span><img class="icon" src="/images/icon-note.png" alt="notes"></span></span>
 			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
-				<div class="notes-hidden"></div>
 			</div>
 			<div class="add-note">
 				<div class="note-editor">
@@ -132,7 +134,7 @@
 
 		<div id="clsCategorySelector" class="category-selector">
 			<select name="category" id="selCategory" class="droptrip" style="width:100px;">
-				<option value="0" selected>Note</option>
+				<option value="0" data-image="/images/icon-note.png" selected>Note</option>
 				<option value="2" data-image="/images/icon-food.png">Eat</option>
 				<option value="1" data-image="/images/icon-stay.png">Stay</option>
 				<option value="3" data-image="/images/icon-poi.png">Do</option>

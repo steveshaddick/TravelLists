@@ -415,11 +415,6 @@ Location.prototype.addNote = function(note, animate) {
 	this.$showHideButton.removeClass('hidden');
 
 	this.totalNotes ++;
-	if (this.totalNotes > 1) {
-		$('.notes-hidden', this.$element).html(this.totalNotes + ' notes hidden');
-	} else {
-		$('.notes-hidden', this.$element).html(this.totalNotes + ' note hidden');
-	}
 	
 	if (note.id > GLOBAL.lastNote) {
 		GLOBAL.lastNote = note.id;
@@ -508,11 +503,7 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 			delete location.notes[note.id];
 			
 			location.totalNotes --;
-			if ((location.totalNotes > 1) || (location.totalNotes == 0)) {
-				$('.notes-hidden', location.$element).html(location.totalNotes + ' notes hidden');
-			} else {
-				$('.notes-hidden', location.$element).html(location.totalNotes + ' note hidden');
-			}
+
 			
 		},
 		function() {
@@ -526,6 +517,7 @@ Location.prototype.showHide = function(event) {
 
 	if (location.isOpen) {
 		location.cancelNote();
+		$('.notes-hidden .number', location.$element).html(location.totalNotes);
 		$('.notes-wrapper', location.$element).slideUp();
 		$('.notes-hidden', location.$element).show();
 		location.isOpen = false;
@@ -878,6 +870,7 @@ var Trip = (function() {
 	var $hiddenNoteLink = null;
 
 	var wait = false;
+	var needScroll = true;
 	var $doc;
 	var lastLocationName = '';
 	var $stickyLocation;
@@ -941,6 +934,7 @@ var Trip = (function() {
 	function checkScroll() {
 
 		if (wait) {
+			needScroll = true;
 			return;
 		}
 
@@ -959,15 +953,16 @@ var Trip = (function() {
 		if (locationName != lastLocationName) {
 			lastLocationName = locationName;
 			if (locationName != '') {
-				$stickyLocation.html(locationName).css('top', 0).attr('href', "#" + locations[location].location.hash);
+				$stickyLocation.css('top', 0);
+				$('.location-name', $stickyLocation).html(locationName).attr('href', "#" + locations[location].location.hash);
 			} else {
 				$stickyLocation.css('top', '');
 			}
 		}
 
-
+		needScroll = false;
 		wait = true;
-		setTimeout(function(){ wait = false; }, 50);
+		setTimeout(function(){ wait = false; if (needScroll) checkScroll(); }, 50);
 	}
 
 	function addLocation(locationData, loopOverride) {
@@ -1423,19 +1418,15 @@ EditText.prototype.destroy = function() {
 	this.$input = null;
 }
 
-var ListAdmin = (function() {
 
-	
+/*var ListAdmin = (function() {
 
 	function init(data) {
 		
 		var notices = data.notices;
 
 		$('.add-location-link').click(addLocation);
-		
-
 		$(".settings-button").click(Settings.toggleSettings);
-
 
 		setTimeout(function() {
 			if (typeof notices !== "undefined") {
@@ -1449,40 +1440,14 @@ var ListAdmin = (function() {
 			}
 		}, 1000);
 		
-
 	}
 
-	
-
-	
-
-	
-
-	/*function sortNotes(event, ui) {
-		var $parent = ui.item.parent();
-
-		var notes = [];
-		$('li', $parent).each(function(index) {
-			notes.push($(this).attr('id').replace('note_', ''));
-		});
-
-		save({
-			noteOrder: {	
-				category: $parent.parent().attr('id').replace('category_', ''),
-				notes: notes
-			}
-		});
-	}*/
 
 	return {
-		init: init/*,
-		save: save,
-		sortNotes: sortNotes*/
+		init: init
 	}
 
-}());
-
-
+}());*/
 
 
 

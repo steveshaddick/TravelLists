@@ -52,7 +52,7 @@ class Main {
 		require_once $this->basePath . 'lib/sendgrid-php/SendGrid_loader.php';
 		
 		$encryptedEmail = Encryptor::encrypt($email, SALT);
-		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE email=?");
+		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE email=? AND isActive=1");
 		$stmt->execute(array($encryptedEmail));
 
 		if ($stmt->rowCount() > 0) {
@@ -74,7 +74,8 @@ class Main {
 			$html = str_replace(array("\r\n", "\n", "\r"), "", $html);
 
 			$mail->addTo($email);
-			$mail->setFrom("forgot.trip@maketripnotes.com");
+			$mail->setFrom("hello@maketripnotes.com");
+			$mail->setFromName("Tripnotes");
 			$mail->setSubject($subject);
 			$mail->setHtml($html);
 			$mail->setText(html2text($html));
@@ -123,6 +124,7 @@ class Main {
 		if ($tripLocation === false) {
 			$tripLocation = array('lat'=>0, 'lng'=> 0);
 		}
+		$shortLocation = (strpos($location, ',') !== false) ? substr($location, 0, strpos($location)) : $location;
 
 		$subtitle = $userName . "'s";
 		
@@ -136,17 +138,18 @@ class Main {
 
 		require_once $this->basePath . 'views/email/welcome.php';
 
-		$subject = str_replace('$TRIP_NAME$', $tripName, $emailContent['subject']);
+		$subject = str_replace(array('$TRIP_NAME$', '$TRIP_LOCATION$', '$NAME$'), array($tripName, $shortLocation, $userName), $emailContent['subject']);
 
 		$html = $emailContent['head'];
-		$html .= str_replace('$TRIP_LINK$', 'http://' . SITE_URL . $publicHash, $emailContent['body']);
+		$html .= str_replace(array('$TRIP_NAME$', '$TRIP_LINK$', '$TRIP_LOCATION$', '$NAME$'), array($tripName, 'http://' . SITE_URL . $publicHash, $shortLocation, $userName), $emailContent['body']);
 		$html .= $emailContent['foot'];
 
 		//$html = str_replace("<h1>", '<h1 style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:16px;color:#333">', $html);
 		//$html = str_replace("<p>", '<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#7d7d7d; margin-top:10px;">', $html);
 
 		$mail->addTo($data['email']);
-		$mail->setFrom("welcome@maketripnotes.com");
+		$mail->setFrom("hello@maketripnotes.com");
+		$mail->setFromName("Tripnotes");
 		$mail->setSubject($subject);
 		$mail->setHtml($html);
 		$mail->setText(html2text($html));
