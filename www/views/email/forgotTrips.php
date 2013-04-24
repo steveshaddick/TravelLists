@@ -24,9 +24,9 @@ ob_start();
 ?>
 
 <p>
-Hello traveller,<br><br>
+Howdy traveller,<br><br>
 
-Here's all your Tripnotes:
+Here are all your Tripnotes:
 </p>
 
 <?php
@@ -64,7 +64,7 @@ ob_start();
 ?>
 
 <p>
-Thanks for using Tripnotes, the easiest way to get &amp; organize trip suggestions.<br><br>
+Thanks for using Tripnotes, the easiest way to get &amp; organize travel recommendations.<br><br>
 Happy travels from Steve, Nathan, and Charles<br/>
 hello@maketripnotes.com
 </p>

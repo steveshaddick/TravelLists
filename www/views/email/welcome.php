@@ -26,14 +26,14 @@ ob_start();
 ?>
 
 <p>Hi $NAME$,</p>
-<p>Your new Tripnotes to $TRIP_LOCATION$ has been created.<p>
-<p>Use the web address below to access your Tripnotes.  You can also share the link with your friends to receive their travel suggestions.</p>
+<p>Your new Tripnote to $TRIP_LOCATION$ has been created.<p>
+<p>Use the link below to plan your trip.  You can also share the link with friends to get their recommendations of the best places to eat, stay and things to do.</p>
 <p><a href="$TRIP_LINK$">$TRIP_LINK$</a></p>
 <p>If you have any questions, reply to this email or tweet us at <a href="http://www.twitter.com/maketripnotes">@maketripnotes</a></p>
 
 
 <p>
-Thanks for using Tripnotes, the easiest way to get &amp; organize trip suggestions.<br><br>
+Thanks for using Tripnotes, the easiest way to get &amp; organize travel recommendations.<br><br>
 Happy travels from Steve, Nathan, and Charles<br/>
 hello@maketripnotes.com
 </p>
