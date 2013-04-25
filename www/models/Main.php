@@ -36,7 +36,7 @@ class Main {
 	public function init() {
 
 		try {
-			$this->db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=UTF-8',  DB_USERNAME, DB_PASSWORD);
+			$this->db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',  DB_USERNAME, DB_PASSWORD);
 		} catch (PDOException $e) {
 			$this->db = null;
 			echo $e->getMessage();
