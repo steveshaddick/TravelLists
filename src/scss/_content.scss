@@ -89,11 +89,8 @@ input[type="email"]
 	background: transparent url('/images/dot.png') repeat-x bottom;
 	text-align: center;
 	@include sans-serif(36px);
-	height: 36px;
 	width: 460px;
 	color:$darkGrey;
-	padding:7px;
-
 	&:focus {
 		color:#000;
 		outline:none;
@@ -802,6 +799,7 @@ a.add-location-link {
 	.txtFromName {
 		@include sans-serif(20px);
 		width: auto;
+		margin-top:10px;
 	}
 
 	.note-submit-wrapper {
