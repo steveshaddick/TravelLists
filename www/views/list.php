@@ -164,7 +164,7 @@
     <script src="/js/jquery/jquery.dd.js"></script>
     <script src="/js/json2.js"></script>
 
-	<script src="/js/Main.js"></script>
+	<script src="/js/main.min.js"></script>
 
 	<script>
 	

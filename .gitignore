@@ -10,3 +10,4 @@ tripnotes_error_log/
 www.esproj/
 *.esproj/
 .DS_Store
+node_modules/

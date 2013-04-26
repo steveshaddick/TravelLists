@@ -3,4 +3,4 @@
 
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
-<script src="/js/Main.js"></script>
+<script src="/js/main.min.js"></script>
