@@ -95,7 +95,7 @@ Location.prototype.addNote = function(note, animate) {
 	var $note = $("#clsNote").clone().attr('id', 'note_' + note.id);
 
 	animate = (typeof animate == "undefined") ? false : animate;
-	
+
 	if (note.canDelete){
 		$('.note-delete a', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	}
@@ -105,7 +105,7 @@ Location.prototype.addNote = function(note, animate) {
 
 	if (note.linkCheck <= (new Date().valueOf() / 1000)) {
 		Main.queueLinkCheck(this, note.id, note.linkUrl);
-	} 
+	}
 	this.parseNote(note.id);
 
 	this.$notesElement.append($note);
@@ -117,6 +117,7 @@ Location.prototype.addNote = function(note, animate) {
 	this.$showHideButton.removeClass('hidden');
 
 	this.totalNotes ++;
+	this.expand();
 	
 	if (note.id > GLOBAL.lastNote) {
 		GLOBAL.lastNote = note.id;
