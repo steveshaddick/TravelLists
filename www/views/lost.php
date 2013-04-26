@@ -43,11 +43,8 @@
 	</div>
 
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
-	
 	<?php include(BASE_PATH . 'views/parts/bottom-scripts.php'); ?>
 
-	<script src="/js/Home.js"></script>
-	<script>
 	
 	$(document).ready(
 		function() {

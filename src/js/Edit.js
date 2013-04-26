@@ -57,7 +57,7 @@ var EditModeModal = (function() {
 	}
 
 	function sendEmail() {
-		
+
 		if (isSending) return;
 
 		var email = $txtEmail.val();
@@ -120,7 +120,7 @@ var EditModeModal = (function() {
 	return {
 		open: open,
 		close: close
-	}
+	};
 }());
 
 var EditMode = (function() {
@@ -138,7 +138,7 @@ var EditMode = (function() {
 		$("header").addClass('edit-on');
 		$("#map").addClass('edit-on');
 
-		$("#addLocationButton").click(addLocation);
+		$("#addLocationButton").click(openLocationModal);
 		$(document).on('click', '.delete-location-button', deleteLocation).on('click', '.location-up', reorderLocation).on('click', '.location-down', reorderLocation);
 		$("#editDoneButton").click(dinit);
 
@@ -168,17 +168,18 @@ var EditMode = (function() {
 		return false;
 	}
 
-	function addLocation() {
+	function openLocationModal() {
 		$('html, body').scrollTop(0);
 		Modal.load('/views/modal/addLocation.html', function() {
 			var options = {
-			  types: ['(regions)']
+				types: ['(regions)']
 			};
-
 			autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtLocation'), options);
 
-			$('.submitLocationLink').click(submitLocation);
-		});
+			Modal.jQ('.submit-location-link').click(submitLocation);
+			Modal.jQ('.cancel-link').click(closeLocationModal);
+		},
+		'location-modal');
 
 		return false;
 	}
@@ -189,15 +190,20 @@ var EditMode = (function() {
 
 		Ajax.call('addLocation', {location: location}, 
 			function(data) {
-				autocomplete = null;
-				$('.submitLocationLink').unbind('click');
-				Modal.close();
+				closeLocationModal();
 				Trip.addLocation(data);
 			},
 			function() {
 				$('#txtLocation').val('');
 				$('#txtLocation').prop('disabled', false);
 			});
+	}
+
+	function closeLocationModal() {
+			autocomplete = null;
+			Modal.jQ('.submit-location-link').unbind('click');
+			Modal.jQ('.cancel-link').unbind('click');
+			Modal.close();
 	}
 
 	function deleteLocation(event) {

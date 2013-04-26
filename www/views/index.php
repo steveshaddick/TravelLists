@@ -61,9 +61,6 @@
 	
 	<?php include(BASE_PATH . 'views/parts/bottom-scripts.php'); ?>
 
-	<script src="/js/Home.js"></script>
-	<script>
-	
 	$(document).ready(
 		function() {
 			Main.init({

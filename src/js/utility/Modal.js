@@ -16,13 +16,13 @@ var Modal = (function() {
 	function close() {
 		
 		if (typeof contentClass != "undefined") {
-			$("#modalContent").removeClass(contentClass);
+			$content.removeClass(contentClass);
 		}
 
 		isModal = false;
 		contentClass = false;
 
-		$("#modalContent").html('');
+		$content.html('');
 		$("#modal").css('display', 'none');
 
 		$(document).unbind('keydown', keyDownHandler);
@@ -33,8 +33,9 @@ var Modal = (function() {
 	function onLoad() {
 		if (!isModal) return;
 
+		$content = $("#modalContent");
 		if (typeof contentClass != "undefined") {
-			$("#modalContent").addClass(contentClass);
+			$content.addClass(contentClass);
 		}
 
 		if (typeof loadCallback != "undefined") {
@@ -59,9 +60,14 @@ var Modal = (function() {
 		return false;
 	}
 
+	function jQ(selector) {
+		return $(selector, $content);
+	}
+
 	return {
 		load: load,
-		close : close
-	}
+		close : close,
+		jQ: jQ
+	};
 
 }());

@@ -19,17 +19,25 @@ grunt.initConfig({
 
 	uglify: {
 		options: {
-			preserveComments: 'some'
+			preserveComments: 'some',
+			compress: false,
+			beautify: true
 		},
 		'uc': {
 			files: {
 				'www/js/main.min.js': [
-					'src/js/utility/*.js',
 					'src/js/Location.js',
 					'src/js/Trip.js',
 					'src/js/Edit.js',
 					'src/js/Home.js',
 					'src/js/Main.js'
+				],
+				'www/js/lib.min.js': [
+					'src/js/lib/jquery/jquery-ui-1.9.0.custom.min.js',
+					'src/js/lib/jquery/jquery.cookie.min.js',
+					'src/js/lib/jquery/jquery.dd.js',
+					'src/js/lib/json2.js',
+					'src/js/utility/*.js'
 				]
 			}
 		}

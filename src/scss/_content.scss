@@ -998,4 +998,36 @@ a.add-location-link {
 			
 		}
 	}
+
+	&.location-modal {
+		text-align:center; 
+		width:620px; 
+		min-height:335px;
+		margin-top: -167px;
+		margin-left: -310px;
+
+		.submit-location-link {
+			@include block-button();
+			background:$green;
+			text-transform: uppercase;
+			&:hover {
+				background:$lightGreen;
+			}
+		}
+
+		.cancel-link {
+			color: $orange;
+			@include sans-serif(14px);
+			text-transform: uppercase;
+			padding-left:20px;
+			letter-spacing: 1px;
+
+			position:absolute;
+			right:80px;
+
+			&:hover {
+				color: $lightOrange;
+			}
+		}
+	}
 }

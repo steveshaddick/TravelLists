@@ -14,6 +14,30 @@ var GLOBAL = {
 	noteCookie: false
 };
 
+/*var pHold = [];
+var fakeId = 0;
+var immediateTimeout = false;
+function p(selector, context, hold) {
+	var cp = "none";
+	if (context) {
+		if (context[0].id === "") {
+			context[0].id = cp = "___" + fakeId;
+			fakeId ++;
+			pHold[cp] = [];
+		}
+	}
+	if (pHold[cp][selector]) {
+		return pHold[cp][selector];
+	} else {
+		pHold[cp][selector] = $(selector, context);
+		if (!immediateTimeout) {
+			setTimeout(function() {
+				pHold[cp][selector] = null;
+			});
+		}
+	}
+}*/
+
 var Notice = (function() {
 
 	var notices = [];
@@ -76,7 +100,7 @@ var Notice = (function() {
 			removeNotice();
 		});
 		
-		Ajax.call('deleteNotice', {noticeId: notices[0]._id}, 
+		Ajax.call('deleteNotice', {noticeId: notices[0]._id},
 			null,
 			null,
 			true
@@ -114,8 +138,7 @@ var Notice = (function() {
 
 	return {
 		addNotice: addNotice
-	}
-
+	};
 }());
 
 var Settings = (function() {
@@ -125,8 +148,7 @@ var Settings = (function() {
 
 
 	function open() {
-		$("txtTripName").val()
-
+		$("txtTripName").val();
 	}
 
 	function toggleSettings() {
@@ -147,17 +169,14 @@ var Settings = (function() {
 
 var Main = (function() {
 
-	
 	var linkQueue = [];
-	
+
 	function init(obj) {
-		
 		Ajax.init(obj.a);
 		GLOBAL.isAdmin = obj.isAdmin;
 		GLOBAL.noteCookie = obj.noteCookie;
 
 		$("#shareTripButton").click(openShareModal);
-		
 	}
 
 	function loadBlock() {
@@ -169,7 +188,7 @@ var Main = (function() {
 
 	function queueLinkCheck(location, noteId, url) {
 
-		if (url =='') return;
+		if (url == '') return;
 
 		linkQueue.push({location: location, noteId:noteId, url: url});
 
@@ -199,7 +218,6 @@ var Main = (function() {
 	}
 
 	function poll() {
-		
 		setTimeout(sendPoll, GLOBAL.polltime);
 	}
 
@@ -222,16 +240,13 @@ var Main = (function() {
 			GLOBAL.polltime = (data.polltime) ? data.polltime : GLOBAL.polltime;
 			var i;
 			for (i=0; i<data.locations.length; i++) {
-				
 				Trip.addLocation(data.locations[i]);
 			}
 			for (i=0; i<data.notes.length; i++) {
-				
 				Trip.addNote(data.notes[i], true);
 			}
 			if (GLOBAL.isAdmin) {
 				for (i=0; i<data.notices.length; i++) {
-					
 					Notice.addNotice(data.notices[i]);
 				}
 			}
@@ -244,19 +259,17 @@ var Main = (function() {
 			'/views/modal/shareTrip.html',
 			function() {
 				$('.text-box', $('#modalContent')).val("http://" + window.location.hostname + window.location.pathname).select();
-				
 				$('#doneButton').click(function() {
 					$('#doneButton').unbind('click');
-					Modal.close()
+					Modal.close();
 				});
 			},
 			'share-modal'
 			);
 
 		return false;
-
 	}
-	
+
 	return {
 		init : init,
 		loadBlock: loadBlock,
@@ -264,5 +277,4 @@ var Main = (function() {
 		queueLinkCheck: queueLinkCheck,
 		poll: poll
 	};
-	
 }());

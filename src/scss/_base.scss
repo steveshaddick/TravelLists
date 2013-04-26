@@ -39,6 +39,7 @@ $maxWidth: 1250px;
 	font-weight: 600;
 	font-size: $size;
 	line-height:$size;
+	font-style: normal;
 }
 
 @mixin border($color) {
