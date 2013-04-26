@@ -242,12 +242,25 @@ var Trip = (function() {
 		return false;
 	}
 
+	function forceCollapseNotes() {
+		for (var loc in locations) {
+			locations[loc].location.forceCollapse();
+		}
+	}
+	function reExpandNotes() {
+		for (var loc in locations) {
+			locations[loc].location.reExpand();
+		}
+	}
+
 	return {
 		loadTrip: loadTrip,
 		addLocation: addLocation,
 		addNote: addNote,
 		deleteLocation: deleteLocation,
 		reorderLocation: reorderLocation,
-		getTripInfo: getTripInfo
+		getTripInfo: getTripInfo,
+		forceCollapseNotes: forceCollapseNotes,
+		reExpandNotes: reExpandNotes
 	}
 }());

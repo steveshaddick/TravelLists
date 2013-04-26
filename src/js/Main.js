@@ -262,6 +262,7 @@ var Main = (function() {
 				$('#doneButton').click(function() {
 					$('#doneButton').unbind('click');
 					Modal.close();
+					return false;
 				});
 			},
 			'share-modal'

@@ -5,6 +5,7 @@ function Location(data, isLast) {
 	this.lat = data.lat;
 	this.lng = data.lng;
 	this.isOpen = true;
+	this.wasOpen = true;
 	this.totalNotes = 0;
 
 	this.topOffset = this.bottomOffset = 0;
@@ -217,21 +218,36 @@ Location.prototype.showHide = function(event) {
 	var location = event.data.location;
 
 	if (location.isOpen) {
-		location.cancelNote();
-		$('.notes-hidden .number', location.$element).html(location.totalNotes);
-		$('.notes-wrapper', location.$element).slideUp();
-		$('.notes-hidden', location.$element).show();
-		location.isOpen = false;
-		location.$showHideButton.html('+').attr('title', 'Expand');
+		location.collapse();
 	} else {
-		$('.notes-wrapper', location.$element).slideDown();
-		$('.notes-hidden', location.$element).hide();
-		location.isOpen = true;
-		location.$showHideButton.html('&#150;').attr('title', 'Collapse');
+		location.expand();
 	}
 
 	return false;
-}
+};
+Location.prototype.collapse = function() {
+	this.cancelNote();
+	$('.notes-hidden .number', this.$element).html(this.totalNotes);
+	$('.notes-wrapper', this.$element).slideUp();
+	$('.notes-hidden', this.$element).show();
+	this.isOpen = false;
+	this.$showHideButton.html('+').attr('title', 'Expand');
+};
+Location.prototype.expand = function() {
+	$('.notes-wrapper', this.$element).slideDown();
+	$('.notes-hidden', this.$element).hide();
+	this.isOpen = true;
+	this.$showHideButton.html('&#150;').attr('title', 'Collapse');
+};
+Location.prototype.forceCollapse = function() {
+	this.wasOpen = this.isOpen;
+	this.collapse();
+};
+Location.prototype.reExpand = function() {
+	if (this.wasOpen) {
+		this.expand();
+	}
+};
 Location.prototype.noteTextFocus = function(event) {
 	var location = event.data.location;
 
@@ -241,7 +257,7 @@ Location.prototype.noteTextFocus = function(event) {
 	}
 	location.editNote();
 	
-}
+};
 Location.prototype.noteTextBlur = function(event) {
 
 	/*var location = event.data.location;
@@ -252,7 +268,7 @@ Location.prototype.noteTextBlur = function(event) {
 	}*/
 
 	
-}
+};
 Location.prototype.editNote = function() {
 	
 	var me = this;
@@ -294,7 +310,7 @@ Location.prototype.editNote = function() {
 	$("#submitNoteButton").click(function() { me.submitNote(); return false;});
 	$("#cancelNoteButton").click(function() { me.cancelNote(); return false;});
 
-}
+};
 Location.prototype.cancelNote = function() {
 
 	GLOBAL.activeNoteLocation = null;
@@ -309,7 +325,7 @@ Location.prototype.cancelNote = function() {
 	$("#submitNoteButton").unbind('click');
 	$("#cancelNoteButton").unbind('click');
 
-}
+};
 Location.prototype.submitNote = function() {
 	var noteText = $.trim(this.$noteText.val());
 	var categoryId = $('#selCategory').val();
@@ -359,5 +375,4 @@ Location.prototype.submitNote = function() {
 			me.cancelNote();
 			$(".blocker", this.$element).addClass('hidden');
 		});
-
-}
+};

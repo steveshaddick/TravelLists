@@ -115,6 +115,7 @@ var EditModeModal = (function() {
 		isSending = false;
 
 		Modal.close();
+		return false;
 	}
 
 	return {
@@ -151,6 +152,7 @@ var EditMode = (function() {
 		});*/
 
 		$("#editBar").slideDown();
+		Trip.forceCollapseNotes();
 	}
 
 	function dinit() {
@@ -173,6 +175,7 @@ var EditMode = (function() {
 		editNotes = [];*/
 
 		$("#editBar").slideUp();
+		Trip.reExpandNotes();
 
 		return false;
 	}
