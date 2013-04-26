@@ -12,9 +12,9 @@ var EditModeModal = (function() {
 	}
 
 	function validateEmail(email) { 
-    	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return re.test(email);
-	} 
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
 
 	function txtChange(e) {
 		var txtValid = true;
@@ -190,6 +190,17 @@ var EditMode = (function() {
 
 			Modal.jQ('.submit-location-link').click(submitLocation);
 			Modal.jQ('.cancel-link').click(closeLocationModal);
+
+			$("#txtLocation").select().keypress(function(event) {
+				var code = (event.keyCode ? event.keyCode : event.which);
+				switch (code) {
+					//enter
+					case 13:
+						submitLocation();
+						break;
+				}
+			});
+
 		},
 		'location-modal');
 
@@ -198,6 +209,8 @@ var EditMode = (function() {
 
 	function submitLocation() {
 		var location = $('#txtLocation').val();
+		if (location == '') return;
+
 		$('#txtLocation').prop('disabled', true);
 
 		Ajax.call('addLocation', {location: location},
@@ -215,6 +228,7 @@ var EditMode = (function() {
 
 	function closeLocationModal() {
 			autocomplete = null;
+			$("#txtLocation").unbind('keypress');
 			Modal.jQ('.submit-location-link').unbind('click');
 			Modal.jQ('.cancel-link').unbind('click');
 			Modal.close();
