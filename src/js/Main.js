@@ -176,8 +176,6 @@ var Main = (function() {
 		GLOBAL.isAdmin = obj.isAdmin;
 		GLOBAL.noteCookie = obj.noteCookie;
 
-		$(document).click(function(event){console.log(event.target);});
-
 		$("#shareTripButton").click(openShareModal);
 	}
 
