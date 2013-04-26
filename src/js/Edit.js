@@ -128,6 +128,7 @@ var EditMode = (function() {
 	var autocomplete = null;
 	var editTitle;
 	var editSubtitle;
+	var editNotes = [];
 
 	function init() {
 		$(".edit-mode").removeClass('edit-off');
@@ -144,6 +145,10 @@ var EditMode = (function() {
 
 		editTitle = new EditText($("#tripTitle"), function() { save({tripTitle:$("#tripTitle").html() }); });
 		editSubtitle = new EditText($("#tripSubtitle"), function() { save({tripSubtitle:$("#tripSubtitle").html() }); });
+
+		/*$('.note-text').each(function( index ) {
+			editNotes.push(new EditText($(this), saveNote));
+		});*/
 
 		$("#editBar").slideDown();
 	}
@@ -162,6 +167,10 @@ var EditMode = (function() {
 
 		editTitle.destroy();
 		editSubtitle.destroy();
+		/*for (var i=0; i<editNotes.length; i++) {
+			editNotes[i].destroy();
+		}
+		editNotes = [];*/
 
 		$("#editBar").slideUp();
 
@@ -188,7 +197,7 @@ var EditMode = (function() {
 		var location = $('#txtLocation').val();
 		$('#txtLocation').prop('disabled', true);
 
-		Ajax.call('addLocation', {location: location}, 
+		Ajax.call('addLocation', {location: location},
 			function(data) {
 				closeLocationModal();
 				Trip.addLocation(data);
@@ -197,6 +206,8 @@ var EditMode = (function() {
 				$('#txtLocation').val('');
 				$('#txtLocation').prop('disabled', false);
 			});
+
+		return false;
 	}
 
 	function closeLocationModal() {
@@ -204,12 +215,14 @@ var EditMode = (function() {
 			Modal.jQ('.submit-location-link').unbind('click');
 			Modal.jQ('.cancel-link').unbind('click');
 			Modal.close();
+
+		return false;
 	}
 
 	function deleteLocation(event) {
 		var locationId = $(this).attr('data-id');
 
-		Ajax.call('deleteLocation', {locationId: locationId}, 
+		Ajax.call('deleteLocation', {locationId: locationId},
 			function(data) {
 				Trip.deleteLocation(locationId);
 			},
@@ -228,6 +241,10 @@ var EditMode = (function() {
 		return false;
 	}
 
+	function saveNote($note) {
+		save($note.html());
+	}
+
 	function save(data) {
 
 		Ajax.call('saveTrip', data);
@@ -237,7 +254,7 @@ var EditMode = (function() {
 	return {
 		init: init,
 		dinit: dinit
-	}
+	};
 
 }());
 
@@ -246,8 +263,8 @@ var EditText = function($element, saveCallback) {
 	this.$element = $element;
 	this.saveCallback = saveCallback;
 
-	this.$divWrapper = $('<div><input type="text" disabled="disabled" class="editTextInput" /></div>');
-	this.$divWrapper.attr('class', this.$element.attr('class'));
+	this.$divWrapper = $('<div class="edit-text"><input type="text" disabled="disabled" class="editTextInput" /></div>');
+	this.$divWrapper.addClass(this.$element.attr('class'));
 
 	this.$input = $('.editTextInput', this.$divWrapper).css('display', 'none');
 
@@ -256,7 +273,7 @@ var EditText = function($element, saveCallback) {
 	this.$input.val(this.$element.html());
 
 	this.$divWrapper.click({editText: this}, this.onClickHandler);
-}
+};
 
 EditText.prototype.onClickHandler = function(event) {
 
@@ -269,7 +286,7 @@ EditText.prototype.onClickHandler = function(event) {
 
 	editText.$input.select().blur({editText: editText}, editText.finishText).keypress({editText: editText}, editText.onKeypress);
 
-}
+};
 
 EditText.prototype.onKeypress = function(event) {
 	var code = (event.keyCode ? event.keyCode : event.which);
@@ -289,7 +306,7 @@ EditText.prototype.onKeypress = function(event) {
 			break;
 
 	}
-}
+};
 
 EditText.prototype.finishText = function(event) {
 
@@ -301,15 +318,18 @@ EditText.prototype.finishText = function(event) {
 	editText.$divWrapper.click({editText: editText}, editText.onClickHandler);
 
 	if (typeof event.data.noSave == "undefined") {
-		editText.saveCallback();
+		editText.saveCallback(editText.$element);
 	}
-}
+};
 
 EditText.prototype.destroy = function() {
+	
+	this.$divWrapper.unbind('click');
+	this.$divWrapper.before(this.$element);
+	this.$divWrapper.remove();
+	this.$divWrapper = null;
+	this.$input.remove();
+	this.$input = null;
 	this.$element = null;
 	this.saveCallback = null;
-
-	this.$divWrapper.unbind('click');
-	this.$divWrapper = null;
-	this.$input = null;
-}
+};

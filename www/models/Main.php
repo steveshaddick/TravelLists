@@ -467,6 +467,46 @@ class Main {
 						$order ++;
 					}
 					break;
+
+				case 'note':
+					/*$note = array('_id'=>$value['id'], 'note'=> $value['note']);
+
+					$linkUrl = '';
+					$linkTitle ='';
+					$linkDescription = '';
+					$linkImage = '';
+					$nextCheck = 0;
+
+					$note['note'] = preg_replace('/[^http:\/\/]\bwww\./i', ' http://www.', $note['note']);
+					if (substr($note['note'],0, 4) == 'www.') {
+						$note['note'] = 'http://' . $note['note'];
+					}
+					preg_match("/(\(?\bhttps?:\/\/[-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#\/%=~_()|])/", $note['note'], $match);
+					if (count($match) > 0) {
+						$linkUrl = $match[0];
+					}
+
+					if ($linkUrl != '') {
+
+						$stmt = $this->db->prepare("SELECT linkTitle, linkImage, linkDescription, nextCheck FROM LinkMetaData WHERE url=?");
+						$stmt->execute(array($linkUrl));
+						
+						if ($stmt->rowCount() > 0) {
+							$row = $stmt->fetch();
+							$linkTitle = $row['linkTitle'];
+							$linkImage = $row['linkImage'];
+							$linkDescription = $row['linkDescription'];
+							$nextCheck = $row['nextCheck'];
+						}
+					}
+
+					$_SESSION['noteCookie'] = $note['noteCookie'];
+
+					$stmt = $this->db->prepare("UPDATE Notes SET trip_id=?, location_id=?, category_id=?, fromName=?, note=?, linkUrl=?, linkTitle=?, linkImage=?, linkDescription=?, linkCheck=?, listOrder=?, cookie=?");
+					$stmt->execute(array($tripId, $note['locationId'], $note['categoryId'], $note['fromName'], $note['note'], $linkUrl, $linkTitle, $linkImage, $linkDescription, $nextCheck, $listOrder, $note['noteCookie']));
+*/
+					//'linkUrl'=>$linkUrl, 'linkTitle'=>$linkTitle, 'linkImage'=>$linkImage, 'linkDescription'=>$linkDescription, 'linkCheck'=>$nextCheck, 
+					break;
 			}
 		}
 

@@ -133,6 +133,11 @@ input[type="email"]
 	background:#eee;
 }
 
+.edit-text {
+	border: 1px dashed #fff;
+	border-radius: $borderRadius;
+}
+
 #modal {
 	display:none;
 	height:100%;
