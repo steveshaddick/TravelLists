@@ -62,7 +62,7 @@
 	
 
 	<div class="bottomnewnotes">
-		<a class="outline-button" href="/" >Make a new Tripnotes</a></span>
+		<a class="outline-button" href="/" >Make a new Tripnotes</a>
 	</div>
 
 
@@ -143,7 +143,7 @@
 
 		<div id="clsNoteFrom" class="note-from-wrapper">
 			<input type="text" id="txtFromName" class="txtFromName" placeholder="Anonymous" />
-			<label for"txtFromName" class="note-from-label">Your name</label>
+			<label for="txtFromName" class="note-from-label">Your name</label>
 		</div>
 
 		<div id="clsSubmitNote" class="note-submit-wrapper">
