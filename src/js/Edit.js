@@ -60,7 +60,6 @@ var EditModeModal = (function() {
 		}
 
 		txtChange();
-
 	}
 
 	function sendEmail() {
