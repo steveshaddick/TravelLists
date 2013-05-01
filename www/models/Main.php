@@ -113,11 +113,10 @@ class Main {
 		}
 
 		//TODO: change this to something better
-		$stmt = $this->db->prepare("SELECT _id FROM Lists WHERE adminHash=? OR publicHash=? LIMIT 1");
+		$stmt = $this->db->prepare("SELECT _id FROM Lists WHERE publicHash=? LIMIT 1");
 		do {
-			$adminHash = randomString(20);
 			$publicHash = randomString(20);
-			$stmt->execute(array($adminHash, $publicHash));
+			$stmt->execute(array($publicHash));
 			$duplicate = $stmt->fetchAll();
 		} while (count($duplicate) !== 0);
 
@@ -131,8 +130,8 @@ class Main {
 
 		$subtitle = $userName . "'s";
 		
-		$stmt = $this->db->prepare("INSERT INTO Lists SET adminHash=?, publicHash=?, tripName=?, subtitle=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
-		$stmt->execute(array($adminHash, $publicHash, $tripName, $subtitle, $userName, $email, $tripLocation['lat'], $tripLocation['lng']));
+		$stmt = $this->db->prepare("INSERT INTO Lists SET publicHash=?, tripName=?, subtitle=?, userName=?, email=?, lat=?, lng=?, dateCreated='$now'");
+		$stmt->execute(array($publicHash, $tripName, $subtitle, $userName, $email, $tripLocation['lat'], $tripLocation['lng']));
 
 		$_SESSION['trip_id'] = $this->db->lastInsertId();
 
@@ -172,7 +171,7 @@ class Main {
 		$this->addLocation($location, $tripLocation);
 		$this->isEditMode = false;
 
-		return array('tripHash'=>$adminHash);
+		return array('tripHash'=>$publicHash);
 
 	}
 
@@ -185,8 +184,8 @@ class Main {
 		$list = $id;
 
 
-		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE adminHash=? OR publicHash=? LIMIT 1");
-		$stmt->execute(array($list, $list));
+		$stmt = $this->db->prepare("SELECT * FROM Lists WHERE publicHash=? LIMIT 1");
+		$stmt->execute(array($list));
 		$this->trip = $stmt->fetch();
 
 		if ($stmt->rowCount() == 0) {
