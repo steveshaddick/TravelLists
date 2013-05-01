@@ -3,6 +3,7 @@ var EditModeModal = (function() {
 	var $txtEmail;
 	var $submit;
 	var isSending = false;
+	var rememberEdit = false;
 
 	function open() {
 		Modal.load('/views/modal/enterEmail.html',
@@ -34,6 +35,12 @@ var EditModeModal = (function() {
 	}
 
 	function init() {
+
+		if (rememberEdit) {
+			EditMode.init();
+			Modal.close();
+			return;
+		}
 
 		$submit = $("#emailAdmin");
 		$txtEmail = $("#txtEmail");
@@ -77,12 +84,16 @@ var EditModeModal = (function() {
 			},
 			function() {
 				EditMode.init();
+				if ($.cookie('email')) {
+					rememberEdit = true;
+				}
 				close();
 			},
 			function() {
 				$txtEmail.addClass('error');
 				$("#errorReturn").removeClass('hidden');
 				isSending = false;
+				rememberEdit = false;
 
 			});
 
