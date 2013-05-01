@@ -4,10 +4,9 @@
 		<div class="contentWrapper">
 		
 		<header class="about-header">
-			<h1 class="site-title"><a href="http://dev.maketripnotes.com">Tripnotes</a></h1>
-			<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
-		</header>		
-		
+				<h1 class="site-title"><img src="../images/tripnotes@2x.png" width="398" height="88" alt="Tripnotes"></h1>
+				<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
+			</header>		
 		
 			<div id="landingPage" class="about-page page-content ">
 
