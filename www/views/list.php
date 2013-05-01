@@ -69,7 +69,7 @@
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 
 	<div class="location-footer edit-mode edit-off">
-		<a id="addLocationButton" class="add-location-button" href="#"><img src="/images/icon-pin.png" width="7" height="14" alt="Icon Pin"> Add a new place to your Tripnotes</a>
+		<a id="addLocationButton" class="add-location-button" href="#"><img src="/images/icon-pin.png" alt="Icon Pin"> Add a new place to your Tripnotes</a>
 	</div>
 	<div class="bottom-pad edit-mode edit-off"></div>
 
