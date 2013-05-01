@@ -14,7 +14,7 @@
 
 			<section id="lostTripPage" class="home-page page-current">
 				<header class="start-header">
-					<h1 class="site-title"><a href="/"><img src="../images/tripnotes@2x.png" width="398" height="88" alt="Tripnotes"></a></h1>
+					<h1 class="site-title"><a href="/"><img src="/images/tripnotes@2x.png" width="398" height="88" alt="Tripnotes"></a></h1>
 					<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
 				</header>
 
