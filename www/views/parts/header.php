@@ -16,12 +16,12 @@
 	?>
 	
 	<title><?php echo $view->title; ?></title>
-	<meta name="title" content="<?php echo $view->title; ?>s" />
 	<meta name="description" content="<?php echo $view->description; ?>" />
 	
 	<link href="/css/boilerplate_top.css" rel="stylesheet" type="text/css" />
 	<link href="/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="/css/boilerplate_bottom.css" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
 	<script src="//use.typekit.net/cyh8uls.js"></script>
 	<script >try{Typekit.load();}catch(e){}</script>
