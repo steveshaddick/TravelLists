@@ -163,20 +163,30 @@ var Trip = (function() {
 		}
 	}
 
-	/*function addNoteClickHandler(event) {
-
-		var location = event.data.location;
-
-		//NoteEditor.newNote($(this).parent(), location);
-
-	}*/
-
-	/*function submitNoteClickHandler(event) {
-		
-		
-	}*/
-
 	function deleteLocation(locationId) {
+		
+		var size = 0, key;
+	    for (key in locations[locationId].location.notes) {
+			if (locations[locationId].location.notes.hasOwnProperty(key)) size++;
+			break;
+		}
+		if (size > 0) {
+			if (!confirm("\"" + locations[locationId].location.name + "\" has notes in it, are you sure you want to delete it?")) {
+				return false;
+			}
+		}
+
+		Ajax.call('deleteLocation', {locationId: locationId},
+			function(data) {
+				removeLocation(locationId);
+			},
+			function() {
+				//error
+			});
+
+	}
+
+	function removeLocation(locationId) {
 		//TODO delete listeners?
 		$("#location_" + locationId).remove();
 		if (locations[locationId].marker) {

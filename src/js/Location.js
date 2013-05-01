@@ -191,33 +191,6 @@ Location.prototype.parseNote = function(noteId, linkData) {
 	$('.note-from', note.$element).html('-' + note.fromName);
 
 };
-/*Location.prototype.deleteNoteClickHandler = function(event) {
-	
-	var location = event.data.location;
-	var note = location.notes[event.data.noteId];
-
-	if ((typeof note == "undefined") || (!note.canDelete)) return;
-
-	Ajax.call('deleteNote', 
-		{ 
-			noteId: note.id,
-			noteCookie: GLOBAL.noteCookie
-
-		},
-		function() {
-			$("#note_" + note.id ).remove();
-			delete location.notes[note.id];
-			
-			location.totalNotes --;
-
-			
-		},
-		function() {
-			//error
-		});
-
-	return false;
-};*/
 Location.prototype.deleteNote = function(noteId) {
 	
 	var note = this.notes[noteId];

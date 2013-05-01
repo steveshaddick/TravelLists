@@ -151,7 +151,7 @@ var EditMode = (function() {
 		$("#map").addClass('edit-on');
 
 		$("#addLocationButton").click(openLocationModal);
-		$(document).on('click', '.delete-location-button', deleteLocation).on('click', '.location-up', reorderLocation).on('click', '.location-down', reorderLocation);
+		$(document).on('click', '.delete-location-button', deleteLocationClick).on('click', '.location-up', reorderLocation).on('click', '.location-down', reorderLocation);
 		$("#editDoneButton").click(dinit);
 
 		editTitle = new EditText($("#tripTitle"), function() { save({tripTitle:$("#tripTitle").html() }); });
@@ -176,7 +176,7 @@ var EditMode = (function() {
 		$("#map").removeClass('edit-on');
 
 		$("#addLocationButton").unbind('click');
-		$(document).off('click', '.delete-location-button', deleteLocation).off('click', '.location-up', reorderLocation).off('click', '.location-down', reorderLocation);
+		$(document).off('click', '.delete-location-button', deleteLocationClick).off('click', '.location-up', reorderLocation).off('click', '.location-down', reorderLocation);
 		$("#editDoneButton").unbind('click');
 
 		editTitle.destroy();
@@ -248,16 +248,9 @@ var EditMode = (function() {
 		return false;
 	}
 
-	function deleteLocation(event) {
+	function deleteLocationClick(event) {
 		var locationId = $(this).attr('data-id');
-
-		Ajax.call('deleteLocation', {locationId: locationId},
-			function(data) {
-				Trip.deleteLocation(locationId);
-			},
-			function() {
-				//error
-			});
+		Trip.deleteLocation(locationId);
 
 		return false;
 	}
