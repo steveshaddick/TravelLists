@@ -248,8 +248,8 @@ var Home = (function() {
 	function sendEmailReturn(data) {
 		Main.loadRelease();
 
-		if (data.message == 'no trips') {
-			alert('No trips were found.');
+		if (!data.message !== '') {
+			alert(data.message);
 			return;
 		}
 		
@@ -261,6 +261,7 @@ var Home = (function() {
 		$currentPage.removeClass('page-right').addClass('page-current');
 
 	}
+
 
 	return {
 		init: init

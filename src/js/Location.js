@@ -96,8 +96,11 @@ Location.prototype.addNote = function(note, animate) {
 
 	animate = (typeof animate == "undefined") ? false : animate;
 
+	$noteDelete = $('.note-delete a', $note);
+	$noteDelete.attr('data-location', this.id).attr('data-note', note.id);
 	if (note.canDelete){
-		$('.note-delete a', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+		$noteDelete.removeClass('edit-mode');
+		//.click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
 	}
 
 	note.$element = $note;
@@ -188,7 +191,7 @@ Location.prototype.parseNote = function(noteId, linkData) {
 	$('.note-from', note.$element).html('-' + note.fromName);
 
 };
-Location.prototype.deleteNoteClickHandler = function(event) {
+/*Location.prototype.deleteNoteClickHandler = function(event) {
 	
 	var location = event.data.location;
 	var note = location.notes[event.data.noteId];
@@ -212,6 +215,33 @@ Location.prototype.deleteNoteClickHandler = function(event) {
 		function() {
 			//error
 		});
+
+	return false;
+};*/
+Location.prototype.deleteNote = function(noteId) {
+	
+	var note = this.notes[noteId];
+	var me = this;
+
+	if ((typeof noteId == "undefined") || ((!note.canDelete) && (!GLOBAL.isEditMode))) return;
+
+	Ajax.call('deleteNote', 
+	{ 
+		noteId: noteId,
+		noteCookie: GLOBAL.noteCookie
+
+	},
+	function() {
+		$("#note_" + noteId ).remove();
+		delete me.notes[noteId];
+		
+		this.totalNotes --;
+
+		
+	},
+	function() {
+		//error
+	});
 
 	return false;
 };

@@ -39,10 +39,7 @@ var Trip = (function() {
 				email = data.email;
 
 				$("#editTripButton").click(checkAdmin);
-
-				if (GLOBAL.isAdmin) {
-					ListAdmin.init(data.notices);
-				}
+				$(document).on('click', '.note-delete>a', checkNoteDelete);
 
 				Main.poll();
 				checkScroll();
@@ -73,6 +70,16 @@ var Trip = (function() {
 		$doc = $(document);
 		$(window).scroll(checkScroll);
 
+	}
+
+	function checkNoteDelete(event) {
+		var $target = $(event.currentTarget);
+		var locationId = $target.attr('data-location');
+		var noteId = $target.attr('data-note');
+
+		locations[locationId].location.deleteNote(noteId);
+
+		return false;
 	}
 
 	function checkScroll() {

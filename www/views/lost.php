@@ -45,21 +45,20 @@
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
 	<?php include(BASE_PATH . 'views/parts/bottom-scripts.php'); ?>
 
-	
-	$(document).ready(
-		function() {
-			Main.init({
-				userAgent: '<?php echo $userAgent; ?>',
-				os: '<?php echo $os; ?>',
-				a: '<?php echo $ajaxToken; ?>'
-			});
+	<script>
+		$(document).ready(
+			function() {
+				Main.init({
+					userAgent: '<?php echo $userAgent; ?>',
+					os: '<?php echo $os; ?>',
+					a: '<?php echo $ajaxToken; ?>'
+				});
 
-			Home.init('lost');
-		}
-	)
+				Home.init('lost');
+		});
 	</script>
 
-
+	
 	<?php include(BASE_PATH . 'views/parts/ga.php'); ?>
 	
 </body>

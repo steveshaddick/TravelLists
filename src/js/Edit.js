@@ -3,6 +3,7 @@ var EditModeModal = (function() {
 	var $txtEmail;
 	var $submit;
 	var isSending = false;
+	var rememberEdit = false;
 
 	function open() {
 		Modal.load('/views/modal/enterEmail.html',
@@ -35,6 +36,12 @@ var EditModeModal = (function() {
 
 	function init() {
 
+		if (rememberEdit) {
+			EditMode.init();
+			Modal.close();
+			return;
+		}
+
 		$submit = $("#emailAdmin");
 		$txtEmail = $("#txtEmail");
 		isSending = false;
@@ -53,7 +60,6 @@ var EditModeModal = (function() {
 		}
 
 		txtChange();
-
 	}
 
 	function sendEmail() {
@@ -77,12 +83,16 @@ var EditModeModal = (function() {
 			},
 			function() {
 				EditMode.init();
+				if ($.cookie('email')) {
+					rememberEdit = true;
+				}
 				close();
 			},
 			function() {
 				$txtEmail.addClass('error');
 				$("#errorReturn").removeClass('hidden');
 				isSending = false;
+				rememberEdit = false;
 
 			});
 
@@ -153,9 +163,11 @@ var EditMode = (function() {
 
 		$("#editBar").slideDown();
 		Trip.forceCollapseNotes();
+		GLOBAL.isEditMode = true;
 	}
 
 	function dinit() {
+		GLOBAL.isEditMode = false;
 		Ajax.call('closeEditMode');
 
 		$(".edit-mode").addClass('edit-off');
@@ -164,7 +176,7 @@ var EditMode = (function() {
 		$("#map").removeClass('edit-on');
 
 		$("#addLocationButton").unbind('click');
-		$(document).unbind('click');
+		$(document).off('click', '.delete-location-button', deleteLocation).off('click', '.location-up', reorderLocation).off('click', '.location-down', reorderLocation);
 		$("#editDoneButton").unbind('click');
 
 		editTitle.destroy();
