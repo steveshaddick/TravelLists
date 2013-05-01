@@ -60,14 +60,12 @@
 		</div>
 	</div>
 
-	
-
-	<div class="bottomnewnotes">
-		<a class="outline-button" href="/" >Make a new Tripnotes</a>
-	</div>
-
 
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
+
+	<div class="bottomnewnotes edit-hidden">
+	<a class="outline-button" href="/" >Make a new Tripnotes</a>
+	</div>
 
 	<div class="location-footer edit-mode edit-off">
 		<a id="addLocationButton" class="add-location-button" href="#"><img src="/images/icon-pin.png" alt="Icon Pin"> Add a new place to your Tripnotes</a>
@@ -89,7 +87,7 @@
 			</div>
 			<div class="add-note">
 				<div class="note-editor">
-					<div class="blocker hidden"><div class="blockerContent">Submitting...</div></div>
+					<div class="blocker hidden"><div class="blockerContent">Adding note...</div></div>
 
 					<div class="note-text-wrapper">
 						<div>

@@ -903,7 +903,8 @@ a.add-location-link {
 
 .bottomnewnotes {
 	text-align: center;
-	padding-top: 50px;
+	padding-top: 20px;
+	padding-bottom: 50px;
 }
 
 .location-footer {
@@ -941,7 +942,7 @@ a.add-location-link {
 .footer {
 	text-align: center;
 	@include sans-serif(14px);
-	padding: 20px 0 20px 0;
+	padding: 50px 0 20px 0;
 
 	.spacer {
 		display: inline-block;
