@@ -843,9 +843,9 @@ input.editTextInput {
 }
 /* line 633, ../../src/scss/_content.scss */
 #locations .notes-hidden .icon {
-  padding-left: 10px;
+  padding-right: 4px;
   position: relative;
-  top: -5px;
+  top: -2px;
 }
 
 /* line 642, ../../src/scss/_content.scss */
