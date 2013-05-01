@@ -10,7 +10,7 @@
 		
 			<div id="landingPage" class="about-page page-content ">
 
-				<p>Tripnotes is a passion project by <a href="#">Steve Shaddick</a>, <a href="#">Nathan Garvie</a>, and <a href="#">Charles Law</a> because there was no simple way to capture and organize travel ideas with friends.  Also, because we like making things :) </p> 
+				<p>Tripnotes is a passion project by <a href="http://www.steveshaddick.com/" target="_blank">Steve Shaddick</a>, <a href="https://twitter.com/n8garvie" target="_blank">Nathan Garvie</a>, and <a href="https://twitter.com/charleslaw" target="_blank">Charles Law</a> because there was no simple way to capture and organize travel ideas with friends.  Also, because we like making things :) </p> 
 				<p>Are you having problems with your Tripnotes or have an idea on how to make it better?</p>
 				<p>Tweet us <a href="http://www.twitter.com/maketripnotes">@maketripnotes</a><br>
 					Email us <a href="mailto:hello@maketripnotes.com">hello@maketripnotes.com</a>

@@ -46,6 +46,7 @@
 			</div>
 			<div class="mapContainer">
 				<span class="stripe edit-mode edit-off"></span>
+				<div class="drop-shadow"></div>
 				<div id="map"></div>
 			</div>
 
@@ -63,14 +64,12 @@
 		</div>
 	</div>
 
-	
-
-	<div class="bottomnewnotes">
-		<a class="outline-button" href="/" >Make a new Tripnotes</a>
-	</div>
-
 
 	<?php include(BASE_PATH . 'views/parts/footer.php'); ?>
+
+	<div class="bottomnewnotes edit-hidden">
+	<a class="outline-button" href="/" >Make a new Tripnotes</a>
+	</div>
 
 	<div class="location-footer edit-mode edit-off">
 		<a id="addLocationButton" class="add-location-button" href="#"><img src="/images/icon-pin.png" alt="Icon Pin"> Add a new place to your Tripnotes</a>
@@ -85,14 +84,14 @@
 				<a class="sprite-button location-up edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 				<a class="sprite-button location-down edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 			</div>
-			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="#" title="Collapse">&#150;</a> <span class="notes-hidden"><span class="number"></span><img class="icon" src="/images/icon-note.png" alt="notes"></span></span>
+			<span class="location-name">$LOCATION$ <a class="show-hide-link hidden" href="#" title="Collapse">&#150;</a> <span class="notes-hidden"><img class="icon" src="/images/icon-notes.png" alt="notes"><span class="number"></span></span></span>
 			<a class="x-button sprite-button delete-location-button edit-mode edit-off" data-id="$LOCATION_ID$" href="#">&nbsp;</a>
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
 			</div>
 			<div class="add-note edit-hidden">
 				<div class="note-editor">
-					<div class="blocker hidden"><div class="blockerContent">Submitting...</div></div>
+					<div class="blocker hidden"><div class="blockerContent">Adding note...</div></div>
 
 					<div class="note-text-wrapper">
 						<div>
