@@ -171,7 +171,7 @@ var EditMode = (function() {
 		Ajax.call('closeEditMode');
 
 		$(".edit-mode").addClass('edit-off');
-		$(".add-note").removeClass('hidden');
+		$(".edit-hidden").removeClass('hidden');
 		$("header").removeClass('edit-on');
 		$("#map").removeClass('edit-on');
 
