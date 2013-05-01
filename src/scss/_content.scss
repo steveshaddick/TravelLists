@@ -261,6 +261,10 @@ input.editTextInput {
 		color: $darkGrey;
 		margin-bottom:12px;
 	}
+	.site-title a:hover {
+		opacity: 0.8;
+		filter: alpha(opacity=80);
+	}
 	.site-subtitle {
 		@include serif-italic(23px);
 		color: $mediumGrey;
