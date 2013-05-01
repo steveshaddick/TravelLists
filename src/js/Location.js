@@ -360,7 +360,6 @@ Location.prototype.submitNote = function() {
 	$(".category-wrapper", this.$noteEditor).addClass('invisible');
 	$(".note-text-wrapper", this.$noteEditor).addClass('invisible');
 	$(".note-editor-bottom", this.$noteEditor).addClass('invisible');
-	return;
 
 	var me = this;
 	Ajax.call('addNote', 
