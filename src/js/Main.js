@@ -191,7 +191,6 @@ var Main = (function() {
 		if (url == '') return;
 
 		linkQueue.push({location: location, noteId:noteId, url: url});
-
 		processLinkQueue();
 	}
 

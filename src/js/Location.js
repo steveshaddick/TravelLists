@@ -97,7 +97,7 @@ Location.prototype.addNote = function(note, animate) {
 	animate = (typeof animate == "undefined") ? false : animate;
 
 	if (note.canDelete){
-		$('.note-delete a', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNoteClickHandler);
+		$('.note-delete a', $note).removeClass('edit-mode').click({ location: this, noteId: note.id }, this.deleteNotenotecooClickHandler);
 	}
 
 	note.$element = $note;

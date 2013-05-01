@@ -84,12 +84,15 @@ class Main {
 			$response = json_decode($responseRaw);
 
 			if ($response->message != 'success') {
+				return array('message'=>'There was an error.');
+			} else {
+				return true;
 			}
 		} else {
-			$message = "no trips";
+			return array('message'=>'No trips were found.');
 		}
 
-		return array('message'=>'');
+		return false;
 
 	}
 
@@ -249,10 +252,7 @@ class Main {
 				'listOrder'=>$row['listOrder']
 				);
 
-			if ($this->isEditMode) {
-				$note['canDelete'] = true;
-			} else if ((!empty($row['cookie'])) && ($_SESSION['noteCookie'] == $row['cookie'])) {
-
+			if ((!empty($row['cookie'])) && ($_SESSION['noteCookie'] == $row['cookie'])) {
 				$note['canDelete'] = true;
 			}
 			if (isset($locationsById[$row['location_id']])) {
