@@ -338,6 +338,8 @@ input.editTextInput {
 .about-page {
 	max-width:800px;
 	@include serif(18x);
+	letter-spacing:0px;
+	font-weight:600;
 }
 
 .edit-mode.edit-off {

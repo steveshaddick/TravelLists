@@ -489,52 +489,54 @@ input.editTextInput {
   font-size: 18x;
   line-height: 22.5x;
   letter-spacing: 1px;
+  letter-spacing: 0px;
+  font-weight: 600;
 }
 
-/* line 343, ../../src/scss/_content.scss */
+/* line 345, ../../src/scss/_content.scss */
 .edit-mode.edit-off {
   display: none !important;
 }
 
-/* line 349, ../../src/scss/_content.scss */
+/* line 351, ../../src/scss/_content.scss */
 .list-wrapper header {
   width: 100%;
 }
-/* line 353, ../../src/scss/_content.scss */
+/* line 355, ../../src/scss/_content.scss */
 .list-wrapper header .header-content {
   max-width: 960px;
   margin: 0 auto;
   padding: 25px 0 17px;
   position: relative;
 }
-/* line 361, ../../src/scss/_content.scss */
+/* line 363, ../../src/scss/_content.scss */
 .list-wrapper header .header-titles {
   width: 660px;
   float: left;
   position: relative;
 }
-/* line 367, ../../src/scss/_content.scss */
+/* line 369, ../../src/scss/_content.scss */
 .list-wrapper header .header-tools {
   padding-top: 41px;
 }
-/* line 371, ../../src/scss/_content.scss */
+/* line 373, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on {
   background: #5f5c66;
   z-index: 1000000;
   top: 0;
 }
-/* line 379, ../../src/scss/_content.scss */
+/* line 381, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on .edit-trip-link,
 .list-wrapper header.edit-on .share-trip-link,
 .list-wrapper header.edit-on .spacer1 {
   display: none;
 }
-/* line 384, ../../src/scss/_content.scss */
+/* line 386, ../../src/scss/_content.scss */
 .list-wrapper header.edit-on .trip-title,
 .list-wrapper header.edit-on .trip-subtitle {
   color: #f1f1ec;
 }
-/* line 390, ../../src/scss/_content.scss */
+/* line 392, ../../src/scss/_content.scss */
 .list-wrapper .trip-title {
   color: #5f5c66;
   display: inline-block;
@@ -546,7 +548,7 @@ input.editTextInput {
   letter-spacing: -3px;
   padding-right: 3px;
 }
-/* line 398, ../../src/scss/_content.scss */
+/* line 400, ../../src/scss/_content.scss */
 .list-wrapper .trip-subtitle {
   color: #151633;
   display: block;
@@ -556,7 +558,7 @@ input.editTextInput {
   font-style: italic;
   font-weight: 600;
 }
-/* line 405, ../../src/scss/_content.scss */
+/* line 407, ../../src/scss/_content.scss */
 .list-wrapper .share-trip-link {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
@@ -577,16 +579,16 @@ input.editTextInput {
   text-decoration: none;
   float: right;
 }
-/* line 416, ../../src/scss/_content.scss */
+/* line 418, ../../src/scss/_content.scss */
 .list-wrapper .share-trip-link img {
   vertical-align: top;
   padding-right: 5px;
 }
-/* line 422, ../../src/scss/_content.scss */
+/* line 424, ../../src/scss/_content.scss */
 .list-wrapper .share-trip-link:hover {
   background: #b8b8b8;
 }
-/* line 427, ../../src/scss/_content.scss */
+/* line 429, ../../src/scss/_content.scss */
 .list-wrapper .edit-trip-link {
   color: #5f5c66;
   font-family: "chaparral-pro", georgia, serif;
@@ -607,16 +609,16 @@ input.editTextInput {
   text-decoration: none;
   float: right;
 }
-/* line 432, ../../src/scss/_content.scss */
+/* line 434, ../../src/scss/_content.scss */
 .list-wrapper .edit-trip-link img {
   vertical-align: top;
   padding: 2px 5px 0 0;
 }
-/* line 438, ../../src/scss/_content.scss */
+/* line 440, ../../src/scss/_content.scss */
 .list-wrapper .edit-trip-link:hover {
   background: #b8b8b8;
 }
-/* line 443, ../../src/scss/_content.scss */
+/* line 445, ../../src/scss/_content.scss */
 .list-wrapper .edit-done-button {
   float: right;
   display: inline-block;
@@ -638,23 +640,23 @@ input.editTextInput {
   border-radius: 4px;
   background: #799b28;
 }
-/* line 450, ../../src/scss/_content.scss */
+/* line 452, ../../src/scss/_content.scss */
 .list-wrapper .edit-done-button:hover {
   background: #a5bb77;
 }
 
-/* line 458, ../../src/scss/_content.scss */
+/* line 460, ../../src/scss/_content.scss */
 .trip-settings {
   display: hidden;
   background: #e6e3e1 url("/images/top-inner-shadow.png") repeat-x top;
   height: 0;
 }
-/* line 463, ../../src/scss/_content.scss */
+/* line 465, ../../src/scss/_content.scss */
 .trip-settings .settings-button {
   background-image: url("/images/gear-button.png");
 }
 
-/* line 469, ../../src/scss/_content.scss */
+/* line 471, ../../src/scss/_content.scss */
 .notice-container {
   width: 100%;
   position: absolute;
@@ -663,7 +665,7 @@ input.editTextInput {
   display: none;
   z-index: 100;
 }
-/* line 477, ../../src/scss/_content.scss */
+/* line 479, ../../src/scss/_content.scss */
 .notice-container .notice {
   background: #fff;
   position: relative;
@@ -676,7 +678,7 @@ input.editTextInput {
   -o-transition: top 0.5s ease-in;
   transition: top 0.5s ease-in;
 }
-/* line 487, ../../src/scss/_content.scss */
+/* line 489, ../../src/scss/_content.scss */
 .notice-container .notice .notice-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
@@ -684,7 +686,7 @@ input.editTextInput {
   font-style: italic;
   font-weight: 600;
 }
-/* line 492, ../../src/scss/_content.scss */
+/* line 494, ../../src/scss/_content.scss */
 .notice-container .up {
   top: -50px;
   -webkit-transition: none;
@@ -692,7 +694,7 @@ input.editTextInput {
   -o-transition: none;
   transition: none;
 }
-/* line 497, ../../src/scss/_content.scss */
+/* line 499, ../../src/scss/_content.scss */
 .notice-container .down {
   top: 50px;
   -webkit-transition: top 0.25s ease-in;
@@ -701,24 +703,24 @@ input.editTextInput {
   transition: top 0.25s ease-in;
 }
 
-/* line 505, ../../src/scss/_content.scss */
+/* line 507, ../../src/scss/_content.scss */
 .fixed {
   position: fixed;
   top: 0;
 }
 
-/* line 510, ../../src/scss/_content.scss */
+/* line 512, ../../src/scss/_content.scss */
 .sprite-button {
   cursor: pointer;
   background-position: left;
   display: inline-block;
 }
-/* line 514, ../../src/scss/_content.scss */
+/* line 516, ../../src/scss/_content.scss */
 .sprite-button:hover {
   background-position: right;
 }
 
-/* line 519, ../../src/scss/_content.scss */
+/* line 521, ../../src/scss/_content.scss */
 .x-button {
   color: #FF0000;
   position: absolute;
@@ -730,30 +732,30 @@ input.editTextInput {
   background-image: url("/images/x-button.png");
 }
 
-/* line 530, ../../src/scss/_content.scss */
+/* line 532, ../../src/scss/_content.scss */
 #map {
   width: 100%;
   height: 395px;
   max-width: 100%;
   margin: 0 auto;
 }
-/* line 536, ../../src/scss/_content.scss */
+/* line 538, ../../src/scss/_content.scss */
 #map.edit-on {
   margin-top: 0px;
 }
 
-/* line 541, ../../src/scss/_content.scss */
+/* line 543, ../../src/scss/_content.scss */
 .mapContainer {
   -moz-box-shadow: inset 0px 2px 2px 0px rgba(95, 92, 102, 0.4);
   -webkit-box-shadow: inset 0px 2px 2px 0px rgba(95, 92, 102, 0.4);
   box-shadow: inset 0px 2px 2px 0px rgba(95, 92, 102, 0.4);
 }
-/* line 546, ../../src/scss/_content.scss */
+/* line 548, ../../src/scss/_content.scss */
 .mapContainer .stripe {
   position: absolute;
 }
 
-/* line 551, ../../src/scss/_content.scss */
+/* line 553, ../../src/scss/_content.scss */
 .stripe {
   background: url("/images/stripe.png") repeat-x;
   height: 11px;
@@ -762,14 +764,14 @@ input.editTextInput {
   z-index: 99;
 }
 
-/* line 560, ../../src/scss/_content.scss */
+/* line 562, ../../src/scss/_content.scss */
 #locations .location {
   padding-bottom: 33px;
   margin-top: 25px;
   /*border-bottom: 1px solid $mediumGrey;*/
   position: relative;
 }
-/* line 566, ../../src/scss/_content.scss */
+/* line 568, ../../src/scss/_content.scss */
 #locations .location .location-name {
   color: #5f5c66;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -778,18 +780,18 @@ input.editTextInput {
   line-height: 36px;
   font-style: normal;
 }
-/* line 571, ../../src/scss/_content.scss */
+/* line 573, ../../src/scss/_content.scss */
 #locations .location .location-notes {
   min-height: 20px;
 }
-/* line 575, ../../src/scss/_content.scss */
+/* line 577, ../../src/scss/_content.scss */
 #locations .location .delete-location-link {
   color: #ff0000;
   position: absolute;
   top: 15px;
   right: 0;
 }
-/* line 583, ../../src/scss/_content.scss */
+/* line 585, ../../src/scss/_content.scss */
 #locations .reorder-location {
   width: 16px;
   position: absolute;
@@ -797,27 +799,27 @@ input.editTextInput {
   left: -25px;
   line-height: 0;
 }
-/* line 592, ../../src/scss/_content.scss */
+/* line 594, ../../src/scss/_content.scss */
 #locations .reorder-location .location-down,
 #locations .reorder-location .location-up {
   height: 8px;
   width: 16px;
 }
-/* line 596, ../../src/scss/_content.scss */
+/* line 598, ../../src/scss/_content.scss */
 #locations .reorder-location .location-up {
   background-image: url("/images/order-up-arrow.png");
   margin-bottom: 10px;
 }
-/* line 600, ../../src/scss/_content.scss */
+/* line 602, ../../src/scss/_content.scss */
 #locations .reorder-location .location-down {
   background-image: url("/images/order-down-arrow.png");
 }
-/* line 606, ../../src/scss/_content.scss */
+/* line 608, ../../src/scss/_content.scss */
 #locations .notes-wrapper {
   margin: 0;
   /*min-height:44px;*/
 }
-/* line 611, ../../src/scss/_content.scss */
+/* line 613, ../../src/scss/_content.scss */
 #locations .notes-hidden {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 24px;
@@ -830,14 +832,14 @@ input.editTextInput {
   top: -3px;
   padding-left: 5px;
 }
-/* line 619, ../../src/scss/_content.scss */
+/* line 621, ../../src/scss/_content.scss */
 #locations .notes-hidden .icon {
   padding-left: 10px;
   position: relative;
   top: -5px;
 }
 
-/* line 628, ../../src/scss/_content.scss */
+/* line 630, ../../src/scss/_content.scss */
 .sticky-location {
   -webkit-transition: top 0.5s ease-in;
   -moz-transition: top 0.5s ease-in;
@@ -853,7 +855,7 @@ input.editTextInput {
   border-bottom: 1px solid #e6e3e1;
   -webkit-transform: translateZ(0);
 }
-/* line 639, ../../src/scss/_content.scss */
+/* line 641, ../../src/scss/_content.scss */
 .sticky-location .location-name {
   color: #5f5c66;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -866,7 +868,7 @@ input.editTextInput {
   margin: 0 auto;
 }
 
-/* line 648, ../../src/scss/_content.scss */
+/* line 650, ../../src/scss/_content.scss */
 .note-category {
   width: 25px;
   background-image: url("/images/category-icons.png");
@@ -877,31 +879,31 @@ input.editTextInput {
   display: block;
   height: 28px;
 }
-/* line 659, ../../src/scss/_content.scss */
+/* line 661, ../../src/scss/_content.scss */
 .note-category.poi {
   background-position: 0;
 }
-/* line 663, ../../src/scss/_content.scss */
+/* line 665, ../../src/scss/_content.scss */
 .note-category.food {
   background-position: -25px;
 }
-/* line 667, ../../src/scss/_content.scss */
+/* line 669, ../../src/scss/_content.scss */
 .note-category.stay {
   background-position: -50px;
 }
 
-/* line 672, ../../src/scss/_content.scss */
+/* line 674, ../../src/scss/_content.scss */
 .note {
   font-size: 30px;
   margin: 22px 0;
   position: relative;
 }
-/* line 680, ../../src/scss/_content.scss */
+/* line 682, ../../src/scss/_content.scss */
 .note .note-text-wrapper {
   vertical-align: top;
   padding-left: 8px;
 }
-/* line 685, ../../src/scss/_content.scss */
+/* line 687, ../../src/scss/_content.scss */
 .note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
@@ -910,7 +912,7 @@ input.editTextInput {
   font-weight: 600;
   color: #151633;
 }
-/* line 689, ../../src/scss/_content.scss */
+/* line 691, ../../src/scss/_content.scss */
 .note .note-text a {
   font-size: inherit;
   color: inherit;
@@ -918,11 +920,11 @@ input.editTextInput {
   font-size: inherit;
   line-height: inherit;
 }
-/* line 696, ../../src/scss/_content.scss */
+/* line 698, ../../src/scss/_content.scss */
 .note .note-text a:hover {
   color: #5f5c66;
 }
-/* line 702, ../../src/scss/_content.scss */
+/* line 704, ../../src/scss/_content.scss */
 .note .note-from {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -931,7 +933,7 @@ input.editTextInput {
   font-weight: 600;
   color: #151633;
 }
-/* line 707, ../../src/scss/_content.scss */
+/* line 709, ../../src/scss/_content.scss */
 .note .note-link {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -939,24 +941,24 @@ input.editTextInput {
   line-height: 18px;
   font-style: normal;
 }
-/* line 711, ../../src/scss/_content.scss */
+/* line 713, ../../src/scss/_content.scss */
 .note .note-link td {
   vertical-align: middle;
 }
-/* line 715, ../../src/scss/_content.scss */
+/* line 717, ../../src/scss/_content.scss */
 .note .note-link .link-info {
   padding-left: 16px;
 }
-/* line 719, ../../src/scss/_content.scss */
+/* line 721, ../../src/scss/_content.scss */
 .note .note-link .link-image {
   border: 1px solid #151633;
   max-width: 170px;
 }
-/* line 724, ../../src/scss/_content.scss */
+/* line 726, ../../src/scss/_content.scss */
 .note .note-link .link-title {
   display: inline-block;
 }
-/* line 727, ../../src/scss/_content.scss */
+/* line 729, ../../src/scss/_content.scss */
 .note .note-link .link-description {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -967,18 +969,18 @@ input.editTextInput {
   display: inline-block;
   margin-top: 5px;
 }
-/* line 735, ../../src/scss/_content.scss */
+/* line 737, ../../src/scss/_content.scss */
 .note .note-delete {
   position: absolute;
   top: 0;
   right: 0;
 }
-/* line 740, ../../src/scss/_content.scss */
+/* line 742, ../../src/scss/_content.scss */
 .note .note-delete a {
   color: #ff0000;
 }
 
-/* line 747, ../../src/scss/_content.scss */
+/* line 749, ../../src/scss/_content.scss */
 a.add-location-link {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -1000,25 +1002,25 @@ a.add-location-link {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 762, ../../src/scss/_content.scss */
+/* line 764, ../../src/scss/_content.scss */
 a.add-location-link:hover {
   color: #b8b8b8;
   text-decoration: none;
 }
 
-/* line 768, ../../src/scss/_content.scss */
+/* line 770, ../../src/scss/_content.scss */
 .add-note {
   padding: 0 40px;
 }
-/* line 772, ../../src/scss/_content.scss */
+/* line 774, ../../src/scss/_content.scss */
 .add-note .note-editor {
   position: relative;
 }
-/* line 776, ../../src/scss/_content.scss */
+/* line 778, ../../src/scss/_content.scss */
 .add-note .note-text-wrapper {
   text-align: center;
 }
-/* line 780, ../../src/scss/_content.scss */
+/* line 782, ../../src/scss/_content.scss */
 .add-note .txtNoteText {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -1029,22 +1031,22 @@ a.add-location-link:hover {
   padding: 0 10px;
   color: #e6e3e1;
 }
-/* line 786, ../../src/scss/_content.scss */
+/* line 788, ../../src/scss/_content.scss */
 .add-note .txtNoteText:focus {
   color: #000;
 }
-/* line 790, ../../src/scss/_content.scss */
+/* line 792, ../../src/scss/_content.scss */
 .add-note .txtNoteText.editing {
   color: #000;
 }
-/* line 796, ../../src/scss/_content.scss */
+/* line 798, ../../src/scss/_content.scss */
 .add-note .note-from-wrapper {
   width: 250px;
   display: inline-block;
   margin-right: 24px;
   text-align: center;
 }
-/* line 803, ../../src/scss/_content.scss */
+/* line 805, ../../src/scss/_content.scss */
 .add-note .txtFromName {
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -1054,14 +1056,14 @@ a.add-location-link:hover {
   width: auto;
   margin-top: 10px;
 }
-/* line 809, ../../src/scss/_content.scss */
+/* line 811, ../../src/scss/_content.scss */
 .add-note .note-submit-wrapper {
   display: inline-block;
   vertical-align: top;
   position: relative;
   top: -2px;
 }
-/* line 817, ../../src/scss/_content.scss */
+/* line 819, ../../src/scss/_content.scss */
 .add-note label {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 18px;
@@ -1072,11 +1074,11 @@ a.add-location-link:hover {
   margin: 12px 0 24px;
   display: block;
 }
-/* line 823, ../../src/scss/_content.scss */
+/* line 825, ../../src/scss/_content.scss */
 .add-note label strong {
   font-weight: 600;
 }
-/* line 828, ../../src/scss/_content.scss */
+/* line 830, ../../src/scss/_content.scss */
 .add-note .note-text {
   font-family: "chaparral-pro", georgia, serif;
   font-size: 30px;
@@ -1085,7 +1087,7 @@ a.add-location-link:hover {
   font-weight: 600;
   color: #151633;
 }
-/* line 834, ../../src/scss/_content.scss */
+/* line 836, ../../src/scss/_content.scss */
 .add-note .submit-note-link {
   display: inline-block;
   background: #799b28;
@@ -1107,11 +1109,11 @@ a.add-location-link:hover {
   color: #e6e3e1;
   letter-spacing: 1px;
 }
-/* line 846, ../../src/scss/_content.scss */
+/* line 848, ../../src/scss/_content.scss */
 .add-note .submit-note-link:hover {
   background: #a5bb77;
 }
-/* line 851, ../../src/scss/_content.scss */
+/* line 853, ../../src/scss/_content.scss */
 .add-note .cancel-note-link {
   color: #f53d12;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -1123,22 +1125,22 @@ a.add-location-link:hover {
   padding-left: 20px;
   letter-spacing: 1px;
 }
-/* line 858, ../../src/scss/_content.scss */
+/* line 860, ../../src/scss/_content.scss */
 .add-note .cancel-note-link:hover {
   color: #f0a959;
 }
-/* line 863, ../../src/scss/_content.scss */
+/* line 865, ../../src/scss/_content.scss */
 .add-note .note-editor-bottom {
   position: relative;
   margin-top: 24px;
 }
-/* line 870, ../../src/scss/_content.scss */
+/* line 872, ../../src/scss/_content.scss */
 .add-note .category-selector {
   position: absolute;
   left: -105px;
   top: -5px;
 }
-/* line 876, ../../src/scss/_content.scss */
+/* line 878, ../../src/scss/_content.scss */
 .add-note .category-label {
   font-size: 18px;
   font-weight: bold;
@@ -1147,13 +1149,13 @@ a.add-location-link:hover {
   top: -22px;
 }
 
-/* line 886, ../../src/scss/_content.scss */
+/* line 888, ../../src/scss/_content.scss */
 .bottomnewnotes {
   text-align: center;
   padding-top: 50px;
 }
 
-/* line 891, ../../src/scss/_content.scss */
+/* line 893, ../../src/scss/_content.scss */
 .location-footer {
   position: fixed;
   bottom: 0;
@@ -1164,7 +1166,7 @@ a.add-location-link:hover {
   background: #ccc;
   padding: 10px 0;
 }
-/* line 901, ../../src/scss/_content.scss */
+/* line 903, ../../src/scss/_content.scss */
 .location-footer .add-location-button {
   display: inline-block;
   padding: 7px 10px 7px;
@@ -1185,17 +1187,17 @@ a.add-location-link:hover {
   border-radius: 4px;
   background: #799b28;
 }
-/* line 906, ../../src/scss/_content.scss */
+/* line 908, ../../src/scss/_content.scss */
 .location-footer .add-location-button:hover {
   background: #a5bb77;
 }
 
-/* line 913, ../../src/scss/_content.scss */
+/* line 915, ../../src/scss/_content.scss */
 .bottom-pad {
   height: 50px;
 }
 
-/* line 917, ../../src/scss/_content.scss */
+/* line 919, ../../src/scss/_content.scss */
 .footer {
   text-align: center;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -1205,17 +1207,17 @@ a.add-location-link:hover {
   font-style: normal;
   padding: 20px 0 20px 0;
 }
-/* line 922, ../../src/scss/_content.scss */
+/* line 924, ../../src/scss/_content.scss */
 .footer .spacer {
   display: inline-block;
   width: 55px;
 }
-/* line 926, ../../src/scss/_content.scss */
+/* line 928, ../../src/scss/_content.scss */
 .footer .aboutlink {
   margin-left: 50px;
 }
 
-/* line 931, ../../src/scss/_content.scss */
+/* line 933, ../../src/scss/_content.scss */
 #modalUnder {
   position: absolute;
   background: url("/images/f5f5f0_70.png");
@@ -1226,14 +1228,14 @@ a.add-location-link:hover {
   z-index: 0;
 }
 
-/* line 941, ../../src/scss/_content.scss */
+/* line 943, ../../src/scss/_content.scss */
 #modalContent {
   top: 50%;
   left: 50%;
   position: absolute;
   z-index: 1;
 }
-/* line 948, ../../src/scss/_content.scss */
+/* line 950, ../../src/scss/_content.scss */
 #modalContent.email-modal {
   text-align: center;
   width: 620px;
@@ -1241,11 +1243,11 @@ a.add-location-link:hover {
   margin-top: -167px;
   margin-left: -310px;
 }
-/* line 955, ../../src/scss/_content.scss */
+/* line 957, ../../src/scss/_content.scss */
 #modalContent.email-modal label {
   font-size: 18px;
 }
-/* line 963, ../../src/scss/_content.scss */
+/* line 965, ../../src/scss/_content.scss */
 #modalContent.email-modal #oopsLink {
   color: #f53d12;
   font-size: 18px;
@@ -1253,12 +1255,12 @@ a.add-location-link:hover {
   left: 0;
   position: absolute;
 }
-/* line 971, ../../src/scss/_content.scss */
+/* line 973, ../../src/scss/_content.scss */
 #modalContent.email-modal #oopsLink:hover {
   color: #f53d12;
   text-decoration: underline;
 }
-/* line 977, ../../src/scss/_content.scss */
+/* line 979, ../../src/scss/_content.scss */
 #modalContent.email-modal #emailAdmin {
   font-style: normal;
   position: absolute;
@@ -1266,7 +1268,7 @@ a.add-location-link:hover {
   font-size: 24px;
   letter-spacing: -0.5px;
 }
-/* line 987, ../../src/scss/_content.scss */
+/* line 989, ../../src/scss/_content.scss */
 #modalContent.share-modal {
   text-align: center;
   width: 620px;
@@ -1274,7 +1276,7 @@ a.add-location-link:hover {
   margin-top: -167px;
   margin-left: -310px;
 }
-/* line 994, ../../src/scss/_content.scss */
+/* line 996, ../../src/scss/_content.scss */
 #modalContent.share-modal .text-box {
   color: #000;
   background: #e6e3e1;
@@ -1284,7 +1286,7 @@ a.add-location-link:hover {
   margin: 0 auto 40px;
   font-size: 22px;
 }
-/* line 1009, ../../src/scss/_content.scss */
+/* line 1011, ../../src/scss/_content.scss */
 #modalContent.location-modal {
   text-align: center;
   width: 620px;
@@ -1292,7 +1294,7 @@ a.add-location-link:hover {
   margin-top: -167px;
   margin-left: -310px;
 }
-/* line 1016, ../../src/scss/_content.scss */
+/* line 1018, ../../src/scss/_content.scss */
 #modalContent.location-modal .submit-location-link {
   display: inline-block;
   padding: 16px;
@@ -1314,11 +1316,11 @@ a.add-location-link:hover {
   background: #799b28;
   text-transform: uppercase;
 }
-/* line 1020, ../../src/scss/_content.scss */
+/* line 1022, ../../src/scss/_content.scss */
 #modalContent.location-modal .submit-location-link:hover {
   background: #a5bb77;
 }
-/* line 1025, ../../src/scss/_content.scss */
+/* line 1027, ../../src/scss/_content.scss */
 #modalContent.location-modal .cancel-link {
   color: #f53d12;
   font-family: "pragmatica-web", helvetica, arial, sans-serif;
@@ -1333,7 +1335,7 @@ a.add-location-link:hover {
   position: absolute;
   right: 80px;
 }
-/* line 1036, ../../src/scss/_content.scss */
+/* line 1038, ../../src/scss/_content.scss */
 #modalContent.location-modal .cancel-link:hover {
   color: #f0a959;
 }
