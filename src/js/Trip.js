@@ -51,13 +51,16 @@ var Trip = (function() {
 		bounds = new google.maps.LatLngBounds();
 
 		var mapOptions = {
-          center: new google.maps.LatLng(obj.lat, obj.lng),
-          zoom: 4,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          disableDefaultUI : true,
-          disableDoubleClickZoom: true,
-          scrollwheel: false
-
+			center: new google.maps.LatLng(obj.lat, obj.lng),
+			zoom: 4,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI : true,
+			disableDoubleClickZoom: true,
+			scrollwheel: false,
+			zoomControl: true,
+			zoomControlOptions: {
+				style: google.maps.ZoomControlStyle.SMALL
+			}
         };
 
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -65,7 +68,6 @@ var Trip = (function() {
         if ($.cookie('from')) {
 			$("#txtFromName").val($.cookie('from'));
 		}
-
 		$stickyLocation = $("#stickyLocation");
 		$doc = $(document);
 		$(window).scroll(checkScroll);
