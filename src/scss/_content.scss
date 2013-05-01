@@ -108,7 +108,7 @@ input[type="email"]
 	position:absolute;
 	top:0;
 	left:0;
-	background:#eee;
+	background:url('/images/000000_50.png');
 	z-index:1000000;
 
 	@include sans-serif(76px);
@@ -245,10 +245,7 @@ input.editTextInput {
 	background: transparent url('/images/dot.png') repeat-x bottom;
 	text-align: left;
 	@include sans-serif(36px);
-	height: 36px;
-	width: 460px;
 	color:$darkGrey;
-	padding:27px;
 
 }
 

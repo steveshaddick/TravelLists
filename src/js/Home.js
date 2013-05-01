@@ -225,6 +225,7 @@ var Home = (function() {
 		}
 
 		Main.loadBlock();
+		$("#txtEmail").prop('disabled', true);
 		Ajax.call('sendEmail',
 			{
 				adminEmail: adminEmail
@@ -247,7 +248,8 @@ var Home = (function() {
 
 	function sendEmailReturn(data) {
 		Main.loadRelease();
-
+		
+		$("#txtEmail").prop('disabled', false);
 		if (!data.message !== '') {
 			alert(data.message);
 			return;
