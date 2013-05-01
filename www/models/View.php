@@ -11,6 +11,7 @@ class View {
 		$baseTitle = 'Tripnotes';
 		$sep = ' | ';
 		$this->type = $type;
+		$this->description = "The easiest way to get & organize trip suggestions.";
 
 		switch ($this->type) {
 			case 'index':
