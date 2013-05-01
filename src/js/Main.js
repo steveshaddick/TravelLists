@@ -11,7 +11,8 @@ var GLOBAL = {
 	lastNote: 0,
 	lastNotice: 0,
 	activeNoteLocation: null,
-	noteCookie: false
+	noteCookie: false,
+	skipPoll: false
 };
 
 /*var pHold = [];
@@ -220,6 +221,11 @@ var Main = (function() {
 	}
 
 	function sendPoll() {
+		if (GLOBAL.skipPoll) {
+			poll();
+			return;
+		}
+
 		Ajax.call('poll',
 			{
 				lastLocation: GLOBAL.lastLocation,

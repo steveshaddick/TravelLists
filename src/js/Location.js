@@ -362,6 +362,7 @@ Location.prototype.submitNote = function() {
 	$(".note-editor-bottom", this.$noteEditor).addClass('invisible');
 
 	var me = this;
+	GLOBAL.skipPoll = true;
 	Ajax.call('addNote', 
 		{
 			noteText: noteText,
@@ -379,6 +380,7 @@ Location.prototype.submitNote = function() {
 			$(".note-editor-bottom", this.$noteEditor).removeClass('invisible');
 			data.categoryId = categoryId;
 			me.addNote(data);
+			GLOBAL.skipPoll = false;
 		},
 		function() {
 			//error
@@ -387,5 +389,6 @@ Location.prototype.submitNote = function() {
 			$(".category-wrapper", this.$noteEditor).removeClass('invisible');
 			$(".note-text-wrapper", this.$noteEditor).removeClass('invisible');
 			$(".note-editor-bottom", this.$noteEditor).removeClass('invisible');
+			GLOBAL.skipPoll = false;
 		});
 };
