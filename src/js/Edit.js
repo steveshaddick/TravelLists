@@ -163,9 +163,11 @@ var EditMode = (function() {
 
 		$("#editBar").slideDown();
 		Trip.forceCollapseNotes();
+		GLOBAL.isEditMode = true;
 	}
 
 	function dinit() {
+		GLOBAL.isEditMode = false;
 		Ajax.call('closeEditMode');
 
 		$(".edit-mode").addClass('edit-off');
@@ -174,7 +176,7 @@ var EditMode = (function() {
 		$("#map").removeClass('edit-on');
 
 		$("#addLocationButton").unbind('click');
-		$(document).unbind('click');
+		$(document).off('click', '.delete-location-button', deleteLocation).off('click', '.location-up', reorderLocation).off('click', '.location-down', reorderLocation);
 		$("#editDoneButton").unbind('click');
 
 		editTitle.destroy();

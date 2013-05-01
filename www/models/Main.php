@@ -388,8 +388,8 @@ class Main {
 		
 		$noteId = intval($noteId);	
 
-		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND _id=? AND cookie=?");
-		if ($stmt->execute(array($tripId, $noteId, $noteCookie))) {
+		$stmt = $this->db->prepare("DELETE FROM Notes WHERE trip_id=? AND _id=?");
+		if ($stmt->execute(array($tripId, $noteId))) {
 			return true;
 		} else {
 			return false;

@@ -5,7 +5,7 @@ if (typeof console == "undefined") {
 }
 
 var GLOBAL = {
-	isAdmin: false,
+	isEditMode: false,
 	polltime: 15000,
 	lastLocation: 0,
 	lastNote: 0,
@@ -173,7 +173,6 @@ var Main = (function() {
 
 	function init(obj) {
 		Ajax.init(obj.a);
-		GLOBAL.isAdmin = obj.isAdmin;
 		GLOBAL.noteCookie = obj.noteCookie;
 
 		$("#shareTripButton").click(openShareModal);
