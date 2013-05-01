@@ -356,7 +356,11 @@ Location.prototype.submitNote = function() {
 
 	//TODO form error checking, loading
 	
-	$(".blocker", this.$element).removeClass('hidden');
+	$(".blocker", this.$noteEditor).removeClass('hidden');
+	$(".category-wrapper", this.$noteEditor).addClass('invisible');
+	$(".note-text-wrapper", this.$noteEditor).addClass('invisible');
+	$(".note-editor-bottom", this.$noteEditor).addClass('invisible');
+	return;
 
 	var me = this;
 	Ajax.call('addNote', 
@@ -370,13 +374,19 @@ Location.prototype.submitNote = function() {
 		function(data) {
 			
 			me.cancelNote();
-			$(".blocker", this.$element).addClass('hidden');
+			$(".blocker", this.$noteEditor).addClass('hidden');
+			$(".category-wrapper", this.$noteEditor).removeClass('invisible');
+			$(".note-text-wrapper", this.$noteEditor).removeClass('invisible');
+			$(".note-editor-bottom", this.$noteEditor).removeClass('invisible');
 			data.categoryId = categoryId;
 			me.addNote(data);
 		},
 		function() {
 			//error
 			me.cancelNote();
-			$(".blocker", this.$element).addClass('hidden');
+			$(".blocker", this.$noteEditor).addClass('hidden');
+			$(".category-wrapper", this.$noteEditor).removeClass('invisible');
+			$(".note-text-wrapper", this.$noteEditor).removeClass('invisible');
+			$(".note-editor-bottom", this.$noteEditor).removeClass('invisible');
 		});
 };

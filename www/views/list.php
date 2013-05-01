@@ -49,9 +49,13 @@
 				<div id="map"></div>
 			</div>
 
-
 		
 			<div class="contentWrapper">
+
+				<div id="loadingTrip" class="loading-trip">
+					Loading Trip ...
+				</div>
+
 				<section id="locations">
 					
 				</section>
@@ -86,7 +90,7 @@
 			<div class="location-notes">
 				<ul class="notes-wrapper"></ul>
 			</div>
-			<div class="add-note">
+			<div class="add-note edit-hidden">
 				<div class="note-editor">
 					<div class="blocker hidden"><div class="blockerContent">Submitting...</div></div>
 

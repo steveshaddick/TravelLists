@@ -1,5 +1,6 @@
 <?php
 
+sleep(5);
 @session_start();
 require_once('../../env/config.php');
 

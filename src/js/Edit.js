@@ -146,7 +146,7 @@ var EditMode = (function() {
 		if (GLOBAL.activeNoteLocation) {
 			GLOBAL.activeNoteLocation.cancelNote();
 		}
-		$(".add-note").addClass('hidden');
+		$(".edit-hidden").addClass('hidden');
 		$("header").addClass('edit-on');
 		$("#map").addClass('edit-on');
 

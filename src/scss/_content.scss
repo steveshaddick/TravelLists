@@ -24,6 +24,9 @@ h1 {
 .hidden {
 	display: none;
 }
+.invisible {
+	visibility: hidden;
+}
 
 .none {
 	color:inherit;
@@ -121,6 +124,7 @@ input[type="email"]
 }
 
 .blocker {
+	@include sans-serif(32px);
 	height:100%;
 	width:100%;
 	position:absolute;
@@ -344,6 +348,12 @@ input.editTextInput {
 
 .edit-mode.edit-off {
 	display: none !important;
+}
+
+.loading-trip {
+	padding: 50px;
+	text-align: center;
+	@include sans-serif(32px);
 }
 
 .list-wrapper {
@@ -773,6 +783,10 @@ a.add-location-link {
 
 	.note-editor {
 		position: relative;
+
+		.blocker {
+
+		}
 
 	}
 	.note-text-wrapper {

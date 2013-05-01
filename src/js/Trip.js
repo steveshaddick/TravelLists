@@ -43,6 +43,10 @@ var Trip = (function() {
 
 				Main.poll();
 				checkScroll();
+
+				setTimeout(function() {
+					$("#loadingTrip").slideUp();
+				},500);
 			},
 			function() {
 				//error
