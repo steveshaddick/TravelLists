@@ -21,7 +21,7 @@
 				<div class="home-form" style="margin:140px 0 20px;">
 
 					<input id="txtLocation" name="txtLocation" type="text" placeholder="ex. Bangkok, Thailand" />
-					<div style="display:inline-block; position:absolute;">
+					<div style="display:inline-block; position:absolute;left:700px;">
 						<a class="next-button" href="#">Next</a>
 					</div>
 					<label for="txtLocation">Start with the first place you're going.</label>
