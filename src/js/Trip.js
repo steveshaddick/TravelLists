@@ -55,7 +55,6 @@ var Trip = (function() {
 			zoom: 4,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			disableDefaultUI : true,
-			disableDoubleClickZoom: true,
 			scrollwheel: false,
 			zoomControl: true,
 			zoomControlOptions: {
