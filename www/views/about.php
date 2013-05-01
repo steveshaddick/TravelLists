@@ -4,7 +4,7 @@
 		<div class="contentWrapper">
 		
 		<header class="about-header">
-				<h1 class="site-title"><img src="../images/tripnotes@2x.png" width="398" height="88" alt="Tripnotes"></h1>
+				<h1 class="site-title"><a href="/"><img src="../images/tripnotes@2x.png" width="398" height="88" alt="Tripnotes"></a></h1>
 				<span class="site-subtitle">The easiest way to get &amp; organize trip suggestions.</span>
 			</header>		
 		
