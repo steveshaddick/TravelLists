@@ -250,7 +250,7 @@ var Home = (function() {
 		Main.loadRelease();
 		
 		$("#txtEmail").prop('disabled', false);
-		if (!data.message !== '') {
+		if (data.message && (data.message != '')) {
 			alert(data.message);
 			return;
 		}
