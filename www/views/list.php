@@ -46,6 +46,7 @@
 			</div>
 			<div class="mapContainer">
 				<span class="stripe edit-mode edit-off"></span>
+				<div class="drop-shadow"></div>
 				<div id="map"></div>
 			</div>
 
